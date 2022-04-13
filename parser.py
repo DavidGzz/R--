@@ -166,7 +166,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("B.txt", "r")
+f = open("Prueba.txt", "r")
 
 while True:
     try:
