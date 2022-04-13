@@ -1,0 +1,22 @@
+RMM;
+	int i, o, k;
+	float valor, x;
+
+function int fact1(int l){
+	
+}
+
+function int fact(float w){
+	
+}
+
+main(){
+	if(y = 34 - l){
+		return(i + 9 - 1);
+	}
+	while(i < 9){
+		
+		return(p);
+		write(i);
+	}
+}
