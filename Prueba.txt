@@ -3,6 +3,7 @@ RMM;
 	float valor, x;
 
 function int fact1(int l, char y){
+	int PRUEBA;
 	if(i == 7){
 		j = 18;
 		return(j);

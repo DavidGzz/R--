@@ -1,5 +1,14 @@
 import ply.yacc as yacc
+from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_directorioDeFunciones
 from lexer import tokens
+
+scope = 1
+popper = []
+tipoActual = []
+tipoRetorno = []
+pilaOperadores = []
+parametros = []
+funcionActual = ""
 
 def p_programa(p):
     '''programa : ID ';' vars programaF main'''
@@ -19,6 +28,8 @@ def p_tipoRetorno(p):
     '''tipoRetorno : INT
                     | FLOAT
                     | VOID'''
+    global tipoRetorno
+    tipoRetorno.append(p[1])
 
 def p_bloque(p):
     '''bloque : '{' cuerpo '}' '''
@@ -120,34 +131,57 @@ def p_constante(p):
                 | CTEI'''
 
 def p_functionParam(p):
-    '''functionParam : param
+    '''functionParam : parametro
                     | empty'''
 
-def p_param(p):
-    '''param : tipo ID paramp'''
+def p_parametro(p):
+    '''parametro : tipo ID parametrop'''
+    global tipoActual
+    tipo = tipoActual.pop()
+    parametros.append([p[2],tipo])
+    add_variablesLocales(p[2], tipo)
 
-def p_paramp(p):
-    '''paramp : ',' param
+def p_parametrop(p):
+    '''parametrop : ',' parametro
                 | empty'''
 
 def p_vars(p):
     '''vars : varsp'''
+    global scope
+    scope = 2
 
 def p_varsp(p):
     '''varsp : tipo varspp ';' varsp
+                | empty'''
+
+def p_varspp(p):
+    '''varspp : ID varsppp'''
+    global tipoActual
+    tipo = tipoActual.pop()
+    tipoActual.append(tipo)
+    if scope == 1:
+        if existe_Global(p[1]):
+            print("Declaracion repetida")
+            exit(1)
+        else:
+            add_variablesGlobales(p[1],tipo)
+    else:
+        if existe_Local(p[1]):
+            print("Declaracion repetida")
+            exit(1)
+        else:
+            add_variablesLocales(p[1], tipo)
+
+def p_varsppp(p):
+    '''varsppp : ',' varspp
                 | empty'''
 
 def p_tipo(p):
     '''tipo : INT
             | FLOAT
             | CHAR'''
-
-def p_varspp(p):
-    '''varspp : ID varsppp'''
-
-def p_varsppp(p):
-    '''varsppp : ',' varspp
-                | empty'''
+    global tipoActual
+    tipoActual.append(p[1])
 
 def p_id(p): 
     '''id : ID idp'''
@@ -175,5 +209,8 @@ while True:
         break
     if not s: break
     parser.parse(s)
+
+print("Variables Globales", variablesGlobales)
+print("Variables Locales", variablesLocales)
 
 f.close()
