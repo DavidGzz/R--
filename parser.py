@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_directorioDeFunciones
+from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
 from lexer import tokens
 
 scope = 1
@@ -161,13 +161,13 @@ def p_varspp(p):
     tipoActual.append(tipo)
     if scope == 1:
         if existe_Global(p[1]):
-            print("Declaracion repetida")
+            print("Variable ya declarada")
             exit(1)
         else:
             add_variablesGlobales(p[1],tipo)
     else:
         if existe_Local(p[1]):
-            print("Declaracion repetida")
+            print("Variable ya declarada")
             exit(1)
         else:
             add_variablesLocales(p[1], tipo)
