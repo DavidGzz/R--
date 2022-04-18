@@ -2,7 +2,7 @@ RMM;
 	int i, o, k;
 	float valor, x;
 
-function int fact1(int l, char y){
+function int fact1 (int l, char y){
 	int PRUEBA;
 	if(i == 7){
 		j = 18;
@@ -14,7 +14,7 @@ function int fact1(int l, char y){
 	}
 }
 
-function void fact(float w, int g){
+function void fact (float w, int g){
 	r = l + p / 6;
 	write(i);
 	return(p + 3 / 4);
