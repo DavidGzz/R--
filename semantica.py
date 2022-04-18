@@ -14,11 +14,11 @@ def add_variablesLocales(id, tipo):
     }
 
 def add_Funciones(id, tipo, parametros):
-    global variablesLocales
+    #global variablesLocales
     Funciones[id] = {
         'tipo' : tipo,
-        'parametros' : parametros,
-        'VariablesLocales' : variablesLocales
+        'parametros' : parametros
+        #'VariablesLocales' : variablesLocales
     }
 
 def delete_VariablesLocales():

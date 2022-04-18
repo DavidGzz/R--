@@ -21,8 +21,22 @@ def p_programaF(p):
                     | empty'''
 
 def p_function(p):
-    '''function : FUNCTION tipoRetorno ID '(' functionParam ')' bloque
+    '''function : FUNCTION tipoRetorno ID '(' functionParam ')' functionAux bloque
                 | empty'''
+
+def p_functionAux(p):
+    '''functionAux : '''
+    global parametros
+    global tipoRetorno
+    global funcionActual
+    if existe_Funcion(p[-4]):
+        print("Error, funcion repetida")
+        exit(1)
+    else:
+        funcionActual = p[-4]
+        tipo = tipoRetorno.pop()
+        add_Funciones(p[-4], tipo, parametros)
+        parametros = []
 
 def p_tipoRetorno(p):
     '''tipoRetorno : INT
@@ -66,13 +80,13 @@ def p_write(p):
 #def p_for(p):
 #    '''for : FOR '(' id oper superexpresion ';' asignacion ')' bloque'''
 
-def p_oper(p):
-    '''oper : '<'
-            | '>'
-            | EQUALS
-            | DIFF
-            | LTHANEQ
-            | GTHANEQ'''
+#def p_oper(p):
+#    '''oper : '<'
+#            | '>'
+#            | EQUALS
+#            | DIFF
+#            | LTHANEQ
+#            | GTHANEQ'''
 
 def p_while(p):
     '''while : WHILE '(' superexpresion ')' bloque'''
@@ -212,5 +226,6 @@ while True:
 
 print("Variables Globales", variablesGlobales)
 print("Variables Locales", variablesLocales)
+print("Directorio de Funciones", Funciones)
 
 f.close()
