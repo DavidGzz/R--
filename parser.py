@@ -1,13 +1,17 @@
 import ply.yacc as yacc
-from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
+from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, get_variable
+from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
 from lexer import tokens
+from CuboSemantico import cuboSemantico
 
 scope = 1
-popper = []
+pOper = []
+pilaO = []
+cuadruplo = []
 tipoActual = []
 tipoRetorno = []
-pilaOperadores = []
 parametros = []
+constantes = {}
 funcionActual = ""
 
 def p_programa(p):
@@ -27,8 +31,6 @@ def p_function(p):
 def p_functionAux(p):
     '''functionAux : '''
     global parametros
-    global tipoRetorno
-    global funcionActual
     if existe_Funcion(p[-4]):
         print("Error, funcion repetida")
         exit(1)
@@ -42,7 +44,6 @@ def p_tipoRetorno(p):
     '''tipoRetorno : INT
                     | FLOAT
                     | VOID'''
-    global tipoRetorno
     tipoRetorno.append(p[1])
 
 def p_bloque(p):
@@ -101,14 +102,41 @@ def p_asignacionp(p):
 
 def p_superexpresion(p):
     '''superexpresion : megaexpresion superexpresionp'''
+    if pOper: 
+        if pOper[-1] == '&&' or pOper[-1] == '||':
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error' :
+                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
+                pilaO.append(["temporal", tipo])
+            else:
+                print("ERROR TYPE MISTMATCH *")
+                exit(1)
+
 
 def p_superexpresionp(p):
     '''superexpresionp : AND superexpresion
                         | OR superexpresion
                         | empty'''
+    if p[1]:
+        pOper.append(p[1])
 
 def p_megaexpresion(p):
     '''megaexpresion : exp megaexpresionp'''
+    if pOper: 
+        if pOper[-1] == '<' or pOper[-1] == '>' or pOper[-1] == '>=' or pOper[-1] == '<=' or pOper[-1] == '<>' or pOper[-1] == '==':
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error' :
+                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
+                pilaO.append(["temporal", tipo])
+            else:
+                print("ERROR TYPE MISTMATCH *")
+                exit(1)
 
 def p_megaexpresionp(p):
     '''megaexpresionp : '<' exp
@@ -118,22 +146,52 @@ def p_megaexpresionp(p):
                         | LTHANEQ exp
                         | GTHANEQ exp
                         | empty'''
+    if p[1]:
+        pOper.append(p[1])
 
 def p_exp(p):
     '''exp : termino expp'''
+    if pOper: 
+        if pOper[-1] == '+' or pOper[-1] == '-':
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error' :
+                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
+                pilaO.append(["temporal", tipo])
+            else:
+                print("ERROR TYPE MISTMATCH +")
+                exit(1)
 
 def p_expp(p):
     '''expp : '+' exp
             | '-' exp
             | empty'''
+    if p[1]:
+        pOper.append(p[1])
 
 def p_termino(p):
     '''termino : factor terminop'''
+    if pOper: 
+        if pOper[-1] == '*' or pOper[-1] == '/':
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error' :
+                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
+                pilaO.append(["temporal", tipo])
+            else:
+                print("ERROR TYPE MISTMATCH *")
+                exit(1)
 
 def p_terminop(p):
-    '''terminop : '*' exp
-                | '/' exp
+    '''terminop : '*' termino
+                | '/' termino
                 | empty'''
+    if p[1]:
+        pOper.append(p[1])
 
 def p_factor(p):
     '''factor : constante
@@ -141,8 +199,20 @@ def p_factor(p):
 
 def p_constante(p):
     '''constante : id
-                | CTEF
-                | CTEI'''
+                | CTEF ctef
+                | CTEI ctei'''
+
+def p_ctef(p):
+    '''ctef : '''
+    if p[-1] not in constantes:
+        constantes[p[-1]] = 'float'
+    pilaO.append([p[-1], 'float'])
+
+def p_ctei(p):
+    '''ctei : '''
+    if p[-1] not in constantes:
+        constantes[p[-1]] = 'int'
+    pilaO.append([p[-1], 'int'])
 
 def p_functionParam(p):
     '''functionParam : parametro
@@ -150,9 +220,8 @@ def p_functionParam(p):
 
 def p_parametro(p):
     '''parametro : tipo ID parametrop'''
-    global tipoActual
     tipo = tipoActual.pop()
-    parametros.append([p[2],tipo])
+    parametros.append([p[2], tipo])
     add_variablesLocales(p[2], tipo)
 
 def p_parametrop(p):
@@ -161,7 +230,6 @@ def p_parametrop(p):
 
 def p_vars(p):
     '''vars : varsp'''
-    global scope
     scope = 2
 
 def p_varsp(p):
@@ -170,7 +238,6 @@ def p_varsp(p):
 
 def p_varspp(p):
     '''varspp : ID varsppp'''
-    global tipoActual
     tipo = tipoActual.pop()
     tipoActual.append(tipo)
     if scope == 1:
@@ -178,7 +245,7 @@ def p_varspp(p):
             print("Variable ya declarada")
             exit(1)
         else:
-            add_variablesGlobales(p[1],tipo)
+            add_variablesGlobales(p[1], tipo)
     else:
         if existe_Local(p[1]):
             print("Variable ya declarada")
@@ -194,14 +261,24 @@ def p_tipo(p):
     '''tipo : INT
             | FLOAT
             | CHAR'''
-    global tipoActual
     tipoActual.append(p[1])
 
 def p_id(p): 
     '''id : ID idp'''
 
 def p_idp(p): 
-    '''idp : '[' superexpresion ']'
+    '''idp : '(' idpp ')'
+            | '[' superexpresion ']'
+            | empty'''
+    variable = get_variable(p[-1])
+    pilaO.append([p[-1], variable[0]])
+
+def p_idpp(p):
+    '''idpp : superexpresion idppp
+            | empty'''
+
+def p_idppp(p):
+    '''idppp : ',' idpp
             | empty'''
 
 def p_empty(p):
@@ -227,5 +304,7 @@ while True:
 print("Variables Globales", variablesGlobales)
 print("Variables Locales", variablesLocales)
 print("Directorio de Funciones", Funciones)
+print("CONSTANTES", constantes)
+print("Cuadruplos", cuadruplo)
 
 f.close()

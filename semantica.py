@@ -10,15 +10,13 @@ def add_variablesGlobales(id, tipo):
 
 def add_variablesLocales(id, tipo):
     variablesLocales[id] = {
-        'tipo': tipo,
+        'tipo' : tipo,
     }
 
 def add_Funciones(id, tipo, parametros):
-    #global variablesLocales
     Funciones[id] = {
         'tipo' : tipo,
-        'parametros' : parametros
-        #'VariablesLocales' : variablesLocales
+        'parametros' : parametros,
     }
 
 def delete_VariablesLocales():
@@ -44,3 +42,12 @@ def existe_Funcion(id):
         return True
     else:
         return False
+
+def get_variable(id):
+    if id in variablesLocales:
+        return [variablesLocales[id]['tipo']]
+    elif id in variablesGlobales:
+        return [variablesGlobales[id]['tipo']]
+    else :
+        print("VARIABLE NO DECLARADA")
+        exit(-1)
