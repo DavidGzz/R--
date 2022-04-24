@@ -4,12 +4,12 @@ RMM;
 
 function int fact1 (int l, char y){
 	int PRUEBA;
-	valor = valor + l * PRUEBA > x * k;
+	valor = valor + (l * PRUEBA) > x * k;
 }
 
 function void fact (float w, int g){
 	float PRUEBA1;
-	i = g + w / 8;
+	i = g + (w - 8.5);
 }
 
 main(){

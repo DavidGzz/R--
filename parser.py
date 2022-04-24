@@ -195,7 +195,15 @@ def p_terminop(p):
 
 def p_factor(p):
     '''factor : constante
-                | '(' superexpresion ')' '''
+                | lParen superexpresion rParen '''
+
+def p_lParen(p):
+    '''lParen : '(' '''
+    pOper.append(p[1])
+
+def p_rParen(p):
+    '''rParen : ')' '''
+    pOper.pop()
 
 def p_constante(p):
     '''constante : id
