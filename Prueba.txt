@@ -4,14 +4,31 @@ RMM;
 
 function int fact1(int l, char y){
 	int PRUEBA;
-	valor = valor + (l * PRUEBA) > x * k;
+	k = valor + (l * PRUEBA) + l * k;
+	write("AAD", l, k + l);
+	return(k);
 }
 
 function void fact(float w, int g){
 	float PRUEBA1;
-	i = g + (w - 8.5 / (9.7 + PRUEBA1));
+	i = g + (g - 8.5 / (9.7 + PRUEBA1));
+	while(PRUEBA1 < w){
+		PRUEBA1 = PRUEBA1 - 1;
+	}
 }
 
 main(){
+	int h;
+	if(valor > i){
+		k = i + o;
+		h = x - valor;
+	}
+	else{
+		i = o;
+		valor = x;
+	}
+	if(i > valor){
+		h = 10;
+	}
 	o = k + i + 6;
 }

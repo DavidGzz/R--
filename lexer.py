@@ -32,6 +32,7 @@ tokens = [
     'DIFF',
     'CTEI',
     'CTEF',
+    'LETRERO',
 ] + list(reserved.values())
 
 literals = ";:,{}[]()<>=|&+-*/"
@@ -39,6 +40,7 @@ literals = ";:,{}[]()<>=|&+-*/"
 t_ignore = ' \t'
 t_CTEI = r'[0-9]+'
 t_CTEF = r'[0-9]+\.[0-9]+'
+t_LETRERO = r'".*"'
 t_DIFF = r'<>'
 t_GTHANEQ = r'>='
 t_LTHANEQ = r'<='

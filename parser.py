@@ -1,18 +1,24 @@
+from asyncio.windows_events import NULL
 import ply.yacc as yacc
 from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, get_variable
 from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
+from semantica import get_tipoRetornoFuncion
 from lexer import tokens
 from CuboSemantico import cuboSemantico
 
 scope = 1
+tipoWrite = 0
 pOper = []
 pilaO = []
 cuadruplo = []
 tipoActual = []
 tipoRetorno = []
 parametros = []
+pilaSaltos = []
 constantes = {}
 funcionActual = ""
+writeActual = ""
+retorna = None
 
 def p_programa(p):
     '''programa : ID ';' vars programaF main'''
@@ -25,20 +31,29 @@ def p_programaF(p):
                     | empty'''
 
 def p_function(p):
-    '''function : FUNCTION tipoRetorno ID '(' functionParam ')' functionAux bloque
+    '''function : FUNCTION tipoRetorno ID '(' functionParam ')' functionAux bloque functionAux2
                 | empty'''
 
 def p_functionAux(p):
     '''functionAux : '''
     global parametros
     if existe_Funcion(p[-4]):
-        print("Error, funcion repetida")
+        print("ERROR, funcion repetida")
         exit(1)
     else:
+        global funcionActual
         funcionActual = p[-4]
         tipo = tipoRetorno.pop()
         add_Funciones(p[-4], tipo, parametros)
         parametros = []
+
+def p_functionAux2(p):
+    '''functionAux2 : '''
+    tipo = get_tipoRetornoFuncion(funcionActual)
+    if not retorna and tipo != 'void':
+        print('LA FUNCION DEBE RETORNAR ALGO')
+        exit(1)
+    delete_VariablesLocales()
 
 def p_tipoRetorno(p):
     '''tipoRetorno : INT
@@ -67,16 +82,74 @@ def p_estatuto(p):
 
 def p_return(p):
     '''return : RETURN superexpresion ';' '''
+    global retorna
+    retorna = pilaO.pop()
+    tipo = get_tipoRetornoFuncion(funcionActual)
+    if retorna and tipo != 'void' and retorna[1] == tipo:
+        cuadruplo.append(['return', funcionActual, '0', retorna[0]])
+    elif tipo != 'void' and tipo != retorna[1]:
+        print('TIPO DE RETORNO EQUIVOCADO')
+        exit(-1)
+    elif retorna and tipo == 'void':
+        print('FUNCIONES VOID NO PUEDEN RETORNAR ALGO')
+        exit(1)
 
 def p_condicion(p):
-    '''condicion : IF '(' superexpresion ')' bloque condicionelse'''
+    '''condicion : IF '(' superexpresion ')' condicionAux bloque condicionelse'''
+
+def p_condicionAux(p):
+    '''condicionAux : '''
+    cond = pilaO.pop()
+    if cond[1] != 'bool':
+        print('TYPE_MISMATCH')
+        exit(1)
+    else:
+        pilaSaltos.append(len(cuadruplo))
+        cuadruplo.append(['gotoF', cond[0], '0', '0'])
 
 def p_condicionelse(p):
-    '''condicionelse : ELSE bloque
+    '''condicionelse : ELSE condicionelseAux bloque
                         | empty'''
+    salida = pilaSaltos.pop()
+    cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo)]
+
+def p_condicionelseAux(p): 
+    '''condicionelseAux : '''
+    salida = pilaSaltos.pop()
+    cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo) + 1]
+    pilaSaltos.append(len(cuadruplo))
+    cuadruplo.append(['goto', '0', '0', '0'])
 
 def p_write(p):
-    '''write : WRITE '(' superexpresion ')' ';' '''
+    '''write : WRITE '(' writep ')' ';' '''
+
+def p_writep(p): 
+    '''writep : superexpresion writepAux writepp
+              | LETRERO writepAux2 writepp''' 
+
+def p_writepAux(p): 
+    '''writepAux : ''' 
+    global tipoWrite
+    tipoWrite = 1
+
+def p_writepAux2(p): 
+    '''writepAux2 : '''
+    global tipoWrite
+    global writeActual
+    tipoWrite = 2
+    writeActual = p[-1]
+
+def p_writepp(p): 
+    '''writepp : ',' writeppAux writep
+                | empty writeppAux'''
+
+def p_writeppAux(p): 
+    '''writeppAux : ''' 
+    if tipoWrite == 1:
+        varWrite = pilaO.pop()
+        cuadruplo.append(['write', '0', '0', varWrite[0]])
+    elif tipoWrite == 2:
+        cuadruplo.append(['write', '0', '0', writeActual])
 
 #def p_for(p):
 #    '''for : FOR '(' id oper superexpresion ';' asignacion ')' bloque'''
@@ -90,7 +163,24 @@ def p_write(p):
 #            | GTHANEQ'''
 
 def p_while(p):
-    '''while : WHILE '(' superexpresion ')' bloque'''
+    '''while : WHILE whileAux '(' superexpresion ')' whileAux2 bloque'''
+    falso = pilaSaltos.pop()
+    retorno = pilaSaltos.pop()
+    cuadruplo.append(['goto', '0', '0', retorno])
+    cuadruplo[falso] = [cuadruplo[falso][0], cuadruplo[falso][1], '0', len(cuadruplo)]
+
+def p_whileAux(p):
+    '''whileAux : '''
+    pilaSaltos.append(len(cuadruplo))
+
+def p_whileAux2(p):
+    '''whileAux2 : '''
+    cond = pilaO.pop()
+    if cond[1] != 'bool':
+        print("TYPE MISTMATCH")
+    else:
+        pilaSaltos.append(len(cuadruplo))
+        cuadruplo.append(['gotof', cond[0], '0', '0'])
 
 def p_asignacion(p):
     '''asignacion : vars
@@ -98,7 +188,10 @@ def p_asignacion(p):
 
 def p_asignacionp(p):
     '''asignacionp : '=' superexpresion ';'
-                    | '[' superexpresion ']' ';' '''
+                    | '[' superexpresion ']' '=' superexpresion ';' '''
+    asignar = pilaO.pop()
+    asignarA = pilaO.pop()
+    cuadruplo.append(['=',  asignar[0], '0', asignarA[0]])
 
 def p_superexpresion(p):
     '''superexpresion : megaexpresion superexpresionp'''
@@ -309,10 +402,10 @@ while True:
     if not s: break
     parser.parse(s)
 
-print("Variables Globales", variablesGlobales)
-print("Variables Locales", variablesLocales)
-print("Directorio de Funciones", Funciones)
-print("CONSTANTES", constantes)
-print("Cuadruplos", cuadruplo)
+#print("Variables Globales", variablesGlobales)
+#print("Variables Locales", variablesLocales)
+#print("Directorio de Funciones", Funciones)
+#print("CONSTANTES", constantes)
+print("Cuadruplos: ", cuadruplo)
 
 f.close()

@@ -19,7 +19,11 @@ def add_Funciones(id, tipo, parametros):
         'parametros' : parametros,
     }
 
+def get_tipoRetornoFuncion(funcionActual):
+    return Funciones[funcionActual]['tipo']
+
 def delete_VariablesLocales():
+    global variablesLocales
     variablesLocales = {}
 
 def delete_VariablesGlobales():
@@ -50,4 +54,4 @@ def get_variable(id):
         return [variablesGlobales[id]['tipo']]
     else :
         print("VARIABLE NO DECLARADA")
-        exit(-1)
+        exit(1)
