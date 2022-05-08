@@ -6,6 +6,10 @@ function int fact1(int l, char y){
 	int PRUEBA;
 	k = valor + (l * PRUEBA) + l * k;
 	write("AAD", l, k + l);
+	for(i = 0; i > 3){
+		PRUEBA = 9;
+		i = i + 1;
+	}
 	return(k);
 }
 

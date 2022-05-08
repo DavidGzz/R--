@@ -5,6 +5,7 @@ from semantica import add_variablesLocales, existe_Global, existe_Local, existe_
 from semantica import get_tipoRetornoFuncion
 from lexer import tokens
 from CuboSemantico import cuboSemantico
+from memoria import Memoria
 
 scope = 1
 tipoWrite = 0
@@ -16,15 +17,23 @@ tipoRetorno = []
 parametros = []
 pilaSaltos = []
 constantes = {}
+cuadruploFuncion = 0
 funcionActual = ""
 writeActual = ""
+mLocal = Memoria(0, 100, 200, 300, 400)
+mGlobal = Memoria(400, 500, 600, 700, 800)
+mConsts = Memoria(800, 900, 1000, 1100, 1200)
+mTemp = Memoria(1200, 1300, 1400, 1500, 1600)
 retorna = None
 
 def p_programa(p):
     '''programa : ID ';' vars programaF main'''
 
 def p_main(p):
-    '''main : MAIN '(' ')' bloque'''
+    '''main : MAIN primerCuad '(' ')' bloque'''
+
+def p_primerCuad(p):
+    '''primerCuad : '''
 
 def p_programaF(p):
     '''programaF : function programaF
@@ -37,6 +46,8 @@ def p_function(p):
 def p_functionAux(p):
     '''functionAux : '''
     global parametros
+    global cuadruploFuncion
+    cuadruploFuncion = len(cuadruplo)
     if existe_Funcion(p[-4]):
         print("ERROR, funcion repetida")
         exit(1)
@@ -44,7 +55,7 @@ def p_functionAux(p):
         global funcionActual
         funcionActual = p[-4]
         tipo = tipoRetorno.pop()
-        add_Funciones(p[-4], tipo, parametros)
+        add_Funciones(p[-4], tipo, parametros, cuadruploFuncion)
         parametros = []
 
 def p_functionAux2(p):
@@ -77,8 +88,8 @@ def p_estatuto(p):
                     | write
                     | while
                     | return
+                    | for
                     | empty'''
-                    #| for
 
 def p_return(p):
     '''return : RETURN superexpresion ';' '''
@@ -151,16 +162,8 @@ def p_writeppAux(p):
     elif tipoWrite == 2:
         cuadruplo.append(['write', '0', '0', writeActual])
 
-#def p_for(p):
-#    '''for : FOR '(' id oper superexpresion ';' asignacion ')' bloque'''
-
-#def p_oper(p):
-#    '''oper : '<'
-#            | '>'
-#            | EQUALS
-#            | DIFF
-#            | LTHANEQ
-#            | GTHANEQ'''
+def p_for(p):
+    '''for : FOR '(' id '=' superexpresion ';' superexpresion ')' bloque'''
 
 def p_while(p):
     '''while : WHILE whileAux '(' superexpresion ')' whileAux2 bloque'''
@@ -202,8 +205,9 @@ def p_superexpresion(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
-                pilaO.append(["temporal", tipo])
+                respuesta = mTemp.add_type(tipo)
+                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
                 exit(1)
@@ -225,8 +229,9 @@ def p_megaexpresion(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
-                pilaO.append(["temporal", tipo])
+                respuesta = mTemp.add_type(tipo)
+                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
                 exit(1)
@@ -251,8 +256,9 @@ def p_exp(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
-                pilaO.append(["temporal", tipo])
+                respuesta = mTemp.add_type(tipo)
+                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH +")
                 exit(1)
@@ -272,9 +278,10 @@ def p_termino(p):
             op1 = pilaO.pop()
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
-            if tipo != 'error' :
-                cuadruplo.append([operador,op2[0],op1[0], "temporal"])
-                pilaO.append(["temporal", tipo])
+            if tipo != 'error':
+                respuesta = mTemp.add_type(tipo)
+                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
                 exit(1)
@@ -331,6 +338,7 @@ def p_parametrop(p):
 
 def p_vars(p):
     '''vars : varsp'''
+    global scope
     scope = 2
 
 def p_varsp(p):

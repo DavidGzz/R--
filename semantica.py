@@ -13,10 +13,11 @@ def add_variablesLocales(id, tipo):
         'tipo' : tipo,
     }
 
-def add_Funciones(id, tipo, parametros):
+def add_Funciones(id, tipo, parametros, cuadruplo):
     Funciones[id] = {
         'tipo' : tipo,
         'parametros' : parametros,
+        'cuadruplo' : cuadruplo
     }
 
 def get_tipoRetornoFuncion(funcionActual):
