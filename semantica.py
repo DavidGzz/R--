@@ -17,6 +17,7 @@ def add_Funciones(id, tipo, parametros, cuadruplo):
     Funciones[id] = {
         'tipo' : tipo,
         'parametros' : parametros,
+        'variablesLocales' : variablesLocales,
         'cuadruplo' : cuadruplo
     }
 
@@ -56,3 +57,20 @@ def get_variable(id):
     else :
         print("VARIABLE NO DECLARADA")
         exit(1)
+
+def get_cuadruploFuncion(funcion):
+    return Funciones[funcion]['cuadruplo']
+
+def validar_Parametros(funcion, arreglo):
+    if len(Funciones[funcion]['parametros']) != len(arreglo):
+        return False
+    arreglo.reverse()
+    for x in Funciones[funcion]['parametros']:
+        y1 = arreglo.pop()[1]
+        y2 = x[1]
+        if(y1 != y2) :
+            return False
+    return True
+
+def get_VariablesFuncion(funcion):
+    return len(Funciones[funcion]['variablesLocales'])

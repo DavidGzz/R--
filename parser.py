@@ -2,13 +2,15 @@ from asyncio.windows_events import NULL
 import ply.yacc as yacc
 from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, get_variable
 from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
-from semantica import get_tipoRetornoFuncion
+from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Parametros, get_VariablesFuncion
 from lexer import tokens
 from CuboSemantico import cuboSemantico
 from memoria import Memoria
 
 scope = 1
 tipoWrite = 0
+totalParametros = 0
+temporal = []
 pOper = []
 pilaO = []
 cuadruplo = []
@@ -27,13 +29,18 @@ mTemp = Memoria(1200, 1300, 1400, 1500, 1600)
 retorna = None
 
 def p_programa(p):
-    '''programa : ID ';' vars programaF main'''
-
-def p_main(p):
-    '''main : MAIN primerCuad '(' ')' bloque'''
+    '''programa : ID primerCuad ';' vars programaF main'''
 
 def p_primerCuad(p):
     '''primerCuad : '''
+    cuadruplo.append(['goto', '0', '0', '0'])
+
+def p_main(p):
+    '''main : MAIN llenarCuad '(' ')' bloque'''
+
+def p_llenarCuad(p):
+    '''llenarCuad : '''
+    cuadruplo[0] = ['goto', '0', '0', len(cuadruplo)]
 
 def p_programaF(p):
     '''programaF : function programaF
@@ -183,7 +190,7 @@ def p_whileAux2(p):
         print("TYPE MISTMATCH")
     else:
         pilaSaltos.append(len(cuadruplo))
-        cuadruplo.append(['gotof', cond[0], '0', '0'])
+        cuadruplo.append(['gotoF', cond[0], '0', '0'])
 
 def p_asignacion(p):
     '''asignacion : vars
@@ -205,8 +212,8 @@ def p_superexpresion(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_type(tipo)
-                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                respuesta = mTemp.add_tipo(tipo)
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
@@ -229,8 +236,8 @@ def p_megaexpresion(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_type(tipo)
-                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                respuesta = mTemp.add_tipo(tipo)
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
@@ -256,7 +263,7 @@ def p_exp(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_type(tipo)
+                respuesta = mTemp.add_tipo(tipo)
                 cuadruplo.append([operador,op2[0],op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -279,8 +286,8 @@ def p_termino(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error':
-                respuesta = mTemp.add_type(tipo)
-                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                respuesta = mTemp.add_tipo(tipo)
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH *")
@@ -359,6 +366,9 @@ def p_varspp(p):
         if existe_Local(p[1]):
             print("Variable ya declarada")
             exit(1)
+        elif existe_Global(p[1]):
+            print("Variable ya declarada")
+            exit(1)
         else:
             add_variablesLocales(p[1], tipo)
 
@@ -379,8 +389,29 @@ def p_idp(p):
     '''idp : '(' idpp ')'
             | '[' superexpresion ']'
             | empty'''
-    variable = get_variable(p[-1])
-    pilaO.append([p[-1], variable[0]])
+    global totalParametros
+    if p[1] == '(':
+        print("(")
+    #    if existe_Funcion(p[-1]):
+    #        global temporal
+    #        for x in range(0, totalParametros):
+    #            temporal.append(pilaO.pop())
+    #        if validar_Parametros(p[-1], temporal):
+    #            cuadruplo.append(['era', get_VariablesFuncion(p[-1]), p[-1], '0'])
+    #            for x in temporal:
+    #                cuadruplo.append(['param', x[0], '0', totalParametros])
+    #                totalParametros = totalParametros - 1
+    #            cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
+    #            if get_tipoRetornoFuncion(p[-1]) != 'void':
+    #                respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))
+    #                cuadruplo.append(['=', p[-1], '0', respuesta])
+    #                pilaO.append([respuesta, get_tipoRetornoFuncion(p[-1])])
+    #        else :
+    #            print("ERROR, parametros equivocados")
+    #            exit(1)
+    else:
+        variable = get_variable(p[-1])
+        pilaO.append([p[-1], variable[0]])
 
 def p_idpp(p):
     '''idpp : superexpresion idppp
@@ -389,6 +420,8 @@ def p_idpp(p):
 def p_idppp(p):
     '''idppp : ',' idpp
             | empty'''
+    global totalParametros
+    totalParametros = totalParametros + 1
 
 def p_empty(p):
     '''empty :'''
@@ -414,6 +447,10 @@ while True:
 #print("Variables Locales", variablesLocales)
 #print("Directorio de Funciones", Funciones)
 #print("CONSTANTES", constantes)
-print("Cuadruplos: ", cuadruplo)
+cont = 0
+print("Cuadruplos")
+for x in cuadruplo:
+    print(cont, ": ", cuadruplo[cont])
+    cont = cont + 1
 
 f.close()

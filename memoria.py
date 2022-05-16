@@ -34,7 +34,7 @@ class Memoria:
         else:
             print("Se excedió del número de variables")
     
-    def add_type(this, tipo):
+    def add_tipo(this, tipo):
         if tipo == 'char':
             return this.add_char(1)
         elif tipo == 'int':
