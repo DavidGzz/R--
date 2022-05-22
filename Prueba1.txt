@@ -1,0 +1,13 @@
+RMM;
+	int i, o, k;
+	float valor, x;
+	char b, ch;
+
+main(){
+	int h, j, r;
+	k = 9;
+	i = 8.3;
+	h = 3;
+	j = 4;
+	o = k + i - 6 * h / j + 10.5;
+}

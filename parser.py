@@ -6,11 +6,13 @@ from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Para
 from lexer import tokens
 from CuboSemantico import cuboSemantico
 from memoria import Memoria
+import json
 
 scope = 1
 tipoWrite = 0
 totalParametros = 0
 temporal = []
+temporal1 = []
 pOper = []
 pilaO = []
 cuadruplo = []
@@ -71,6 +73,10 @@ def p_functionAux2(p):
     if not retorna and tipo != 'void':
         print('LA FUNCION DEBE RETORNAR ALGO')
         exit(1)
+    global mLocal
+    mLocal = Memoria(0, 100, 200, 300,400)
+    global mTemp
+    mTemp = Memoria(1200, 1300, 1400, 1500, 1600)
     delete_VariablesLocales()
 
 def p_tipoRetorno(p):
@@ -256,15 +262,17 @@ def p_megaexpresionp(p):
 
 def p_exp(p):
     '''exp : termino expp'''
+    #print("POPER+: ", pOper)
     if pOper: 
         if pOper[-1] == '+' or pOper[-1] == '-':
+            global cuadruplo
             operador = pOper.pop()
             op1 = pilaO.pop()
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
                 respuesta = mTemp.add_tipo(tipo)
-                cuadruplo.append([operador,op2[0],op1[0], respuesta])
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
                 print("ERROR TYPE MISTMATCH +")
@@ -277,10 +285,16 @@ def p_expp(p):
     if p[1]:
         pOper.append(p[1])
 
+#def p_pApp(p):
+#    '''pApp : '''
+#    pOper.append(p[-1])
+
 def p_termino(p):
     '''termino : factor terminop'''
-    if pOper: 
+    #print("POPER*: ", pOper)
+    if pOper:
         if pOper[-1] == '*' or pOper[-1] == '/':
+            global cuadruplo
             operador = pOper.pop()
             op1 = pilaO.pop()
             op2 = pilaO.pop()
@@ -320,14 +334,14 @@ def p_constante(p):
 def p_ctef(p):
     '''ctef : '''
     if p[-1] not in constantes:
-        constantes[p[-1]] = 'float'
-    pilaO.append([p[-1], 'float'])
+        constantes[p[-1]] = mConsts.add_tipo('float')
+    pilaO.append([constantes[p[-1]], 'float'])
 
 def p_ctei(p):
     '''ctei : '''
     if p[-1] not in constantes:
-        constantes[p[-1]] = 'int'
-    pilaO.append([p[-1], 'int'])
+        constantes[p[-1]] = mConsts.add_tipo('int')
+    pilaO.append([constantes[p[-1]], 'int'])
 
 def p_functionParam(p):
     '''functionParam : parametro
@@ -337,7 +351,7 @@ def p_parametro(p):
     '''parametro : tipo ID parametrop'''
     tipo = tipoActual.pop()
     parametros.append([p[2], tipo])
-    add_variablesLocales(p[2], tipo)
+    add_variablesLocales(mLocal, p[2], tipo)
 
 def p_parametrop(p):
     '''parametrop : ',' parametro
@@ -361,7 +375,7 @@ def p_varspp(p):
             print("Variable ya declarada")
             exit(1)
         else:
-            add_variablesGlobales(p[1], tipo)
+            add_variablesGlobales(mGlobal, p[1], tipo)
     else:
         if existe_Local(p[1]):
             print("Variable ya declarada")
@@ -370,7 +384,7 @@ def p_varspp(p):
             print("Variable ya declarada")
             exit(1)
         else:
-            add_variablesLocales(p[1], tipo)
+            add_variablesLocales(mLocal, p[1], tipo)
 
 def p_varsppp(p):
     '''varsppp : ',' varspp
@@ -391,27 +405,29 @@ def p_idp(p):
             | empty'''
     global totalParametros
     if p[1] == '(':
-        print("(")
-    #    if existe_Funcion(p[-1]):
-    #        global temporal
-    #        for x in range(0, totalParametros):
-    #            temporal.append(pilaO.pop())
-    #        if validar_Parametros(p[-1], temporal):
-    #            cuadruplo.append(['era', get_VariablesFuncion(p[-1]), p[-1], '0'])
-    #            for x in temporal:
-    #                cuadruplo.append(['param', x[0], '0', totalParametros])
-    #                totalParametros = totalParametros - 1
-    #            cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
-    #            if get_tipoRetornoFuncion(p[-1]) != 'void':
-    #                respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))
-    #                cuadruplo.append(['=', p[-1], '0', respuesta])
-    #                pilaO.append([respuesta, get_tipoRetornoFuncion(p[-1])])
-    #        else :
-    #            print("ERROR, parametros equivocados")
-    #            exit(1)
+        if existe_Funcion(p[-1]):
+            global temporal
+            global temporal1
+            for x in range(0, totalParametros):
+                aux = pilaO.pop()
+                temporal.append(aux)
+                temporal1.append(aux)
+            if validar_Parametros(p[-1], temporal):
+                cuadruplo.append(['era', get_VariablesFuncion(p[-1]), p[-1], '0'])
+                for x in temporal1:
+                    cuadruplo.append(['param', x[0], '0', totalParametros])
+                    totalParametros = totalParametros - 1
+                cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
+                if get_tipoRetornoFuncion(p[-1]) != 'void':
+                    respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))
+                    cuadruplo.append(['=', p[-1], '0', respuesta])
+                    pilaO.append([respuesta, get_tipoRetornoFuncion(p[-1])])
+            else :
+                print("ERROR, parametros equivocados")
+                exit(1)
     else:
         variable = get_variable(p[-1])
-        pilaO.append([p[-1], variable[0]])
+        pilaO.append([variable[0], variable[1]])
 
 def p_idpp(p):
     '''idpp : superexpresion idppp
@@ -454,3 +470,13 @@ for x in cuadruplo:
     cont = cont + 1
 
 f.close()
+
+diccionario = {
+            'funciones': Funciones,
+            'cuadruplos': cuadruplo ,
+            'constantes': constantes,
+            'globals': variablesGlobales,
+    }
+
+with open('cuadruplos.json', 'w') as f:
+    json.dump(diccionario, f)

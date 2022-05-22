@@ -1,16 +1,20 @@
-
+import memoria
 variablesLocales = {}
 variablesGlobales = {}
 Funciones = {}
 
-def add_variablesGlobales(id, tipo):
+def add_variablesGlobales(memoria, id, tipo):
+    dirMemoria = memoria.add_tipo(tipo)
     variablesGlobales[id] = {
         'tipo': tipo,
+        'dirMemoria': dirMemoria,
     }
 
-def add_variablesLocales(id, tipo):
+def add_variablesLocales(memoria, id, tipo):
+    dirMemoria = memoria.add_tipo(tipo)
     variablesLocales[id] = {
         'tipo' : tipo,
+        'dirMemoria': dirMemoria,
     }
 
 def add_Funciones(id, tipo, parametros, cuadruplo):
@@ -51,9 +55,9 @@ def existe_Funcion(id):
 
 def get_variable(id):
     if id in variablesLocales:
-        return [variablesLocales[id]['tipo']]
+        return [variablesLocales[id]['dirMemoria'], variablesLocales[id]['tipo']]
     elif id in variablesGlobales:
-        return [variablesGlobales[id]['tipo']]
+        return [variablesGlobales[id]['dirMemoria'], variablesGlobales[id]['tipo']]
     else :
         print("VARIABLE NO DECLARADA")
         exit(1)
@@ -68,7 +72,7 @@ def validar_Parametros(funcion, arreglo):
     for x in Funciones[funcion]['parametros']:
         y1 = arreglo.pop()[1]
         y2 = x[1]
-        if(y1 != y2) :
+        if(y1 != y2):
             return False
     return True
 

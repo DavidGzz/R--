@@ -5,7 +5,7 @@ RMM;
 
 function int fact1(int l, int y){
 	int PRUEBA;
-	k = valor + (l * PRUEBA) + o * k;
+	k = valor + l * PRUEBA + o * k;
 	write("AAD", l, k + l);
 	for(i = 0; i > 3){
 		PRUEBA = 9;
@@ -24,6 +24,7 @@ function void fact(float w, int g){
 
 main(){
 	int h, j, r;
+	float p;
 	j = 90;
 	if(valor > i){
 		k = i + o;
@@ -37,5 +38,5 @@ main(){
 		h = 10;
 	}
 	o = k + i + 6;
-	r = fact1(h, j);
+	r = fact(p, j);
 }
