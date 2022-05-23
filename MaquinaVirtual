@@ -69,6 +69,19 @@ def asignacion(c1, c2, c3):
         global temporal
         temporal[c3] = get_Valor(c1)
 
+def mayorQ(c1, c2, c3):
+	if float(get_Valor(c1)) > float(get_Valor(c2)):
+		temporal[c3] = True
+	else: 
+		temporal[c3] = False
+
+def menorQ(c1, c2, c3):
+	global temporal
+	if float(get_Valor(c1)) < float(get_Valor(c2)):
+		temporal[c3] = True
+	else: 
+		temporal[c3] = False
+
 operaciones = {
     '+': suma,
     'goto': goto,
@@ -77,6 +90,8 @@ operaciones = {
     '-': resta,
     '/': division,
     '*': multiplicacion,
+    '>': mayorQ,
+    '<': menorQ,
 }
 
 with open('cuadruplos.json') as f:
@@ -86,9 +101,10 @@ constantes = todo['constantes']
 constantes = {v: k for k, v in constantes.items()}
 cuadruplos = todo['cuadruplos']
 cont = 0
+
 while cont < len(cuadruplos):
 	cuad = cuadruplos[cont]
-	operaciones[cuad[0]](cuad[1], cuad[2], cuad[3]) 
+	operaciones[cuad[0]](cuad[1], cuad[2], cuad[3])
 	cont = cont + 1
 
 for x in temporal:

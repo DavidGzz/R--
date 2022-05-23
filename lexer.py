@@ -63,7 +63,7 @@ def t_error(t):
     
 lexer = lex.lex()
 
-f = open("Prueba.txt", "r")
+f = open("Prueba1.txt", "r")
 data = f.read()
 
 lexer.input(data)

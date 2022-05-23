@@ -66,73 +66,75 @@ Rule 56    megaexpresionp -> LTHANEQ exp
 Rule 57    megaexpresionp -> GTHANEQ exp
 Rule 58    megaexpresionp -> empty
 Rule 59    exp -> termino expp
-Rule 60    expp -> + exp
-Rule 61    expp -> - exp
+Rule 60    expp -> + pAppT exp
+Rule 61    expp -> - pAppT exp
 Rule 62    expp -> empty
-Rule 63    termino -> factor terminop
-Rule 64    terminop -> * termino
-Rule 65    terminop -> / termino
-Rule 66    terminop -> empty
-Rule 67    factor -> constante
-Rule 68    factor -> lParen superexpresion rParen
-Rule 69    lParen -> (
-Rule 70    rParen -> )
-Rule 71    constante -> id
-Rule 72    constante -> CTEF ctef
-Rule 73    constante -> CTEI ctei
-Rule 74    ctef -> <empty>
-Rule 75    ctei -> <empty>
-Rule 76    functionParam -> parametro
-Rule 77    functionParam -> empty
-Rule 78    parametro -> tipo ID parametrop
-Rule 79    parametrop -> , parametro
-Rule 80    parametrop -> empty
-Rule 81    vars -> varsp
-Rule 82    varsp -> tipo varspp ; varsp
-Rule 83    varsp -> empty
-Rule 84    varspp -> ID varsppp
-Rule 85    varsppp -> , varspp
-Rule 86    varsppp -> empty
-Rule 87    tipo -> INT
-Rule 88    tipo -> FLOAT
-Rule 89    tipo -> CHAR
-Rule 90    id -> ID idp
-Rule 91    idp -> ( idpp )
-Rule 92    idp -> [ superexpresion ]
-Rule 93    idp -> empty
-Rule 94    idpp -> superexpresion idppp
-Rule 95    idpp -> empty
-Rule 96    idppp -> , idpp
-Rule 97    idppp -> empty
-Rule 98    empty -> <empty>
+Rule 63    pAppT -> <empty>
+Rule 64    termino -> factor terminop
+Rule 65    terminop -> * pAppF termino
+Rule 66    terminop -> / pAppF termino
+Rule 67    terminop -> empty
+Rule 68    pAppF -> <empty>
+Rule 69    factor -> constante
+Rule 70    factor -> lParen superexpresion rParen
+Rule 71    lParen -> (
+Rule 72    rParen -> )
+Rule 73    constante -> id
+Rule 74    constante -> CTEF ctef
+Rule 75    constante -> CTEI ctei
+Rule 76    ctef -> <empty>
+Rule 77    ctei -> <empty>
+Rule 78    functionParam -> parametro
+Rule 79    functionParam -> empty
+Rule 80    parametro -> tipo ID parametrop
+Rule 81    parametrop -> , parametro
+Rule 82    parametrop -> empty
+Rule 83    vars -> varsp
+Rule 84    varsp -> tipo varspp ; varsp
+Rule 85    varsp -> empty
+Rule 86    varspp -> ID varsppp
+Rule 87    varsppp -> , varspp
+Rule 88    varsppp -> empty
+Rule 89    tipo -> INT
+Rule 90    tipo -> FLOAT
+Rule 91    tipo -> CHAR
+Rule 92    id -> ID idp
+Rule 93    idp -> ( idpp )
+Rule 94    idp -> [ superexpresion ]
+Rule 95    idp -> empty
+Rule 96    idpp -> superexpresion idppp
+Rule 97    idpp -> empty
+Rule 98    idppp -> , idpp
+Rule 99    idppp -> empty
+Rule 100   empty -> <empty>
 
 Terminals, with rules where they appear
 
-(                    : 3 7 26 31 39 40 69 91
-)                    : 3 7 26 31 39 40 70 91
-*                    : 64
+(                    : 3 7 26 31 39 40 71 93
+)                    : 3 7 26 31 39 40 72 93
+*                    : 65
 +                    : 60
-,                    : 36 79 85 96
+,                    : 36 81 87 98
 -                    : 61
-/                    : 65
-;                    : 1 25 31 39 45 46 82
+/                    : 66
+;                    : 1 25 31 39 45 46 84
 <                    : 52
 =                    : 39 45 46
 >                    : 53
 AND                  : 48
-CHAR                 : 89
-CTEF                 : 72
-CTEI                 : 73
+CHAR                 : 91
+CTEF                 : 74
+CTEI                 : 75
 DIFF                 : 55
 ELSE                 : 28
 EQUALS               : 54
-FLOAT                : 12 88
+FLOAT                : 12 90
 FOR                  : 39
 FUNCTION             : 7
 GTHANEQ              : 57
-ID                   : 1 7 78 84 90
+ID                   : 1 7 80 86 92
 IF                   : 26
-INT                  : 11 87
+INT                  : 11 89
 LETRERO              : 33
 LTHANEQ              : 56
 MAIN                 : 3
@@ -142,8 +144,8 @@ RETURN               : 25
 VOID                 : 13
 WHILE                : 40
 WRITE                : 31
-[                    : 46 92
-]                    : 46 92
+[                    : 46 94
+]                    : 46 94
 error                : 
 {                    : 14
 }                    : 14
@@ -157,47 +159,49 @@ condicion            : 19
 condicionAux         : 26
 condicionelse        : 26
 condicionelseAux     : 28
-constante            : 67
-ctef                 : 72
-ctei                 : 73
+constante            : 69
+ctef                 : 74
+ctei                 : 75
 cuerpo               : 14
-empty                : 6 8 17 24 29 37 50 58 62 66 77 80 83 86 93 95 97
+empty                : 6 8 17 24 29 37 50 58 62 67 79 82 85 88 95 97 99
 estatuto             : 16
 estatutop            : 15 16
 exp                  : 51 52 53 54 55 56 57 60 61
 expp                 : 59
-factor               : 63
+factor               : 64
 for                  : 23
 function             : 5
 functionAux          : 7
 functionAux2         : 7
 functionParam        : 7
-id                   : 39 44 71
-idp                  : 90
-idpp                 : 91 96
-idppp                : 94
-lParen               : 68
+id                   : 39 44 73
+idp                  : 92
+idpp                 : 93 98
+idppp                : 96
+lParen               : 70
 llenarCuad           : 3
 main                 : 1
 megaexpresion        : 47
 megaexpresionp       : 51
-parametro            : 76 79
-parametrop           : 78
+pAppF                : 65 66
+pAppT                : 60 61
+parametro            : 78 81
+parametrop           : 80
 primerCuad           : 1
 programa             : 0
 programaF            : 1 5
-rParen               : 68
+rParen               : 70
 return               : 22
-superexpresion       : 25 26 32 39 39 40 45 46 46 48 49 68 92 94
+superexpresion       : 25 26 32 39 39 40 45 46 46 48 49 70 94 96
 superexpresionp      : 47
-termino              : 59 64 65
-terminop             : 63
-tipo                 : 78 82
+termino              : 59 65 66
+terminop             : 64
+tipo                 : 80 84
 tipoRetorno          : 7
 vars                 : 1 15 43
-varsp                : 81 82
-varspp               : 82 85
-varsppp              : 84
+varsp                : 83 84
+varspp               : 84 87
+varsppp              : 86
 while                : 21
 whileAux             : 40
 whileAux2            : 40
@@ -244,19 +248,19 @@ state 3
 state 4
 
     (1) programa -> ID primerCuad ; . vars programaF main
-    (81) vars -> . varsp
-    (82) varsp -> . tipo varspp ; varsp
-    (83) varsp -> . empty
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
-    (98) empty -> .
+    (83) vars -> . varsp
+    (84) varsp -> . tipo varspp ; varsp
+    (85) varsp -> . empty
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
+    (100) empty -> .
 
     INT             shift and go to state 9
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
-    FUNCTION        reduce using rule 98 (empty -> .)
-    MAIN            reduce using rule 98 (empty -> .)
+    FUNCTION        reduce using rule 100 (empty -> .)
+    MAIN            reduce using rule 100 (empty -> .)
 
     vars                           shift and go to state 5
     varsp                          shift and go to state 6
@@ -270,13 +274,13 @@ state 5
     (6) programaF -> . empty
     (7) function -> . FUNCTION tipoRetorno ID ( functionParam ) functionAux bloque functionAux2
     (8) function -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
   ! shift/reduce conflict for FUNCTION resolved as shift
     FUNCTION        shift and go to state 15
-    MAIN            reduce using rule 98 (empty -> .)
+    MAIN            reduce using rule 100 (empty -> .)
 
-  ! FUNCTION        [ reduce using rule 98 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 100 (empty -> .) ]
 
     programaF                      shift and go to state 12
     function                       shift and go to state 13
@@ -284,26 +288,26 @@ state 5
 
 state 6
 
-    (81) vars -> varsp .
+    (83) vars -> varsp .
 
-    FUNCTION        reduce using rule 81 (vars -> varsp .)
-    MAIN            reduce using rule 81 (vars -> varsp .)
-    IF              reduce using rule 81 (vars -> varsp .)
-    WRITE           reduce using rule 81 (vars -> varsp .)
-    WHILE           reduce using rule 81 (vars -> varsp .)
-    RETURN          reduce using rule 81 (vars -> varsp .)
-    FOR             reduce using rule 81 (vars -> varsp .)
-    ID              reduce using rule 81 (vars -> varsp .)
-    INT             reduce using rule 81 (vars -> varsp .)
-    FLOAT           reduce using rule 81 (vars -> varsp .)
-    CHAR            reduce using rule 81 (vars -> varsp .)
-    }               reduce using rule 81 (vars -> varsp .)
+    FUNCTION        reduce using rule 83 (vars -> varsp .)
+    MAIN            reduce using rule 83 (vars -> varsp .)
+    IF              reduce using rule 83 (vars -> varsp .)
+    WRITE           reduce using rule 83 (vars -> varsp .)
+    WHILE           reduce using rule 83 (vars -> varsp .)
+    RETURN          reduce using rule 83 (vars -> varsp .)
+    FOR             reduce using rule 83 (vars -> varsp .)
+    ID              reduce using rule 83 (vars -> varsp .)
+    INT             reduce using rule 83 (vars -> varsp .)
+    FLOAT           reduce using rule 83 (vars -> varsp .)
+    CHAR            reduce using rule 83 (vars -> varsp .)
+    }               reduce using rule 83 (vars -> varsp .)
 
 
 state 7
 
-    (82) varsp -> tipo . varspp ; varsp
-    (84) varspp -> . ID varsppp
+    (84) varsp -> tipo . varspp ; varsp
+    (86) varspp -> . ID varsppp
 
     ID              shift and go to state 17
 
@@ -311,41 +315,41 @@ state 7
 
 state 8
 
-    (83) varsp -> empty .
+    (85) varsp -> empty .
 
-    FUNCTION        reduce using rule 83 (varsp -> empty .)
-    MAIN            reduce using rule 83 (varsp -> empty .)
-    IF              reduce using rule 83 (varsp -> empty .)
-    WRITE           reduce using rule 83 (varsp -> empty .)
-    WHILE           reduce using rule 83 (varsp -> empty .)
-    RETURN          reduce using rule 83 (varsp -> empty .)
-    FOR             reduce using rule 83 (varsp -> empty .)
-    ID              reduce using rule 83 (varsp -> empty .)
-    INT             reduce using rule 83 (varsp -> empty .)
-    FLOAT           reduce using rule 83 (varsp -> empty .)
-    CHAR            reduce using rule 83 (varsp -> empty .)
-    }               reduce using rule 83 (varsp -> empty .)
+    FUNCTION        reduce using rule 85 (varsp -> empty .)
+    MAIN            reduce using rule 85 (varsp -> empty .)
+    IF              reduce using rule 85 (varsp -> empty .)
+    WRITE           reduce using rule 85 (varsp -> empty .)
+    WHILE           reduce using rule 85 (varsp -> empty .)
+    RETURN          reduce using rule 85 (varsp -> empty .)
+    FOR             reduce using rule 85 (varsp -> empty .)
+    ID              reduce using rule 85 (varsp -> empty .)
+    INT             reduce using rule 85 (varsp -> empty .)
+    FLOAT           reduce using rule 85 (varsp -> empty .)
+    CHAR            reduce using rule 85 (varsp -> empty .)
+    }               reduce using rule 85 (varsp -> empty .)
 
 
 state 9
 
-    (87) tipo -> INT .
+    (89) tipo -> INT .
 
-    ID              reduce using rule 87 (tipo -> INT .)
+    ID              reduce using rule 89 (tipo -> INT .)
 
 
 state 10
 
-    (88) tipo -> FLOAT .
+    (90) tipo -> FLOAT .
 
-    ID              reduce using rule 88 (tipo -> FLOAT .)
+    ID              reduce using rule 90 (tipo -> FLOAT .)
 
 
 state 11
 
-    (89) tipo -> CHAR .
+    (91) tipo -> CHAR .
 
-    ID              reduce using rule 89 (tipo -> CHAR .)
+    ID              reduce using rule 91 (tipo -> CHAR .)
 
 
 state 12
@@ -364,13 +368,13 @@ state 13
     (6) programaF -> . empty
     (7) function -> . FUNCTION tipoRetorno ID ( functionParam ) functionAux bloque functionAux2
     (8) function -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
   ! shift/reduce conflict for FUNCTION resolved as shift
     FUNCTION        shift and go to state 15
-    MAIN            reduce using rule 98 (empty -> .)
+    MAIN            reduce using rule 100 (empty -> .)
 
-  ! FUNCTION        [ reduce using rule 98 (empty -> .) ]
+  ! FUNCTION        [ reduce using rule 100 (empty -> .) ]
 
     function                       shift and go to state 13
     programaF                      shift and go to state 20
@@ -403,20 +407,20 @@ state 15
 
 state 16
 
-    (82) varsp -> tipo varspp . ; varsp
+    (84) varsp -> tipo varspp . ; varsp
 
     ;               shift and go to state 25
 
 
 state 17
 
-    (84) varspp -> ID . varsppp
-    (85) varsppp -> . , varspp
-    (86) varsppp -> . empty
-    (98) empty -> .
+    (86) varspp -> ID . varsppp
+    (87) varsppp -> . , varspp
+    (88) varsppp -> . empty
+    (100) empty -> .
 
     ,               shift and go to state 27
-    ;               reduce using rule 98 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
 
     varsppp                        shift and go to state 26
     empty                          shift and go to state 28
@@ -474,13 +478,13 @@ state 24
 
 state 25
 
-    (82) varsp -> tipo varspp ; . varsp
-    (82) varsp -> . tipo varspp ; varsp
-    (83) varsp -> . empty
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
-    (98) empty -> .
+    (84) varsp -> tipo varspp ; . varsp
+    (84) varsp -> . tipo varspp ; varsp
+    (85) varsp -> . empty
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
+    (100) empty -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -488,19 +492,19 @@ state 25
     INT             shift and go to state 9
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
-    FUNCTION        reduce using rule 98 (empty -> .)
-    MAIN            reduce using rule 98 (empty -> .)
-    IF              reduce using rule 98 (empty -> .)
-    WRITE           reduce using rule 98 (empty -> .)
-    WHILE           reduce using rule 98 (empty -> .)
-    RETURN          reduce using rule 98 (empty -> .)
-    FOR             reduce using rule 98 (empty -> .)
-    ID              reduce using rule 98 (empty -> .)
-    }               reduce using rule 98 (empty -> .)
+    FUNCTION        reduce using rule 100 (empty -> .)
+    MAIN            reduce using rule 100 (empty -> .)
+    IF              reduce using rule 100 (empty -> .)
+    WRITE           reduce using rule 100 (empty -> .)
+    WHILE           reduce using rule 100 (empty -> .)
+    RETURN          reduce using rule 100 (empty -> .)
+    FOR             reduce using rule 100 (empty -> .)
+    ID              reduce using rule 100 (empty -> .)
+    }               reduce using rule 100 (empty -> .)
 
-  ! INT             [ reduce using rule 98 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 98 (empty -> .) ]
-  ! CHAR            [ reduce using rule 98 (empty -> .) ]
+  ! INT             [ reduce using rule 100 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 100 (empty -> .) ]
+  ! CHAR            [ reduce using rule 100 (empty -> .) ]
 
     tipo                           shift and go to state 7
     varsp                          shift and go to state 31
@@ -508,15 +512,15 @@ state 25
 
 state 26
 
-    (84) varspp -> ID varsppp .
+    (86) varspp -> ID varsppp .
 
-    ;               reduce using rule 84 (varspp -> ID varsppp .)
+    ;               reduce using rule 86 (varspp -> ID varsppp .)
 
 
 state 27
 
-    (85) varsppp -> , . varspp
-    (84) varspp -> . ID varsppp
+    (87) varsppp -> , . varspp
+    (86) varspp -> . ID varsppp
 
     ID              shift and go to state 17
 
@@ -524,9 +528,9 @@ state 27
 
 state 28
 
-    (86) varsppp -> empty .
+    (88) varsppp -> empty .
 
-    ;               reduce using rule 86 (varsppp -> empty .)
+    ;               reduce using rule 88 (varsppp -> empty .)
 
 
 state 29
@@ -545,27 +549,27 @@ state 30
 
 state 31
 
-    (82) varsp -> tipo varspp ; varsp .
+    (84) varsp -> tipo varspp ; varsp .
 
-    FUNCTION        reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    MAIN            reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    IF              reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    WRITE           reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    WHILE           reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    RETURN          reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    FOR             reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    ID              reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    INT             reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    FLOAT           reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    CHAR            reduce using rule 82 (varsp -> tipo varspp ; varsp .)
-    }               reduce using rule 82 (varsp -> tipo varspp ; varsp .)
+    FUNCTION        reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    MAIN            reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    IF              reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    WRITE           reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    WHILE           reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    RETURN          reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    FOR             reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    ID              reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    INT             reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    FLOAT           reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    CHAR            reduce using rule 84 (varsp -> tipo varspp ; varsp .)
+    }               reduce using rule 84 (varsp -> tipo varspp ; varsp .)
 
 
 state 32
 
-    (85) varsppp -> , varspp .
+    (87) varsppp -> , varspp .
 
-    ;               reduce using rule 85 (varsppp -> , varspp .)
+    ;               reduce using rule 87 (varsppp -> , varspp .)
 
 
 state 33
@@ -578,15 +582,15 @@ state 33
 state 34
 
     (7) function -> FUNCTION tipoRetorno ID ( . functionParam ) functionAux bloque functionAux2
-    (76) functionParam -> . parametro
-    (77) functionParam -> . empty
-    (78) parametro -> . tipo ID parametrop
-    (98) empty -> .
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
+    (78) functionParam -> . parametro
+    (79) functionParam -> . empty
+    (80) parametro -> . tipo ID parametrop
+    (100) empty -> .
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
 
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
     INT             shift and go to state 9
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
@@ -614,21 +618,21 @@ state 36
 
 state 37
 
-    (76) functionParam -> parametro .
+    (78) functionParam -> parametro .
 
-    )               reduce using rule 76 (functionParam -> parametro .)
+    )               reduce using rule 78 (functionParam -> parametro .)
 
 
 state 38
 
-    (77) functionParam -> empty .
+    (79) functionParam -> empty .
 
-    )               reduce using rule 77 (functionParam -> empty .)
+    )               reduce using rule 79 (functionParam -> empty .)
 
 
 state 39
 
-    (78) parametro -> tipo . ID parametrop
+    (80) parametro -> tipo . ID parametrop
 
     ID              shift and go to state 43
 
@@ -644,13 +648,13 @@ state 41
 
     (14) bloque -> { . cuerpo }
     (15) cuerpo -> . vars estatutop
-    (81) vars -> . varsp
-    (82) varsp -> . tipo varspp ; varsp
-    (83) varsp -> . empty
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
-    (98) empty -> .
+    (83) vars -> . varsp
+    (84) varsp -> . tipo varspp ; varsp
+    (85) varsp -> . empty
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
+    (100) empty -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -658,17 +662,17 @@ state 41
     INT             shift and go to state 9
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
-    IF              reduce using rule 98 (empty -> .)
-    WRITE           reduce using rule 98 (empty -> .)
-    WHILE           reduce using rule 98 (empty -> .)
-    RETURN          reduce using rule 98 (empty -> .)
-    FOR             reduce using rule 98 (empty -> .)
-    ID              reduce using rule 98 (empty -> .)
-    }               reduce using rule 98 (empty -> .)
+    IF              reduce using rule 100 (empty -> .)
+    WRITE           reduce using rule 100 (empty -> .)
+    WHILE           reduce using rule 100 (empty -> .)
+    RETURN          reduce using rule 100 (empty -> .)
+    FOR             reduce using rule 100 (empty -> .)
+    ID              reduce using rule 100 (empty -> .)
+    }               reduce using rule 100 (empty -> .)
 
-  ! INT             [ reduce using rule 98 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 98 (empty -> .) ]
-  ! CHAR            [ reduce using rule 98 (empty -> .) ]
+  ! INT             [ reduce using rule 100 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 100 (empty -> .) ]
+  ! CHAR            [ reduce using rule 100 (empty -> .) ]
 
     cuerpo                         shift and go to state 44
     vars                           shift and go to state 45
@@ -687,13 +691,13 @@ state 42
 
 state 43
 
-    (78) parametro -> tipo ID . parametrop
-    (79) parametrop -> . , parametro
-    (80) parametrop -> . empty
-    (98) empty -> .
+    (80) parametro -> tipo ID . parametrop
+    (81) parametrop -> . , parametro
+    (82) parametrop -> . empty
+    (100) empty -> .
 
     ,               shift and go to state 48
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
 
     parametrop                     shift and go to state 47
     empty                          shift and go to state 49
@@ -717,7 +721,7 @@ state 45
     (22) estatuto -> . return
     (23) estatuto -> . for
     (24) estatuto -> . empty
-    (98) empty -> .
+    (100) empty -> .
     (43) asignacion -> . vars
     (44) asignacion -> . id asignacionp
     (26) condicion -> . IF ( superexpresion ) condicionAux bloque condicionelse
@@ -725,13 +729,13 @@ state 45
     (40) while -> . WHILE whileAux ( superexpresion ) whileAux2 bloque
     (25) return -> . RETURN superexpresion ;
     (39) for -> . FOR ( id = superexpresion ; superexpresion ) bloque
-    (81) vars -> . varsp
-    (90) id -> . ID idp
-    (82) varsp -> . tipo varspp ; varsp
-    (83) varsp -> . empty
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
+    (83) vars -> . varsp
+    (92) id -> . ID idp
+    (84) varsp -> . tipo varspp ; varsp
+    (85) varsp -> . empty
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
 
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for WRITE resolved as shift
@@ -742,7 +746,7 @@ state 45
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
   ! shift/reduce conflict for CHAR resolved as shift
-    }               reduce using rule 98 (empty -> .)
+    }               reduce using rule 100 (empty -> .)
     IF              shift and go to state 62
     WRITE           shift and go to state 63
     WHILE           shift and go to state 64
@@ -753,15 +757,15 @@ state 45
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
 
-  ! IF              [ reduce using rule 98 (empty -> .) ]
-  ! WRITE           [ reduce using rule 98 (empty -> .) ]
-  ! WHILE           [ reduce using rule 98 (empty -> .) ]
-  ! RETURN          [ reduce using rule 98 (empty -> .) ]
-  ! FOR             [ reduce using rule 98 (empty -> .) ]
-  ! ID              [ reduce using rule 98 (empty -> .) ]
-  ! INT             [ reduce using rule 98 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 98 (empty -> .) ]
-  ! CHAR            [ reduce using rule 98 (empty -> .) ]
+  ! IF              [ reduce using rule 100 (empty -> .) ]
+  ! WRITE           [ reduce using rule 100 (empty -> .) ]
+  ! WHILE           [ reduce using rule 100 (empty -> .) ]
+  ! RETURN          [ reduce using rule 100 (empty -> .) ]
+  ! FOR             [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! INT             [ reduce using rule 100 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 100 (empty -> .) ]
+  ! CHAR            [ reduce using rule 100 (empty -> .) ]
 
     vars                           shift and go to state 51
     estatutop                      shift and go to state 52
@@ -788,18 +792,18 @@ state 46
 
 state 47
 
-    (78) parametro -> tipo ID parametrop .
+    (80) parametro -> tipo ID parametrop .
 
-    )               reduce using rule 78 (parametro -> tipo ID parametrop .)
+    )               reduce using rule 80 (parametro -> tipo ID parametrop .)
 
 
 state 48
 
-    (79) parametrop -> , . parametro
-    (78) parametro -> . tipo ID parametrop
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
+    (81) parametrop -> , . parametro
+    (80) parametro -> . tipo ID parametrop
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
 
     INT             shift and go to state 9
     FLOAT           shift and go to state 10
@@ -810,9 +814,9 @@ state 48
 
 state 49
 
-    (80) parametrop -> empty .
+    (82) parametrop -> empty .
 
-    )               reduce using rule 80 (parametrop -> empty .)
+    )               reduce using rule 82 (parametrop -> empty .)
 
 
 state 50
@@ -870,7 +874,7 @@ state 53
     (22) estatuto -> . return
     (23) estatuto -> . for
     (24) estatuto -> . empty
-    (98) empty -> .
+    (100) empty -> .
     (43) asignacion -> . vars
     (44) asignacion -> . id asignacionp
     (26) condicion -> . IF ( superexpresion ) condicionAux bloque condicionelse
@@ -878,13 +882,13 @@ state 53
     (40) while -> . WHILE whileAux ( superexpresion ) whileAux2 bloque
     (25) return -> . RETURN superexpresion ;
     (39) for -> . FOR ( id = superexpresion ; superexpresion ) bloque
-    (81) vars -> . varsp
-    (90) id -> . ID idp
-    (82) varsp -> . tipo varspp ; varsp
-    (83) varsp -> . empty
-    (87) tipo -> . INT
-    (88) tipo -> . FLOAT
-    (89) tipo -> . CHAR
+    (83) vars -> . varsp
+    (92) id -> . ID idp
+    (84) varsp -> . tipo varspp ; varsp
+    (85) varsp -> . empty
+    (89) tipo -> . INT
+    (90) tipo -> . FLOAT
+    (91) tipo -> . CHAR
 
   ! shift/reduce conflict for IF resolved as shift
   ! shift/reduce conflict for WRITE resolved as shift
@@ -895,7 +899,7 @@ state 53
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
   ! shift/reduce conflict for CHAR resolved as shift
-    }               reduce using rule 98 (empty -> .)
+    }               reduce using rule 100 (empty -> .)
     IF              shift and go to state 62
     WRITE           shift and go to state 63
     WHILE           shift and go to state 64
@@ -906,15 +910,15 @@ state 53
     FLOAT           shift and go to state 10
     CHAR            shift and go to state 11
 
-  ! IF              [ reduce using rule 98 (empty -> .) ]
-  ! WRITE           [ reduce using rule 98 (empty -> .) ]
-  ! WHILE           [ reduce using rule 98 (empty -> .) ]
-  ! RETURN          [ reduce using rule 98 (empty -> .) ]
-  ! FOR             [ reduce using rule 98 (empty -> .) ]
-  ! ID              [ reduce using rule 98 (empty -> .) ]
-  ! INT             [ reduce using rule 98 (empty -> .) ]
-  ! FLOAT           [ reduce using rule 98 (empty -> .) ]
-  ! CHAR            [ reduce using rule 98 (empty -> .) ]
+  ! IF              [ reduce using rule 100 (empty -> .) ]
+  ! WRITE           [ reduce using rule 100 (empty -> .) ]
+  ! WHILE           [ reduce using rule 100 (empty -> .) ]
+  ! RETURN          [ reduce using rule 100 (empty -> .) ]
+  ! FOR             [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! INT             [ reduce using rule 100 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 100 (empty -> .) ]
+  ! CHAR            [ reduce using rule 100 (empty -> .) ]
 
     estatuto                       shift and go to state 53
     estatutop                      shift and go to state 70
@@ -934,7 +938,7 @@ state 54
 
     (17) estatutop -> empty .
     (24) estatuto -> empty .
-    (83) varsp -> empty .
+    (85) varsp -> empty .
 
   ! reduce/reduce conflict for } resolved using rule 17 (estatutop -> empty .)
   ! reduce/reduce conflict for IF resolved using rule 24 (estatuto -> empty .)
@@ -959,16 +963,16 @@ state 54
     CHAR            reduce using rule 24 (estatuto -> empty .)
 
   ! }               [ reduce using rule 24 (estatuto -> empty .) ]
-  ! IF              [ reduce using rule 83 (varsp -> empty .) ]
-  ! WRITE           [ reduce using rule 83 (varsp -> empty .) ]
-  ! WHILE           [ reduce using rule 83 (varsp -> empty .) ]
-  ! RETURN          [ reduce using rule 83 (varsp -> empty .) ]
-  ! FOR             [ reduce using rule 83 (varsp -> empty .) ]
-  ! ID              [ reduce using rule 83 (varsp -> empty .) ]
-  ! INT             [ reduce using rule 83 (varsp -> empty .) ]
-  ! FLOAT           [ reduce using rule 83 (varsp -> empty .) ]
-  ! CHAR            [ reduce using rule 83 (varsp -> empty .) ]
-  ! }               [ reduce using rule 83 (varsp -> empty .) ]
+  ! IF              [ reduce using rule 85 (varsp -> empty .) ]
+  ! WRITE           [ reduce using rule 85 (varsp -> empty .) ]
+  ! WHILE           [ reduce using rule 85 (varsp -> empty .) ]
+  ! RETURN          [ reduce using rule 85 (varsp -> empty .) ]
+  ! FOR             [ reduce using rule 85 (varsp -> empty .) ]
+  ! ID              [ reduce using rule 85 (varsp -> empty .) ]
+  ! INT             [ reduce using rule 85 (varsp -> empty .) ]
+  ! FLOAT           [ reduce using rule 85 (varsp -> empty .) ]
+  ! CHAR            [ reduce using rule 85 (varsp -> empty .) ]
+  ! }               [ reduce using rule 85 (varsp -> empty .) ]
 
 
 state 55
@@ -1107,14 +1111,14 @@ state 65
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1139,34 +1143,34 @@ state 66
 
 state 67
 
-    (90) id -> ID . idp
-    (91) idp -> . ( idpp )
-    (92) idp -> . [ superexpresion ]
-    (93) idp -> . empty
-    (98) empty -> .
+    (92) id -> ID . idp
+    (93) idp -> . ( idpp )
+    (94) idp -> . [ superexpresion ]
+    (95) idp -> . empty
+    (100) empty -> .
 
   ! shift/reduce conflict for [ resolved as shift
     (               shift and go to state 90
     [               shift and go to state 91
-    =               reduce using rule 98 (empty -> .)
-    *               reduce using rule 98 (empty -> .)
-    /               reduce using rule 98 (empty -> .)
-    +               reduce using rule 98 (empty -> .)
-    -               reduce using rule 98 (empty -> .)
-    <               reduce using rule 98 (empty -> .)
-    >               reduce using rule 98 (empty -> .)
-    EQUALS          reduce using rule 98 (empty -> .)
-    DIFF            reduce using rule 98 (empty -> .)
-    LTHANEQ         reduce using rule 98 (empty -> .)
-    GTHANEQ         reduce using rule 98 (empty -> .)
-    AND             reduce using rule 98 (empty -> .)
-    OR              reduce using rule 98 (empty -> .)
-    ;               reduce using rule 98 (empty -> .)
-    ]               reduce using rule 98 (empty -> .)
-    )               reduce using rule 98 (empty -> .)
-    ,               reduce using rule 98 (empty -> .)
+    =               reduce using rule 100 (empty -> .)
+    *               reduce using rule 100 (empty -> .)
+    /               reduce using rule 100 (empty -> .)
+    +               reduce using rule 100 (empty -> .)
+    -               reduce using rule 100 (empty -> .)
+    <               reduce using rule 100 (empty -> .)
+    >               reduce using rule 100 (empty -> .)
+    EQUALS          reduce using rule 100 (empty -> .)
+    DIFF            reduce using rule 100 (empty -> .)
+    LTHANEQ         reduce using rule 100 (empty -> .)
+    GTHANEQ         reduce using rule 100 (empty -> .)
+    AND             reduce using rule 100 (empty -> .)
+    OR              reduce using rule 100 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
+    ]               reduce using rule 100 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
+    ,               reduce using rule 100 (empty -> .)
 
-  ! [               [ reduce using rule 98 (empty -> .) ]
+  ! [               [ reduce using rule 100 (empty -> .) ]
 
     idp                            shift and go to state 89
     empty                          shift and go to state 92
@@ -1183,9 +1187,9 @@ state 68
 
 state 69
 
-    (79) parametrop -> , parametro .
+    (81) parametrop -> , parametro .
 
-    )               reduce using rule 79 (parametrop -> , parametro .)
+    )               reduce using rule 81 (parametrop -> , parametro .)
 
 
 state 70
@@ -1217,14 +1221,14 @@ state 72
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1246,14 +1250,14 @@ state 73
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1275,14 +1279,14 @@ state 74
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1306,14 +1310,14 @@ state 75
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     LETRERO         shift and go to state 99
     CTEF            shift and go to state 85
@@ -1351,14 +1355,14 @@ state 78
     (48) superexpresionp -> . AND superexpresion
     (49) superexpresionp -> . OR superexpresion
     (50) superexpresionp -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
     AND             shift and go to state 103
     OR              shift and go to state 104
-    ;               reduce using rule 98 (empty -> .)
-    ]               reduce using rule 98 (empty -> .)
-    )               reduce using rule 98 (empty -> .)
-    ,               reduce using rule 98 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
+    ]               reduce using rule 100 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
+    ,               reduce using rule 100 (empty -> .)
 
     superexpresionp                shift and go to state 102
     empty                          shift and go to state 105
@@ -1373,7 +1377,7 @@ state 79
     (56) megaexpresionp -> . LTHANEQ exp
     (57) megaexpresionp -> . GTHANEQ exp
     (58) megaexpresionp -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
     <               shift and go to state 107
     >               shift and go to state 108
@@ -1381,12 +1385,12 @@ state 79
     DIFF            shift and go to state 110
     LTHANEQ         shift and go to state 111
     GTHANEQ         shift and go to state 112
-    AND             reduce using rule 98 (empty -> .)
-    OR              reduce using rule 98 (empty -> .)
-    ;               reduce using rule 98 (empty -> .)
-    ]               reduce using rule 98 (empty -> .)
-    )               reduce using rule 98 (empty -> .)
-    ,               reduce using rule 98 (empty -> .)
+    AND             reduce using rule 100 (empty -> .)
+    OR              reduce using rule 100 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
+    ]               reduce using rule 100 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
+    ,               reduce using rule 100 (empty -> .)
 
     megaexpresionp                 shift and go to state 106
     empty                          shift and go to state 113
@@ -1394,93 +1398,93 @@ state 79
 state 80
 
     (59) exp -> termino . expp
-    (60) expp -> . + exp
-    (61) expp -> . - exp
+    (60) expp -> . + pAppT exp
+    (61) expp -> . - pAppT exp
     (62) expp -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
     +               shift and go to state 115
     -               shift and go to state 116
-    <               reduce using rule 98 (empty -> .)
-    >               reduce using rule 98 (empty -> .)
-    EQUALS          reduce using rule 98 (empty -> .)
-    DIFF            reduce using rule 98 (empty -> .)
-    LTHANEQ         reduce using rule 98 (empty -> .)
-    GTHANEQ         reduce using rule 98 (empty -> .)
-    AND             reduce using rule 98 (empty -> .)
-    OR              reduce using rule 98 (empty -> .)
-    ;               reduce using rule 98 (empty -> .)
-    ]               reduce using rule 98 (empty -> .)
-    )               reduce using rule 98 (empty -> .)
-    ,               reduce using rule 98 (empty -> .)
+    <               reduce using rule 100 (empty -> .)
+    >               reduce using rule 100 (empty -> .)
+    EQUALS          reduce using rule 100 (empty -> .)
+    DIFF            reduce using rule 100 (empty -> .)
+    LTHANEQ         reduce using rule 100 (empty -> .)
+    GTHANEQ         reduce using rule 100 (empty -> .)
+    AND             reduce using rule 100 (empty -> .)
+    OR              reduce using rule 100 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
+    ]               reduce using rule 100 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
+    ,               reduce using rule 100 (empty -> .)
 
     expp                           shift and go to state 114
     empty                          shift and go to state 117
 
 state 81
 
-    (63) termino -> factor . terminop
-    (64) terminop -> . * termino
-    (65) terminop -> . / termino
-    (66) terminop -> . empty
-    (98) empty -> .
+    (64) termino -> factor . terminop
+    (65) terminop -> . * pAppF termino
+    (66) terminop -> . / pAppF termino
+    (67) terminop -> . empty
+    (100) empty -> .
 
     *               shift and go to state 119
     /               shift and go to state 120
-    +               reduce using rule 98 (empty -> .)
-    -               reduce using rule 98 (empty -> .)
-    <               reduce using rule 98 (empty -> .)
-    >               reduce using rule 98 (empty -> .)
-    EQUALS          reduce using rule 98 (empty -> .)
-    DIFF            reduce using rule 98 (empty -> .)
-    LTHANEQ         reduce using rule 98 (empty -> .)
-    GTHANEQ         reduce using rule 98 (empty -> .)
-    AND             reduce using rule 98 (empty -> .)
-    OR              reduce using rule 98 (empty -> .)
-    ;               reduce using rule 98 (empty -> .)
-    ]               reduce using rule 98 (empty -> .)
-    )               reduce using rule 98 (empty -> .)
-    ,               reduce using rule 98 (empty -> .)
+    +               reduce using rule 100 (empty -> .)
+    -               reduce using rule 100 (empty -> .)
+    <               reduce using rule 100 (empty -> .)
+    >               reduce using rule 100 (empty -> .)
+    EQUALS          reduce using rule 100 (empty -> .)
+    DIFF            reduce using rule 100 (empty -> .)
+    LTHANEQ         reduce using rule 100 (empty -> .)
+    GTHANEQ         reduce using rule 100 (empty -> .)
+    AND             reduce using rule 100 (empty -> .)
+    OR              reduce using rule 100 (empty -> .)
+    ;               reduce using rule 100 (empty -> .)
+    ]               reduce using rule 100 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
+    ,               reduce using rule 100 (empty -> .)
 
     terminop                       shift and go to state 118
     empty                          shift and go to state 121
 
 state 82
 
-    (67) factor -> constante .
+    (69) factor -> constante .
 
-    *               reduce using rule 67 (factor -> constante .)
-    /               reduce using rule 67 (factor -> constante .)
-    +               reduce using rule 67 (factor -> constante .)
-    -               reduce using rule 67 (factor -> constante .)
-    <               reduce using rule 67 (factor -> constante .)
-    >               reduce using rule 67 (factor -> constante .)
-    EQUALS          reduce using rule 67 (factor -> constante .)
-    DIFF            reduce using rule 67 (factor -> constante .)
-    LTHANEQ         reduce using rule 67 (factor -> constante .)
-    GTHANEQ         reduce using rule 67 (factor -> constante .)
-    AND             reduce using rule 67 (factor -> constante .)
-    OR              reduce using rule 67 (factor -> constante .)
-    ;               reduce using rule 67 (factor -> constante .)
-    ]               reduce using rule 67 (factor -> constante .)
-    )               reduce using rule 67 (factor -> constante .)
-    ,               reduce using rule 67 (factor -> constante .)
+    *               reduce using rule 69 (factor -> constante .)
+    /               reduce using rule 69 (factor -> constante .)
+    +               reduce using rule 69 (factor -> constante .)
+    -               reduce using rule 69 (factor -> constante .)
+    <               reduce using rule 69 (factor -> constante .)
+    >               reduce using rule 69 (factor -> constante .)
+    EQUALS          reduce using rule 69 (factor -> constante .)
+    DIFF            reduce using rule 69 (factor -> constante .)
+    LTHANEQ         reduce using rule 69 (factor -> constante .)
+    GTHANEQ         reduce using rule 69 (factor -> constante .)
+    AND             reduce using rule 69 (factor -> constante .)
+    OR              reduce using rule 69 (factor -> constante .)
+    ;               reduce using rule 69 (factor -> constante .)
+    ]               reduce using rule 69 (factor -> constante .)
+    )               reduce using rule 69 (factor -> constante .)
+    ,               reduce using rule 69 (factor -> constante .)
 
 
 state 83
 
-    (68) factor -> lParen . superexpresion rParen
+    (70) factor -> lParen . superexpresion rParen
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1498,88 +1502,88 @@ state 83
 
 state 84
 
-    (71) constante -> id .
+    (73) constante -> id .
 
-    *               reduce using rule 71 (constante -> id .)
-    /               reduce using rule 71 (constante -> id .)
-    +               reduce using rule 71 (constante -> id .)
-    -               reduce using rule 71 (constante -> id .)
-    <               reduce using rule 71 (constante -> id .)
-    >               reduce using rule 71 (constante -> id .)
-    EQUALS          reduce using rule 71 (constante -> id .)
-    DIFF            reduce using rule 71 (constante -> id .)
-    LTHANEQ         reduce using rule 71 (constante -> id .)
-    GTHANEQ         reduce using rule 71 (constante -> id .)
-    AND             reduce using rule 71 (constante -> id .)
-    OR              reduce using rule 71 (constante -> id .)
-    ;               reduce using rule 71 (constante -> id .)
-    ]               reduce using rule 71 (constante -> id .)
-    )               reduce using rule 71 (constante -> id .)
-    ,               reduce using rule 71 (constante -> id .)
+    *               reduce using rule 73 (constante -> id .)
+    /               reduce using rule 73 (constante -> id .)
+    +               reduce using rule 73 (constante -> id .)
+    -               reduce using rule 73 (constante -> id .)
+    <               reduce using rule 73 (constante -> id .)
+    >               reduce using rule 73 (constante -> id .)
+    EQUALS          reduce using rule 73 (constante -> id .)
+    DIFF            reduce using rule 73 (constante -> id .)
+    LTHANEQ         reduce using rule 73 (constante -> id .)
+    GTHANEQ         reduce using rule 73 (constante -> id .)
+    AND             reduce using rule 73 (constante -> id .)
+    OR              reduce using rule 73 (constante -> id .)
+    ;               reduce using rule 73 (constante -> id .)
+    ]               reduce using rule 73 (constante -> id .)
+    )               reduce using rule 73 (constante -> id .)
+    ,               reduce using rule 73 (constante -> id .)
 
 
 state 85
 
-    (72) constante -> CTEF . ctef
-    (74) ctef -> .
+    (74) constante -> CTEF . ctef
+    (76) ctef -> .
 
-    *               reduce using rule 74 (ctef -> .)
-    /               reduce using rule 74 (ctef -> .)
-    +               reduce using rule 74 (ctef -> .)
-    -               reduce using rule 74 (ctef -> .)
-    <               reduce using rule 74 (ctef -> .)
-    >               reduce using rule 74 (ctef -> .)
-    EQUALS          reduce using rule 74 (ctef -> .)
-    DIFF            reduce using rule 74 (ctef -> .)
-    LTHANEQ         reduce using rule 74 (ctef -> .)
-    GTHANEQ         reduce using rule 74 (ctef -> .)
-    AND             reduce using rule 74 (ctef -> .)
-    OR              reduce using rule 74 (ctef -> .)
-    ;               reduce using rule 74 (ctef -> .)
-    ]               reduce using rule 74 (ctef -> .)
-    )               reduce using rule 74 (ctef -> .)
-    ,               reduce using rule 74 (ctef -> .)
+    *               reduce using rule 76 (ctef -> .)
+    /               reduce using rule 76 (ctef -> .)
+    +               reduce using rule 76 (ctef -> .)
+    -               reduce using rule 76 (ctef -> .)
+    <               reduce using rule 76 (ctef -> .)
+    >               reduce using rule 76 (ctef -> .)
+    EQUALS          reduce using rule 76 (ctef -> .)
+    DIFF            reduce using rule 76 (ctef -> .)
+    LTHANEQ         reduce using rule 76 (ctef -> .)
+    GTHANEQ         reduce using rule 76 (ctef -> .)
+    AND             reduce using rule 76 (ctef -> .)
+    OR              reduce using rule 76 (ctef -> .)
+    ;               reduce using rule 76 (ctef -> .)
+    ]               reduce using rule 76 (ctef -> .)
+    )               reduce using rule 76 (ctef -> .)
+    ,               reduce using rule 76 (ctef -> .)
 
     ctef                           shift and go to state 123
 
 state 86
 
-    (73) constante -> CTEI . ctei
-    (75) ctei -> .
+    (75) constante -> CTEI . ctei
+    (77) ctei -> .
 
-    *               reduce using rule 75 (ctei -> .)
-    /               reduce using rule 75 (ctei -> .)
-    +               reduce using rule 75 (ctei -> .)
-    -               reduce using rule 75 (ctei -> .)
-    <               reduce using rule 75 (ctei -> .)
-    >               reduce using rule 75 (ctei -> .)
-    EQUALS          reduce using rule 75 (ctei -> .)
-    DIFF            reduce using rule 75 (ctei -> .)
-    LTHANEQ         reduce using rule 75 (ctei -> .)
-    GTHANEQ         reduce using rule 75 (ctei -> .)
-    AND             reduce using rule 75 (ctei -> .)
-    OR              reduce using rule 75 (ctei -> .)
-    ;               reduce using rule 75 (ctei -> .)
-    ]               reduce using rule 75 (ctei -> .)
-    )               reduce using rule 75 (ctei -> .)
-    ,               reduce using rule 75 (ctei -> .)
+    *               reduce using rule 77 (ctei -> .)
+    /               reduce using rule 77 (ctei -> .)
+    +               reduce using rule 77 (ctei -> .)
+    -               reduce using rule 77 (ctei -> .)
+    <               reduce using rule 77 (ctei -> .)
+    >               reduce using rule 77 (ctei -> .)
+    EQUALS          reduce using rule 77 (ctei -> .)
+    DIFF            reduce using rule 77 (ctei -> .)
+    LTHANEQ         reduce using rule 77 (ctei -> .)
+    GTHANEQ         reduce using rule 77 (ctei -> .)
+    AND             reduce using rule 77 (ctei -> .)
+    OR              reduce using rule 77 (ctei -> .)
+    ;               reduce using rule 77 (ctei -> .)
+    ]               reduce using rule 77 (ctei -> .)
+    )               reduce using rule 77 (ctei -> .)
+    ,               reduce using rule 77 (ctei -> .)
 
     ctei                           shift and go to state 124
 
 state 87
 
-    (69) lParen -> ( .
+    (71) lParen -> ( .
 
-    CTEF            reduce using rule 69 (lParen -> ( .)
-    CTEI            reduce using rule 69 (lParen -> ( .)
-    (               reduce using rule 69 (lParen -> ( .)
-    ID              reduce using rule 69 (lParen -> ( .)
+    CTEF            reduce using rule 71 (lParen -> ( .)
+    CTEI            reduce using rule 71 (lParen -> ( .)
+    (               reduce using rule 71 (lParen -> ( .)
+    ID              reduce using rule 71 (lParen -> ( .)
 
 
 state 88
 
     (39) for -> FOR ( . id = superexpresion ; superexpresion ) bloque
-    (90) id -> . ID idp
+    (92) id -> . ID idp
 
     ID              shift and go to state 67
 
@@ -1587,47 +1591,47 @@ state 88
 
 state 89
 
-    (90) id -> ID idp .
+    (92) id -> ID idp .
 
-    =               reduce using rule 90 (id -> ID idp .)
-    [               reduce using rule 90 (id -> ID idp .)
-    *               reduce using rule 90 (id -> ID idp .)
-    /               reduce using rule 90 (id -> ID idp .)
-    +               reduce using rule 90 (id -> ID idp .)
-    -               reduce using rule 90 (id -> ID idp .)
-    <               reduce using rule 90 (id -> ID idp .)
-    >               reduce using rule 90 (id -> ID idp .)
-    EQUALS          reduce using rule 90 (id -> ID idp .)
-    DIFF            reduce using rule 90 (id -> ID idp .)
-    LTHANEQ         reduce using rule 90 (id -> ID idp .)
-    GTHANEQ         reduce using rule 90 (id -> ID idp .)
-    AND             reduce using rule 90 (id -> ID idp .)
-    OR              reduce using rule 90 (id -> ID idp .)
-    ;               reduce using rule 90 (id -> ID idp .)
-    ]               reduce using rule 90 (id -> ID idp .)
-    )               reduce using rule 90 (id -> ID idp .)
-    ,               reduce using rule 90 (id -> ID idp .)
+    =               reduce using rule 92 (id -> ID idp .)
+    [               reduce using rule 92 (id -> ID idp .)
+    *               reduce using rule 92 (id -> ID idp .)
+    /               reduce using rule 92 (id -> ID idp .)
+    +               reduce using rule 92 (id -> ID idp .)
+    -               reduce using rule 92 (id -> ID idp .)
+    <               reduce using rule 92 (id -> ID idp .)
+    >               reduce using rule 92 (id -> ID idp .)
+    EQUALS          reduce using rule 92 (id -> ID idp .)
+    DIFF            reduce using rule 92 (id -> ID idp .)
+    LTHANEQ         reduce using rule 92 (id -> ID idp .)
+    GTHANEQ         reduce using rule 92 (id -> ID idp .)
+    AND             reduce using rule 92 (id -> ID idp .)
+    OR              reduce using rule 92 (id -> ID idp .)
+    ;               reduce using rule 92 (id -> ID idp .)
+    ]               reduce using rule 92 (id -> ID idp .)
+    )               reduce using rule 92 (id -> ID idp .)
+    ,               reduce using rule 92 (id -> ID idp .)
 
 
 state 90
 
-    (91) idp -> ( . idpp )
-    (94) idpp -> . superexpresion idppp
-    (95) idpp -> . empty
+    (93) idp -> ( . idpp )
+    (96) idpp -> . superexpresion idppp
+    (97) idpp -> . empty
     (47) superexpresion -> . megaexpresion superexpresionp
-    (98) empty -> .
+    (100) empty -> .
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
     (               shift and go to state 87
@@ -1646,18 +1650,18 @@ state 90
 
 state 91
 
-    (92) idp -> [ . superexpresion ]
+    (94) idp -> [ . superexpresion ]
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1675,26 +1679,26 @@ state 91
 
 state 92
 
-    (93) idp -> empty .
+    (95) idp -> empty .
 
-    =               reduce using rule 93 (idp -> empty .)
-    [               reduce using rule 93 (idp -> empty .)
-    *               reduce using rule 93 (idp -> empty .)
-    /               reduce using rule 93 (idp -> empty .)
-    +               reduce using rule 93 (idp -> empty .)
-    -               reduce using rule 93 (idp -> empty .)
-    <               reduce using rule 93 (idp -> empty .)
-    >               reduce using rule 93 (idp -> empty .)
-    EQUALS          reduce using rule 93 (idp -> empty .)
-    DIFF            reduce using rule 93 (idp -> empty .)
-    LTHANEQ         reduce using rule 93 (idp -> empty .)
-    GTHANEQ         reduce using rule 93 (idp -> empty .)
-    AND             reduce using rule 93 (idp -> empty .)
-    OR              reduce using rule 93 (idp -> empty .)
-    ;               reduce using rule 93 (idp -> empty .)
-    ]               reduce using rule 93 (idp -> empty .)
-    )               reduce using rule 93 (idp -> empty .)
-    ,               reduce using rule 93 (idp -> empty .)
+    =               reduce using rule 95 (idp -> empty .)
+    [               reduce using rule 95 (idp -> empty .)
+    *               reduce using rule 95 (idp -> empty .)
+    /               reduce using rule 95 (idp -> empty .)
+    +               reduce using rule 95 (idp -> empty .)
+    -               reduce using rule 95 (idp -> empty .)
+    <               reduce using rule 95 (idp -> empty .)
+    >               reduce using rule 95 (idp -> empty .)
+    EQUALS          reduce using rule 95 (idp -> empty .)
+    DIFF            reduce using rule 95 (idp -> empty .)
+    LTHANEQ         reduce using rule 95 (idp -> empty .)
+    GTHANEQ         reduce using rule 95 (idp -> empty .)
+    AND             reduce using rule 95 (idp -> empty .)
+    OR              reduce using rule 95 (idp -> empty .)
+    ;               reduce using rule 95 (idp -> empty .)
+    ]               reduce using rule 95 (idp -> empty .)
+    )               reduce using rule 95 (idp -> empty .)
+    ,               reduce using rule 95 (idp -> empty .)
 
 
 state 93
@@ -1759,14 +1763,14 @@ state 100
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1814,14 +1818,14 @@ state 103
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1843,14 +1847,14 @@ state 104
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1892,14 +1896,14 @@ state 107
 
     (52) megaexpresionp -> < . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1917,14 +1921,14 @@ state 108
 
     (53) megaexpresionp -> > . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1942,14 +1946,14 @@ state 109
 
     (54) megaexpresionp -> EQUALS . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1967,14 +1971,14 @@ state 110
 
     (55) megaexpresionp -> DIFF . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -1992,14 +1996,14 @@ state 111
 
     (56) megaexpresionp -> LTHANEQ . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -2017,14 +2021,14 @@ state 112
 
     (57) megaexpresionp -> GTHANEQ . exp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -2070,53 +2074,27 @@ state 114
 
 state 115
 
-    (60) expp -> + . exp
-    (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (60) expp -> + . pAppT exp
+    (63) pAppT -> .
 
-    CTEF            shift and go to state 85
-    CTEI            shift and go to state 86
-    (               shift and go to state 87
-    ID              shift and go to state 67
+    CTEF            reduce using rule 63 (pAppT -> .)
+    CTEI            reduce using rule 63 (pAppT -> .)
+    (               reduce using rule 63 (pAppT -> .)
+    ID              reduce using rule 63 (pAppT -> .)
 
-    exp                            shift and go to state 145
-    termino                        shift and go to state 80
-    factor                         shift and go to state 81
-    constante                      shift and go to state 82
-    lParen                         shift and go to state 83
-    id                             shift and go to state 84
+    pAppT                          shift and go to state 145
 
 state 116
 
-    (61) expp -> - . exp
-    (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (61) expp -> - . pAppT exp
+    (63) pAppT -> .
 
-    CTEF            shift and go to state 85
-    CTEI            shift and go to state 86
-    (               shift and go to state 87
-    ID              shift and go to state 67
+    CTEF            reduce using rule 63 (pAppT -> .)
+    CTEI            reduce using rule 63 (pAppT -> .)
+    (               reduce using rule 63 (pAppT -> .)
+    ID              reduce using rule 63 (pAppT -> .)
 
-    exp                            shift and go to state 146
-    termino                        shift and go to state 80
-    factor                         shift and go to state 81
-    constante                      shift and go to state 82
-    lParen                         shift and go to state 83
-    id                             shift and go to state 84
+    pAppT                          shift and go to state 146
 
 state 117
 
@@ -2138,94 +2116,72 @@ state 117
 
 state 118
 
-    (63) termino -> factor terminop .
+    (64) termino -> factor terminop .
 
-    +               reduce using rule 63 (termino -> factor terminop .)
-    -               reduce using rule 63 (termino -> factor terminop .)
-    <               reduce using rule 63 (termino -> factor terminop .)
-    >               reduce using rule 63 (termino -> factor terminop .)
-    EQUALS          reduce using rule 63 (termino -> factor terminop .)
-    DIFF            reduce using rule 63 (termino -> factor terminop .)
-    LTHANEQ         reduce using rule 63 (termino -> factor terminop .)
-    GTHANEQ         reduce using rule 63 (termino -> factor terminop .)
-    AND             reduce using rule 63 (termino -> factor terminop .)
-    OR              reduce using rule 63 (termino -> factor terminop .)
-    ;               reduce using rule 63 (termino -> factor terminop .)
-    ]               reduce using rule 63 (termino -> factor terminop .)
-    )               reduce using rule 63 (termino -> factor terminop .)
-    ,               reduce using rule 63 (termino -> factor terminop .)
+    +               reduce using rule 64 (termino -> factor terminop .)
+    -               reduce using rule 64 (termino -> factor terminop .)
+    <               reduce using rule 64 (termino -> factor terminop .)
+    >               reduce using rule 64 (termino -> factor terminop .)
+    EQUALS          reduce using rule 64 (termino -> factor terminop .)
+    DIFF            reduce using rule 64 (termino -> factor terminop .)
+    LTHANEQ         reduce using rule 64 (termino -> factor terminop .)
+    GTHANEQ         reduce using rule 64 (termino -> factor terminop .)
+    AND             reduce using rule 64 (termino -> factor terminop .)
+    OR              reduce using rule 64 (termino -> factor terminop .)
+    ;               reduce using rule 64 (termino -> factor terminop .)
+    ]               reduce using rule 64 (termino -> factor terminop .)
+    )               reduce using rule 64 (termino -> factor terminop .)
+    ,               reduce using rule 64 (termino -> factor terminop .)
 
 
 state 119
 
-    (64) terminop -> * . termino
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (65) terminop -> * . pAppF termino
+    (68) pAppF -> .
 
-    CTEF            shift and go to state 85
-    CTEI            shift and go to state 86
-    (               shift and go to state 87
-    ID              shift and go to state 67
+    CTEF            reduce using rule 68 (pAppF -> .)
+    CTEI            reduce using rule 68 (pAppF -> .)
+    (               reduce using rule 68 (pAppF -> .)
+    ID              reduce using rule 68 (pAppF -> .)
 
-    termino                        shift and go to state 147
-    factor                         shift and go to state 81
-    constante                      shift and go to state 82
-    lParen                         shift and go to state 83
-    id                             shift and go to state 84
+    pAppF                          shift and go to state 147
 
 state 120
 
-    (65) terminop -> / . termino
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (66) terminop -> / . pAppF termino
+    (68) pAppF -> .
 
-    CTEF            shift and go to state 85
-    CTEI            shift and go to state 86
-    (               shift and go to state 87
-    ID              shift and go to state 67
+    CTEF            reduce using rule 68 (pAppF -> .)
+    CTEI            reduce using rule 68 (pAppF -> .)
+    (               reduce using rule 68 (pAppF -> .)
+    ID              reduce using rule 68 (pAppF -> .)
 
-    termino                        shift and go to state 148
-    factor                         shift and go to state 81
-    constante                      shift and go to state 82
-    lParen                         shift and go to state 83
-    id                             shift and go to state 84
+    pAppF                          shift and go to state 148
 
 state 121
 
-    (66) terminop -> empty .
+    (67) terminop -> empty .
 
-    +               reduce using rule 66 (terminop -> empty .)
-    -               reduce using rule 66 (terminop -> empty .)
-    <               reduce using rule 66 (terminop -> empty .)
-    >               reduce using rule 66 (terminop -> empty .)
-    EQUALS          reduce using rule 66 (terminop -> empty .)
-    DIFF            reduce using rule 66 (terminop -> empty .)
-    LTHANEQ         reduce using rule 66 (terminop -> empty .)
-    GTHANEQ         reduce using rule 66 (terminop -> empty .)
-    AND             reduce using rule 66 (terminop -> empty .)
-    OR              reduce using rule 66 (terminop -> empty .)
-    ;               reduce using rule 66 (terminop -> empty .)
-    ]               reduce using rule 66 (terminop -> empty .)
-    )               reduce using rule 66 (terminop -> empty .)
-    ,               reduce using rule 66 (terminop -> empty .)
+    +               reduce using rule 67 (terminop -> empty .)
+    -               reduce using rule 67 (terminop -> empty .)
+    <               reduce using rule 67 (terminop -> empty .)
+    >               reduce using rule 67 (terminop -> empty .)
+    EQUALS          reduce using rule 67 (terminop -> empty .)
+    DIFF            reduce using rule 67 (terminop -> empty .)
+    LTHANEQ         reduce using rule 67 (terminop -> empty .)
+    GTHANEQ         reduce using rule 67 (terminop -> empty .)
+    AND             reduce using rule 67 (terminop -> empty .)
+    OR              reduce using rule 67 (terminop -> empty .)
+    ;               reduce using rule 67 (terminop -> empty .)
+    ]               reduce using rule 67 (terminop -> empty .)
+    )               reduce using rule 67 (terminop -> empty .)
+    ,               reduce using rule 67 (terminop -> empty .)
 
 
 state 122
 
-    (68) factor -> lParen superexpresion . rParen
-    (70) rParen -> . )
+    (70) factor -> lParen superexpresion . rParen
+    (72) rParen -> . )
 
     )               shift and go to state 150
 
@@ -2233,46 +2189,46 @@ state 122
 
 state 123
 
-    (72) constante -> CTEF ctef .
+    (74) constante -> CTEF ctef .
 
-    *               reduce using rule 72 (constante -> CTEF ctef .)
-    /               reduce using rule 72 (constante -> CTEF ctef .)
-    +               reduce using rule 72 (constante -> CTEF ctef .)
-    -               reduce using rule 72 (constante -> CTEF ctef .)
-    <               reduce using rule 72 (constante -> CTEF ctef .)
-    >               reduce using rule 72 (constante -> CTEF ctef .)
-    EQUALS          reduce using rule 72 (constante -> CTEF ctef .)
-    DIFF            reduce using rule 72 (constante -> CTEF ctef .)
-    LTHANEQ         reduce using rule 72 (constante -> CTEF ctef .)
-    GTHANEQ         reduce using rule 72 (constante -> CTEF ctef .)
-    AND             reduce using rule 72 (constante -> CTEF ctef .)
-    OR              reduce using rule 72 (constante -> CTEF ctef .)
-    ;               reduce using rule 72 (constante -> CTEF ctef .)
-    ]               reduce using rule 72 (constante -> CTEF ctef .)
-    )               reduce using rule 72 (constante -> CTEF ctef .)
-    ,               reduce using rule 72 (constante -> CTEF ctef .)
+    *               reduce using rule 74 (constante -> CTEF ctef .)
+    /               reduce using rule 74 (constante -> CTEF ctef .)
+    +               reduce using rule 74 (constante -> CTEF ctef .)
+    -               reduce using rule 74 (constante -> CTEF ctef .)
+    <               reduce using rule 74 (constante -> CTEF ctef .)
+    >               reduce using rule 74 (constante -> CTEF ctef .)
+    EQUALS          reduce using rule 74 (constante -> CTEF ctef .)
+    DIFF            reduce using rule 74 (constante -> CTEF ctef .)
+    LTHANEQ         reduce using rule 74 (constante -> CTEF ctef .)
+    GTHANEQ         reduce using rule 74 (constante -> CTEF ctef .)
+    AND             reduce using rule 74 (constante -> CTEF ctef .)
+    OR              reduce using rule 74 (constante -> CTEF ctef .)
+    ;               reduce using rule 74 (constante -> CTEF ctef .)
+    ]               reduce using rule 74 (constante -> CTEF ctef .)
+    )               reduce using rule 74 (constante -> CTEF ctef .)
+    ,               reduce using rule 74 (constante -> CTEF ctef .)
 
 
 state 124
 
-    (73) constante -> CTEI ctei .
+    (75) constante -> CTEI ctei .
 
-    *               reduce using rule 73 (constante -> CTEI ctei .)
-    /               reduce using rule 73 (constante -> CTEI ctei .)
-    +               reduce using rule 73 (constante -> CTEI ctei .)
-    -               reduce using rule 73 (constante -> CTEI ctei .)
-    <               reduce using rule 73 (constante -> CTEI ctei .)
-    >               reduce using rule 73 (constante -> CTEI ctei .)
-    EQUALS          reduce using rule 73 (constante -> CTEI ctei .)
-    DIFF            reduce using rule 73 (constante -> CTEI ctei .)
-    LTHANEQ         reduce using rule 73 (constante -> CTEI ctei .)
-    GTHANEQ         reduce using rule 73 (constante -> CTEI ctei .)
-    AND             reduce using rule 73 (constante -> CTEI ctei .)
-    OR              reduce using rule 73 (constante -> CTEI ctei .)
-    ;               reduce using rule 73 (constante -> CTEI ctei .)
-    ]               reduce using rule 73 (constante -> CTEI ctei .)
-    )               reduce using rule 73 (constante -> CTEI ctei .)
-    ,               reduce using rule 73 (constante -> CTEI ctei .)
+    *               reduce using rule 75 (constante -> CTEI ctei .)
+    /               reduce using rule 75 (constante -> CTEI ctei .)
+    +               reduce using rule 75 (constante -> CTEI ctei .)
+    -               reduce using rule 75 (constante -> CTEI ctei .)
+    <               reduce using rule 75 (constante -> CTEI ctei .)
+    >               reduce using rule 75 (constante -> CTEI ctei .)
+    EQUALS          reduce using rule 75 (constante -> CTEI ctei .)
+    DIFF            reduce using rule 75 (constante -> CTEI ctei .)
+    LTHANEQ         reduce using rule 75 (constante -> CTEI ctei .)
+    GTHANEQ         reduce using rule 75 (constante -> CTEI ctei .)
+    AND             reduce using rule 75 (constante -> CTEI ctei .)
+    OR              reduce using rule 75 (constante -> CTEI ctei .)
+    ;               reduce using rule 75 (constante -> CTEI ctei .)
+    ]               reduce using rule 75 (constante -> CTEI ctei .)
+    )               reduce using rule 75 (constante -> CTEI ctei .)
+    ,               reduce using rule 75 (constante -> CTEI ctei .)
 
 
 state 125
@@ -2284,34 +2240,34 @@ state 125
 
 state 126
 
-    (91) idp -> ( idpp . )
+    (93) idp -> ( idpp . )
 
     )               shift and go to state 152
 
 
 state 127
 
-    (94) idpp -> superexpresion . idppp
-    (96) idppp -> . , idpp
-    (97) idppp -> . empty
-    (98) empty -> .
+    (96) idpp -> superexpresion . idppp
+    (98) idppp -> . , idpp
+    (99) idppp -> . empty
+    (100) empty -> .
 
     ,               shift and go to state 154
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
 
     idppp                          shift and go to state 153
     empty                          shift and go to state 155
 
 state 128
 
-    (95) idpp -> empty .
+    (97) idpp -> empty .
 
-    )               reduce using rule 95 (idpp -> empty .)
+    )               reduce using rule 97 (idpp -> empty .)
 
 
 state 129
 
-    (92) idp -> [ superexpresion . ]
+    (94) idp -> [ superexpresion . ]
 
     ]               shift and go to state 156
 
@@ -2360,10 +2316,10 @@ state 134
     (32) writep -> superexpresion writepAux . writepp
     (36) writepp -> . , writeppAux writep
     (37) writepp -> . empty writeppAux
-    (98) empty -> .
+    (100) empty -> .
 
     ,               shift and go to state 161
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
 
     writepp                        shift and go to state 160
     empty                          shift and go to state 162
@@ -2373,10 +2329,10 @@ state 135
     (33) writep -> LETRERO writepAux2 . writepp
     (36) writepp -> . , writeppAux writep
     (37) writepp -> . empty writeppAux
-    (98) empty -> .
+    (100) empty -> .
 
     ,               shift and go to state 161
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
 
     writepp                        shift and go to state 163
     empty                          shift and go to state 162
@@ -2482,122 +2438,142 @@ state 144
 
 state 145
 
-    (60) expp -> + exp .
+    (60) expp -> + pAppT . exp
+    (59) exp -> . termino expp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    <               reduce using rule 60 (expp -> + exp .)
-    >               reduce using rule 60 (expp -> + exp .)
-    EQUALS          reduce using rule 60 (expp -> + exp .)
-    DIFF            reduce using rule 60 (expp -> + exp .)
-    LTHANEQ         reduce using rule 60 (expp -> + exp .)
-    GTHANEQ         reduce using rule 60 (expp -> + exp .)
-    AND             reduce using rule 60 (expp -> + exp .)
-    OR              reduce using rule 60 (expp -> + exp .)
-    ;               reduce using rule 60 (expp -> + exp .)
-    ]               reduce using rule 60 (expp -> + exp .)
-    )               reduce using rule 60 (expp -> + exp .)
-    ,               reduce using rule 60 (expp -> + exp .)
+    CTEF            shift and go to state 85
+    CTEI            shift and go to state 86
+    (               shift and go to state 87
+    ID              shift and go to state 67
 
+    exp                            shift and go to state 165
+    termino                        shift and go to state 80
+    factor                         shift and go to state 81
+    constante                      shift and go to state 82
+    lParen                         shift and go to state 83
+    id                             shift and go to state 84
 
 state 146
 
-    (61) expp -> - exp .
+    (61) expp -> - pAppT . exp
+    (59) exp -> . termino expp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    <               reduce using rule 61 (expp -> - exp .)
-    >               reduce using rule 61 (expp -> - exp .)
-    EQUALS          reduce using rule 61 (expp -> - exp .)
-    DIFF            reduce using rule 61 (expp -> - exp .)
-    LTHANEQ         reduce using rule 61 (expp -> - exp .)
-    GTHANEQ         reduce using rule 61 (expp -> - exp .)
-    AND             reduce using rule 61 (expp -> - exp .)
-    OR              reduce using rule 61 (expp -> - exp .)
-    ;               reduce using rule 61 (expp -> - exp .)
-    ]               reduce using rule 61 (expp -> - exp .)
-    )               reduce using rule 61 (expp -> - exp .)
-    ,               reduce using rule 61 (expp -> - exp .)
+    CTEF            shift and go to state 85
+    CTEI            shift and go to state 86
+    (               shift and go to state 87
+    ID              shift and go to state 67
 
+    exp                            shift and go to state 166
+    termino                        shift and go to state 80
+    factor                         shift and go to state 81
+    constante                      shift and go to state 82
+    lParen                         shift and go to state 83
+    id                             shift and go to state 84
 
 state 147
 
-    (64) terminop -> * termino .
+    (65) terminop -> * pAppF . termino
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    +               reduce using rule 64 (terminop -> * termino .)
-    -               reduce using rule 64 (terminop -> * termino .)
-    <               reduce using rule 64 (terminop -> * termino .)
-    >               reduce using rule 64 (terminop -> * termino .)
-    EQUALS          reduce using rule 64 (terminop -> * termino .)
-    DIFF            reduce using rule 64 (terminop -> * termino .)
-    LTHANEQ         reduce using rule 64 (terminop -> * termino .)
-    GTHANEQ         reduce using rule 64 (terminop -> * termino .)
-    AND             reduce using rule 64 (terminop -> * termino .)
-    OR              reduce using rule 64 (terminop -> * termino .)
-    ;               reduce using rule 64 (terminop -> * termino .)
-    ]               reduce using rule 64 (terminop -> * termino .)
-    )               reduce using rule 64 (terminop -> * termino .)
-    ,               reduce using rule 64 (terminop -> * termino .)
+    CTEF            shift and go to state 85
+    CTEI            shift and go to state 86
+    (               shift and go to state 87
+    ID              shift and go to state 67
 
+    termino                        shift and go to state 167
+    factor                         shift and go to state 81
+    constante                      shift and go to state 82
+    lParen                         shift and go to state 83
+    id                             shift and go to state 84
 
 state 148
 
-    (65) terminop -> / termino .
+    (66) terminop -> / pAppF . termino
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    +               reduce using rule 65 (terminop -> / termino .)
-    -               reduce using rule 65 (terminop -> / termino .)
-    <               reduce using rule 65 (terminop -> / termino .)
-    >               reduce using rule 65 (terminop -> / termino .)
-    EQUALS          reduce using rule 65 (terminop -> / termino .)
-    DIFF            reduce using rule 65 (terminop -> / termino .)
-    LTHANEQ         reduce using rule 65 (terminop -> / termino .)
-    GTHANEQ         reduce using rule 65 (terminop -> / termino .)
-    AND             reduce using rule 65 (terminop -> / termino .)
-    OR              reduce using rule 65 (terminop -> / termino .)
-    ;               reduce using rule 65 (terminop -> / termino .)
-    ]               reduce using rule 65 (terminop -> / termino .)
-    )               reduce using rule 65 (terminop -> / termino .)
-    ,               reduce using rule 65 (terminop -> / termino .)
+    CTEF            shift and go to state 85
+    CTEI            shift and go to state 86
+    (               shift and go to state 87
+    ID              shift and go to state 67
 
+    termino                        shift and go to state 168
+    factor                         shift and go to state 81
+    constante                      shift and go to state 82
+    lParen                         shift and go to state 83
+    id                             shift and go to state 84
 
 state 149
 
-    (68) factor -> lParen superexpresion rParen .
+    (70) factor -> lParen superexpresion rParen .
 
-    *               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    /               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    +               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    -               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    <               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    >               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    EQUALS          reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    DIFF            reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    LTHANEQ         reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    GTHANEQ         reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    AND             reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    OR              reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    ;               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    ]               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    )               reduce using rule 68 (factor -> lParen superexpresion rParen .)
-    ,               reduce using rule 68 (factor -> lParen superexpresion rParen .)
+    *               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    /               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    +               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    -               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    <               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    >               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    EQUALS          reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    DIFF            reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    LTHANEQ         reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    GTHANEQ         reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    AND             reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    OR              reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    ;               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    ]               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    )               reduce using rule 70 (factor -> lParen superexpresion rParen .)
+    ,               reduce using rule 70 (factor -> lParen superexpresion rParen .)
 
 
 state 150
 
-    (70) rParen -> ) .
+    (72) rParen -> ) .
 
-    *               reduce using rule 70 (rParen -> ) .)
-    /               reduce using rule 70 (rParen -> ) .)
-    +               reduce using rule 70 (rParen -> ) .)
-    -               reduce using rule 70 (rParen -> ) .)
-    <               reduce using rule 70 (rParen -> ) .)
-    >               reduce using rule 70 (rParen -> ) .)
-    EQUALS          reduce using rule 70 (rParen -> ) .)
-    DIFF            reduce using rule 70 (rParen -> ) .)
-    LTHANEQ         reduce using rule 70 (rParen -> ) .)
-    GTHANEQ         reduce using rule 70 (rParen -> ) .)
-    AND             reduce using rule 70 (rParen -> ) .)
-    OR              reduce using rule 70 (rParen -> ) .)
-    ;               reduce using rule 70 (rParen -> ) .)
-    ]               reduce using rule 70 (rParen -> ) .)
-    )               reduce using rule 70 (rParen -> ) .)
-    ,               reduce using rule 70 (rParen -> ) .)
+    *               reduce using rule 72 (rParen -> ) .)
+    /               reduce using rule 72 (rParen -> ) .)
+    +               reduce using rule 72 (rParen -> ) .)
+    -               reduce using rule 72 (rParen -> ) .)
+    <               reduce using rule 72 (rParen -> ) .)
+    >               reduce using rule 72 (rParen -> ) .)
+    EQUALS          reduce using rule 72 (rParen -> ) .)
+    DIFF            reduce using rule 72 (rParen -> ) .)
+    LTHANEQ         reduce using rule 72 (rParen -> ) .)
+    GTHANEQ         reduce using rule 72 (rParen -> ) .)
+    AND             reduce using rule 72 (rParen -> ) .)
+    OR              reduce using rule 72 (rParen -> ) .)
+    ;               reduce using rule 72 (rParen -> ) .)
+    ]               reduce using rule 72 (rParen -> ) .)
+    )               reduce using rule 72 (rParen -> ) .)
+    ,               reduce using rule 72 (rParen -> ) .)
 
 
 state 151
@@ -2606,14 +2582,14 @@ state 151
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -2621,7 +2597,7 @@ state 151
     ID              shift and go to state 67
 
     id                             shift and go to state 84
-    superexpresion                 shift and go to state 165
+    superexpresion                 shift and go to state 169
     megaexpresion                  shift and go to state 78
     exp                            shift and go to state 79
     termino                        shift and go to state 80
@@ -2631,60 +2607,60 @@ state 151
 
 state 152
 
-    (91) idp -> ( idpp ) .
+    (93) idp -> ( idpp ) .
 
-    =               reduce using rule 91 (idp -> ( idpp ) .)
-    [               reduce using rule 91 (idp -> ( idpp ) .)
-    *               reduce using rule 91 (idp -> ( idpp ) .)
-    /               reduce using rule 91 (idp -> ( idpp ) .)
-    +               reduce using rule 91 (idp -> ( idpp ) .)
-    -               reduce using rule 91 (idp -> ( idpp ) .)
-    <               reduce using rule 91 (idp -> ( idpp ) .)
-    >               reduce using rule 91 (idp -> ( idpp ) .)
-    EQUALS          reduce using rule 91 (idp -> ( idpp ) .)
-    DIFF            reduce using rule 91 (idp -> ( idpp ) .)
-    LTHANEQ         reduce using rule 91 (idp -> ( idpp ) .)
-    GTHANEQ         reduce using rule 91 (idp -> ( idpp ) .)
-    AND             reduce using rule 91 (idp -> ( idpp ) .)
-    OR              reduce using rule 91 (idp -> ( idpp ) .)
-    ;               reduce using rule 91 (idp -> ( idpp ) .)
-    ]               reduce using rule 91 (idp -> ( idpp ) .)
-    )               reduce using rule 91 (idp -> ( idpp ) .)
-    ,               reduce using rule 91 (idp -> ( idpp ) .)
+    =               reduce using rule 93 (idp -> ( idpp ) .)
+    [               reduce using rule 93 (idp -> ( idpp ) .)
+    *               reduce using rule 93 (idp -> ( idpp ) .)
+    /               reduce using rule 93 (idp -> ( idpp ) .)
+    +               reduce using rule 93 (idp -> ( idpp ) .)
+    -               reduce using rule 93 (idp -> ( idpp ) .)
+    <               reduce using rule 93 (idp -> ( idpp ) .)
+    >               reduce using rule 93 (idp -> ( idpp ) .)
+    EQUALS          reduce using rule 93 (idp -> ( idpp ) .)
+    DIFF            reduce using rule 93 (idp -> ( idpp ) .)
+    LTHANEQ         reduce using rule 93 (idp -> ( idpp ) .)
+    GTHANEQ         reduce using rule 93 (idp -> ( idpp ) .)
+    AND             reduce using rule 93 (idp -> ( idpp ) .)
+    OR              reduce using rule 93 (idp -> ( idpp ) .)
+    ;               reduce using rule 93 (idp -> ( idpp ) .)
+    ]               reduce using rule 93 (idp -> ( idpp ) .)
+    )               reduce using rule 93 (idp -> ( idpp ) .)
+    ,               reduce using rule 93 (idp -> ( idpp ) .)
 
 
 state 153
 
-    (94) idpp -> superexpresion idppp .
+    (96) idpp -> superexpresion idppp .
 
-    )               reduce using rule 94 (idpp -> superexpresion idppp .)
+    )               reduce using rule 96 (idpp -> superexpresion idppp .)
 
 
 state 154
 
-    (96) idppp -> , . idpp
-    (94) idpp -> . superexpresion idppp
-    (95) idpp -> . empty
+    (98) idppp -> , . idpp
+    (96) idpp -> . superexpresion idppp
+    (97) idpp -> . empty
     (47) superexpresion -> . megaexpresion superexpresionp
-    (98) empty -> .
+    (100) empty -> .
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
-    )               reduce using rule 98 (empty -> .)
+    )               reduce using rule 100 (empty -> .)
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
     (               shift and go to state 87
     ID              shift and go to state 67
 
-    idpp                           shift and go to state 166
+    idpp                           shift and go to state 170
     superexpresion                 shift and go to state 127
     empty                          shift and go to state 128
     megaexpresion                  shift and go to state 78
@@ -2697,33 +2673,33 @@ state 154
 
 state 155
 
-    (97) idppp -> empty .
+    (99) idppp -> empty .
 
-    )               reduce using rule 97 (idppp -> empty .)
+    )               reduce using rule 99 (idppp -> empty .)
 
 
 state 156
 
-    (92) idp -> [ superexpresion ] .
+    (94) idp -> [ superexpresion ] .
 
-    =               reduce using rule 92 (idp -> [ superexpresion ] .)
-    [               reduce using rule 92 (idp -> [ superexpresion ] .)
-    *               reduce using rule 92 (idp -> [ superexpresion ] .)
-    /               reduce using rule 92 (idp -> [ superexpresion ] .)
-    +               reduce using rule 92 (idp -> [ superexpresion ] .)
-    -               reduce using rule 92 (idp -> [ superexpresion ] .)
-    <               reduce using rule 92 (idp -> [ superexpresion ] .)
-    >               reduce using rule 92 (idp -> [ superexpresion ] .)
-    EQUALS          reduce using rule 92 (idp -> [ superexpresion ] .)
-    DIFF            reduce using rule 92 (idp -> [ superexpresion ] .)
-    LTHANEQ         reduce using rule 92 (idp -> [ superexpresion ] .)
-    GTHANEQ         reduce using rule 92 (idp -> [ superexpresion ] .)
-    AND             reduce using rule 92 (idp -> [ superexpresion ] .)
-    OR              reduce using rule 92 (idp -> [ superexpresion ] .)
-    ;               reduce using rule 92 (idp -> [ superexpresion ] .)
-    ]               reduce using rule 92 (idp -> [ superexpresion ] .)
-    )               reduce using rule 92 (idp -> [ superexpresion ] .)
-    ,               reduce using rule 92 (idp -> [ superexpresion ] .)
+    =               reduce using rule 94 (idp -> [ superexpresion ] .)
+    [               reduce using rule 94 (idp -> [ superexpresion ] .)
+    *               reduce using rule 94 (idp -> [ superexpresion ] .)
+    /               reduce using rule 94 (idp -> [ superexpresion ] .)
+    +               reduce using rule 94 (idp -> [ superexpresion ] .)
+    -               reduce using rule 94 (idp -> [ superexpresion ] .)
+    <               reduce using rule 94 (idp -> [ superexpresion ] .)
+    >               reduce using rule 94 (idp -> [ superexpresion ] .)
+    EQUALS          reduce using rule 94 (idp -> [ superexpresion ] .)
+    DIFF            reduce using rule 94 (idp -> [ superexpresion ] .)
+    LTHANEQ         reduce using rule 94 (idp -> [ superexpresion ] .)
+    GTHANEQ         reduce using rule 94 (idp -> [ superexpresion ] .)
+    AND             reduce using rule 94 (idp -> [ superexpresion ] .)
+    OR              reduce using rule 94 (idp -> [ superexpresion ] .)
+    ;               reduce using rule 94 (idp -> [ superexpresion ] .)
+    ]               reduce using rule 94 (idp -> [ superexpresion ] .)
+    )               reduce using rule 94 (idp -> [ superexpresion ] .)
+    ,               reduce using rule 94 (idp -> [ superexpresion ] .)
 
 
 state 157
@@ -2732,21 +2708,21 @@ state 157
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
     (               shift and go to state 87
     ID              shift and go to state 67
 
-    superexpresion                 shift and go to state 167
+    superexpresion                 shift and go to state 171
     megaexpresion                  shift and go to state 78
     exp                            shift and go to state 79
     termino                        shift and go to state 80
@@ -2762,7 +2738,7 @@ state 158
 
     {               shift and go to state 41
 
-    bloque                         shift and go to state 168
+    bloque                         shift and go to state 172
 
 state 159
 
@@ -2798,7 +2774,7 @@ state 161
     (               reduce using rule 38 (writeppAux -> .)
     ID              reduce using rule 38 (writeppAux -> .)
 
-    writeppAux                     shift and go to state 169
+    writeppAux                     shift and go to state 173
 
 state 162
 
@@ -2807,7 +2783,7 @@ state 162
 
     )               reduce using rule 38 (writeppAux -> .)
 
-    writeppAux                     shift and go to state 170
+    writeppAux                     shift and go to state 174
 
 state 163
 
@@ -2823,52 +2799,128 @@ state 164
 
     {               reduce using rule 42 (whileAux2 -> .)
 
-    whileAux2                      shift and go to state 171
+    whileAux2                      shift and go to state 175
 
 state 165
 
-    (39) for -> FOR ( id = superexpresion . ; superexpresion ) bloque
+    (60) expp -> + pAppT exp .
 
-    ;               shift and go to state 172
+    <               reduce using rule 60 (expp -> + pAppT exp .)
+    >               reduce using rule 60 (expp -> + pAppT exp .)
+    EQUALS          reduce using rule 60 (expp -> + pAppT exp .)
+    DIFF            reduce using rule 60 (expp -> + pAppT exp .)
+    LTHANEQ         reduce using rule 60 (expp -> + pAppT exp .)
+    GTHANEQ         reduce using rule 60 (expp -> + pAppT exp .)
+    AND             reduce using rule 60 (expp -> + pAppT exp .)
+    OR              reduce using rule 60 (expp -> + pAppT exp .)
+    ;               reduce using rule 60 (expp -> + pAppT exp .)
+    ]               reduce using rule 60 (expp -> + pAppT exp .)
+    )               reduce using rule 60 (expp -> + pAppT exp .)
+    ,               reduce using rule 60 (expp -> + pAppT exp .)
 
 
 state 166
 
-    (96) idppp -> , idpp .
+    (61) expp -> - pAppT exp .
 
-    )               reduce using rule 96 (idppp -> , idpp .)
+    <               reduce using rule 61 (expp -> - pAppT exp .)
+    >               reduce using rule 61 (expp -> - pAppT exp .)
+    EQUALS          reduce using rule 61 (expp -> - pAppT exp .)
+    DIFF            reduce using rule 61 (expp -> - pAppT exp .)
+    LTHANEQ         reduce using rule 61 (expp -> - pAppT exp .)
+    GTHANEQ         reduce using rule 61 (expp -> - pAppT exp .)
+    AND             reduce using rule 61 (expp -> - pAppT exp .)
+    OR              reduce using rule 61 (expp -> - pAppT exp .)
+    ;               reduce using rule 61 (expp -> - pAppT exp .)
+    ]               reduce using rule 61 (expp -> - pAppT exp .)
+    )               reduce using rule 61 (expp -> - pAppT exp .)
+    ,               reduce using rule 61 (expp -> - pAppT exp .)
 
 
 state 167
 
-    (46) asignacionp -> [ superexpresion ] = superexpresion . ;
+    (65) terminop -> * pAppF termino .
 
-    ;               shift and go to state 173
+    +               reduce using rule 65 (terminop -> * pAppF termino .)
+    -               reduce using rule 65 (terminop -> * pAppF termino .)
+    <               reduce using rule 65 (terminop -> * pAppF termino .)
+    >               reduce using rule 65 (terminop -> * pAppF termino .)
+    EQUALS          reduce using rule 65 (terminop -> * pAppF termino .)
+    DIFF            reduce using rule 65 (terminop -> * pAppF termino .)
+    LTHANEQ         reduce using rule 65 (terminop -> * pAppF termino .)
+    GTHANEQ         reduce using rule 65 (terminop -> * pAppF termino .)
+    AND             reduce using rule 65 (terminop -> * pAppF termino .)
+    OR              reduce using rule 65 (terminop -> * pAppF termino .)
+    ;               reduce using rule 65 (terminop -> * pAppF termino .)
+    ]               reduce using rule 65 (terminop -> * pAppF termino .)
+    )               reduce using rule 65 (terminop -> * pAppF termino .)
+    ,               reduce using rule 65 (terminop -> * pAppF termino .)
 
 
 state 168
 
+    (66) terminop -> / pAppF termino .
+
+    +               reduce using rule 66 (terminop -> / pAppF termino .)
+    -               reduce using rule 66 (terminop -> / pAppF termino .)
+    <               reduce using rule 66 (terminop -> / pAppF termino .)
+    >               reduce using rule 66 (terminop -> / pAppF termino .)
+    EQUALS          reduce using rule 66 (terminop -> / pAppF termino .)
+    DIFF            reduce using rule 66 (terminop -> / pAppF termino .)
+    LTHANEQ         reduce using rule 66 (terminop -> / pAppF termino .)
+    GTHANEQ         reduce using rule 66 (terminop -> / pAppF termino .)
+    AND             reduce using rule 66 (terminop -> / pAppF termino .)
+    OR              reduce using rule 66 (terminop -> / pAppF termino .)
+    ;               reduce using rule 66 (terminop -> / pAppF termino .)
+    ]               reduce using rule 66 (terminop -> / pAppF termino .)
+    )               reduce using rule 66 (terminop -> / pAppF termino .)
+    ,               reduce using rule 66 (terminop -> / pAppF termino .)
+
+
+state 169
+
+    (39) for -> FOR ( id = superexpresion . ; superexpresion ) bloque
+
+    ;               shift and go to state 176
+
+
+state 170
+
+    (98) idppp -> , idpp .
+
+    )               reduce using rule 98 (idppp -> , idpp .)
+
+
+state 171
+
+    (46) asignacionp -> [ superexpresion ] = superexpresion . ;
+
+    ;               shift and go to state 177
+
+
+state 172
+
     (26) condicion -> IF ( superexpresion ) condicionAux bloque . condicionelse
     (28) condicionelse -> . ELSE condicionelseAux bloque
     (29) condicionelse -> . empty
-    (98) empty -> .
+    (100) empty -> .
 
-    ELSE            shift and go to state 175
-    IF              reduce using rule 98 (empty -> .)
-    WRITE           reduce using rule 98 (empty -> .)
-    WHILE           reduce using rule 98 (empty -> .)
-    RETURN          reduce using rule 98 (empty -> .)
-    FOR             reduce using rule 98 (empty -> .)
-    ID              reduce using rule 98 (empty -> .)
-    INT             reduce using rule 98 (empty -> .)
-    FLOAT           reduce using rule 98 (empty -> .)
-    CHAR            reduce using rule 98 (empty -> .)
-    }               reduce using rule 98 (empty -> .)
+    ELSE            shift and go to state 179
+    IF              reduce using rule 100 (empty -> .)
+    WRITE           reduce using rule 100 (empty -> .)
+    WHILE           reduce using rule 100 (empty -> .)
+    RETURN          reduce using rule 100 (empty -> .)
+    FOR             reduce using rule 100 (empty -> .)
+    ID              reduce using rule 100 (empty -> .)
+    INT             reduce using rule 100 (empty -> .)
+    FLOAT           reduce using rule 100 (empty -> .)
+    CHAR            reduce using rule 100 (empty -> .)
+    }               reduce using rule 100 (empty -> .)
 
-    condicionelse                  shift and go to state 174
-    empty                          shift and go to state 176
+    condicionelse                  shift and go to state 178
+    empty                          shift and go to state 180
 
-state 169
+state 173
 
     (36) writepp -> , writeppAux . writep
     (32) writep -> . superexpresion writepAux writepp
@@ -2876,14 +2928,14 @@ state 169
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     LETRERO         shift and go to state 99
     CTEF            shift and go to state 85
@@ -2891,7 +2943,7 @@ state 169
     (               shift and go to state 87
     ID              shift and go to state 67
 
-    writep                         shift and go to state 177
+    writep                         shift and go to state 181
     superexpresion                 shift and go to state 98
     megaexpresion                  shift and go to state 78
     exp                            shift and go to state 79
@@ -2901,36 +2953,36 @@ state 169
     lParen                         shift and go to state 83
     id                             shift and go to state 84
 
-state 170
+state 174
 
     (37) writepp -> empty writeppAux .
 
     )               reduce using rule 37 (writepp -> empty writeppAux .)
 
 
-state 171
+state 175
 
     (40) while -> WHILE whileAux ( superexpresion ) whileAux2 . bloque
     (14) bloque -> . { cuerpo }
 
     {               shift and go to state 41
 
-    bloque                         shift and go to state 178
+    bloque                         shift and go to state 182
 
-state 172
+state 176
 
     (39) for -> FOR ( id = superexpresion ; . superexpresion ) bloque
     (47) superexpresion -> . megaexpresion superexpresionp
     (51) megaexpresion -> . exp megaexpresionp
     (59) exp -> . termino expp
-    (63) termino -> . factor terminop
-    (67) factor -> . constante
-    (68) factor -> . lParen superexpresion rParen
-    (71) constante -> . id
-    (72) constante -> . CTEF ctef
-    (73) constante -> . CTEI ctei
-    (69) lParen -> . (
-    (90) id -> . ID idp
+    (64) termino -> . factor terminop
+    (69) factor -> . constante
+    (70) factor -> . lParen superexpresion rParen
+    (73) constante -> . id
+    (74) constante -> . CTEF ctef
+    (75) constante -> . CTEI ctei
+    (71) lParen -> . (
+    (92) id -> . ID idp
 
     CTEF            shift and go to state 85
     CTEI            shift and go to state 86
@@ -2938,7 +2990,7 @@ state 172
     ID              shift and go to state 67
 
     id                             shift and go to state 84
-    superexpresion                 shift and go to state 179
+    superexpresion                 shift and go to state 183
     megaexpresion                  shift and go to state 78
     exp                            shift and go to state 79
     termino                        shift and go to state 80
@@ -2946,7 +2998,7 @@ state 172
     constante                      shift and go to state 82
     lParen                         shift and go to state 83
 
-state 173
+state 177
 
     (46) asignacionp -> [ superexpresion ] = superexpresion ; .
 
@@ -2962,7 +3014,7 @@ state 173
     }               reduce using rule 46 (asignacionp -> [ superexpresion ] = superexpresion ; .)
 
 
-state 174
+state 178
 
     (26) condicion -> IF ( superexpresion ) condicionAux bloque condicionelse .
 
@@ -2978,16 +3030,16 @@ state 174
     }               reduce using rule 26 (condicion -> IF ( superexpresion ) condicionAux bloque condicionelse .)
 
 
-state 175
+state 179
 
     (28) condicionelse -> ELSE . condicionelseAux bloque
     (30) condicionelseAux -> .
 
     {               reduce using rule 30 (condicionelseAux -> .)
 
-    condicionelseAux               shift and go to state 180
+    condicionelseAux               shift and go to state 184
 
-state 176
+state 180
 
     (29) condicionelse -> empty .
 
@@ -3003,14 +3055,14 @@ state 176
     }               reduce using rule 29 (condicionelse -> empty .)
 
 
-state 177
+state 181
 
     (36) writepp -> , writeppAux writep .
 
     )               reduce using rule 36 (writepp -> , writeppAux writep .)
 
 
-state 178
+state 182
 
     (40) while -> WHILE whileAux ( superexpresion ) whileAux2 bloque .
 
@@ -3026,32 +3078,32 @@ state 178
     }               reduce using rule 40 (while -> WHILE whileAux ( superexpresion ) whileAux2 bloque .)
 
 
-state 179
+state 183
 
     (39) for -> FOR ( id = superexpresion ; superexpresion . ) bloque
 
-    )               shift and go to state 181
+    )               shift and go to state 185
 
 
-state 180
+state 184
 
     (28) condicionelse -> ELSE condicionelseAux . bloque
     (14) bloque -> . { cuerpo }
 
     {               shift and go to state 41
 
-    bloque                         shift and go to state 182
+    bloque                         shift and go to state 186
 
-state 181
+state 185
 
     (39) for -> FOR ( id = superexpresion ; superexpresion ) . bloque
     (14) bloque -> . { cuerpo }
 
     {               shift and go to state 41
 
-    bloque                         shift and go to state 183
+    bloque                         shift and go to state 187
 
-state 182
+state 186
 
     (28) condicionelse -> ELSE condicionelseAux bloque .
 
@@ -3067,7 +3119,7 @@ state 182
     }               reduce using rule 28 (condicionelse -> ELSE condicionelseAux bloque .)
 
 
-state 183
+state 187
 
     (39) for -> FOR ( id = superexpresion ; superexpresion ) bloque .
 

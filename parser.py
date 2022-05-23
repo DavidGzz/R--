@@ -279,15 +279,29 @@ def p_exp(p):
                 exit(1)
 
 def p_expp(p):
-    '''expp : '+' exp
-            | '-' exp
+    '''expp : '+' pAppT exp
+            | '-' pAppT exp
             | empty'''
-    if p[1]:
-        pOper.append(p[1])
+    #if p[1]:
+    #    pOper.append(p[1])
 
-#def p_pApp(p):
-#    '''pApp : '''
-#    pOper.append(p[-1])
+def p_pAppT(p):
+    '''pAppT : '''
+    if pOper:
+        if pOper[-1] == '*' or pOper[-1] == '/' or pOper[-1] == '+' or pOper[-1] == '-':
+            global cuadruplo
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error' :
+                respuesta = mTemp.add_tipo(tipo)
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
+            else:
+                print("ERROR TYPE MISTMATCH +")
+                exit(1)
+    pOper.append(p[-1])
 
 def p_termino(p):
     '''termino : factor terminop'''
@@ -308,11 +322,33 @@ def p_termino(p):
                 exit(1)
 
 def p_terminop(p):
-    '''terminop : '*' termino
-                | '/' termino
+    '''terminop : '*' pAppF termino
+                | '/' pAppF termino
                 | empty'''
-    if p[1]:
-        pOper.append(p[1])
+    #if p[1]:
+    #    pOper.append(p[1])
+
+def p_pAppF(p):
+    '''pAppF : '''
+    if pOper:
+        print("POPER: ", pOper[-1])
+        if pOper[-1] == '+' or pOper[-1] == '-':
+            pOper.append(p[-1])
+        elif pOper[-1] == '*' or pOper[-1] == '/':
+            global cuadruplo
+            operador = pOper.pop()
+            op1 = pilaO.pop()
+            op2 = pilaO.pop()
+            tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
+            if tipo != 'error':
+                respuesta = mTemp.add_tipo(tipo)
+                cuadruplo.append([operador, op2[0], op1[0], respuesta])
+                pilaO.append([respuesta, tipo])
+            else:
+                print("ERROR TYPE MISTMATCH *")
+                exit(1)
+            pOper.append(p[-1])
+    
 
 def p_factor(p):
     '''factor : constante
@@ -449,7 +485,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("Prueba.txt", "r")
+f = open("Prueba1.txt", "r")
 
 while True:
     try:
