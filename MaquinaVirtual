@@ -108,4 +108,4 @@ while cont < len(cuadruplos):
 	cont = cont + 1
 
 for x in temporal:
-    print("T: ", temporal[x])
+    print("Respuestas: ", temporal[x])
