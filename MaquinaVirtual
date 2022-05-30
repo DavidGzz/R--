@@ -1,10 +1,17 @@
 import json
 from math import *
 
+from semantica import get_variable
+
 constantes = {}
 variablesGlobales = {}
 variablesLocales = {}
 temporal = {}
+stackMemoria = []
+parametros = []
+auxLocales = {}
+cont = 0
+contAux = 0
 
 def get_Valor(c):
     try:
@@ -22,6 +29,7 @@ def get_Valor(c):
             return variablesGlobales[c]
     except:
         print("Variable no tiene valor")
+        print(c)
 
 def suma(c1, c2, c3):
     try:
@@ -82,6 +90,53 @@ def menorQ(c1, c2, c3):
 	else: 
 		temporal[c3] = False
 
+def write(c1, c2, c3):
+    print(get_Valor(c3))
+
+def era(c1, c2, c3):
+	global stackMemoria
+	global variablesLocales
+	stackMemoria.append([cont, variablesLocales, temporal])
+	global parametros
+	parametros = todo['funciones'][c2]
+
+def retorno(c1, c2, c3):
+    global variablesGlobales
+    global cont
+    variablesGlobales[c1] = get_Valor(c3)
+    cont = contAux
+
+def ret(c1, c2, c3):
+    global variablesLocales
+    global temporal
+    global cont
+    cont = contAux
+
+def gosub(c1, c2, c3):
+    global cont
+    global contAux
+    contAux = cont
+    cont = c1
+    global variablesLocales
+    variablesLocales = auxLocales 
+
+def parametro(c1, c2, c3):
+    global auxLocales
+    x = list(reversed(parametros['parametros']))[c3 - 1]
+    auxLocales[parametros['variablesLocales'][x[0]]['dirMemoria']] = get_Valor(c1)
+    
+def endfunc(c1, c2, c3):
+    global cont
+    cont = contAux
+
+def igualIgual(c1, c2, c3):
+    global temporal
+    if float(get_Valor(c1)) == float(get_Valor(c2)):
+        temporal[c3] = True
+    else:
+        temporal[c3] = False
+
+
 operaciones = {
     '+': suma,
     'goto': goto,
@@ -92,6 +147,14 @@ operaciones = {
     '*': multiplicacion,
     '>': mayorQ,
     '<': menorQ,
+    'write': write,
+    'era' : era,
+    'return' : retorno,
+    'gosub' : gosub,
+    'param' : parametro,
+    'ENDFUNC' : endfunc,
+    '==' : igualIgual,
+    'ret' : ret,
 }
 
 with open('cuadruplos.json') as f:
@@ -100,12 +163,10 @@ with open('cuadruplos.json') as f:
 constantes = todo['constantes']
 constantes = {v: k for k, v in constantes.items()}
 cuadruplos = todo['cuadruplos']
-cont = 0
+#llenarVariablesLocales('main')
+cuad1 = cuadruplos[cont]
 
 while cont < len(cuadruplos):
 	cuad = cuadruplos[cont]
 	operaciones[cuad[0]](cuad[1], cuad[2], cuad[3])
 	cont = cont + 1
-
-for x in temporal:
-    print("Respuestas: ", temporal[x])

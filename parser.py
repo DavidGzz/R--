@@ -73,6 +73,14 @@ def p_functionAux2(p):
     if not retorna and tipo != 'void':
         print('LA FUNCION DEBE RETORNAR ALGO')
         exit(1)
+    if tipo == 'void':
+        cuadruplo.append(['ret', '0', '0', '0'])
+    if retorna:
+        if(retorna[1] != tipo) and tipo != 'void':
+            print("Type Mistmatch")
+            exit(1)
+
+    cuadruplo.append(['ENDFUNC', '0', '0', '0'])
     global mLocal
     mLocal = Memoria(0, 100, 200, 300,400)
     global mTemp
@@ -102,6 +110,7 @@ def p_estatuto(p):
                     | while
                     | return
                     | for
+                    | id ';'
                     | empty'''
 
 def p_return(p):
@@ -111,6 +120,7 @@ def p_return(p):
     tipo = get_tipoRetornoFuncion(funcionActual)
     if retorna and tipo != 'void' and retorna[1] == tipo:
         cuadruplo.append(['return', funcionActual, '0', retorna[0]])
+        #cuadruplo.append(['ret', '0', '0', '0'])
     elif tipo != 'void' and tipo != retorna[1]:
         print('TIPO DE RETORNO EQUIVOCADO')
         exit(-1)
@@ -331,8 +341,7 @@ def p_terminop(p):
 def p_pAppF(p):
     '''pAppF : '''
     if pOper:
-        print("POPER: ", pOper[-1])
-        if pOper[-1] == '+' or pOper[-1] == '-':
+        if pOper[-1] == '+' or pOper[-1] == '-' or pOper[-1] == '':
             pOper.append(p[-1])
         elif pOper[-1] == '*' or pOper[-1] == '/':
             global cuadruplo
@@ -348,6 +357,8 @@ def p_pAppF(p):
                 print("ERROR TYPE MISTMATCH *")
                 exit(1)
             pOper.append(p[-1])
+    else:
+        pOper.append(p[-1])
     
 
 def p_factor(p):
@@ -453,6 +464,7 @@ def p_idp(p):
                 for x in temporal1:
                     cuadruplo.append(['param', x[0], '0', totalParametros])
                     totalParametros = totalParametros - 1
+                temporal1 = []
                 cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
                 if get_tipoRetornoFuncion(p[-1]) != 'void':
                     respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))

@@ -16,7 +16,6 @@ reserved = {
     'char' : 'CHAR',
     #'read' : 'READ',
     'write' : 'WRITE',
-    'void' : 'VOID',
     #'arreglo' : 'ARREGLO',
     'main' : 'MAIN',
     'programa' : 'PROGRAMA'
