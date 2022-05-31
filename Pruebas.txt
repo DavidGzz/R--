@@ -1,0 +1,6 @@
+Prueba = llamada a función void
+Prueba1 = llamada a función no void
+Prueba2 = ifs
+Prueba3 = whiles
+prueba4 = fors
+Prueba5 = Factorial
