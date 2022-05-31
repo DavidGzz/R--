@@ -1,0 +1,35 @@
+RMM;
+
+int i, o, k;
+float valor, x;
+
+main(){
+	int prueba;
+	prueba = 5;
+	i = 10;
+	x = 5;
+	valor = 9;
+	
+	if(x == 5){
+		if(i == 10){
+			write(i + 10);
+		}
+		write(i);
+	}
+	else{
+		write(i + 5);
+	}
+
+	if(prueba == 4){
+		write(i - 5);
+	}
+	else{
+		if(prueba == 4){
+			write(valor);
+		}
+		else{
+			write(valor + 10);
+		}
+		write(valor);
+	}
+}

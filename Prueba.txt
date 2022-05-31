@@ -1,42 +1,23 @@
 RMM;
-	int i, o, k;
-	float valor, x;
-	char b, ch;
 
-function int fact1(int l, int y){
-	int PRUEBA;
-	k = valor + l * PRUEBA + o * k;
-	write("AAD", l, k + l);
-	for(i = 0; i > 3){
-		PRUEBA = 9;
-		i = i + 1;
-	}
-	return(k);
-}
+int i, o, k;
+float valor, x;
 
 function void fact(float w, int g){
-	float PRUEBA1;
-	i = g + (g - 8.5 / (9.7 + PRUEBA1));
-	while(PRUEBA1 < w){
-		PRUEBA1 = PRUEBA1 - 1;
+	float PRUEBA;
+	PRUEBA = 10;
+	i = g + (w - 8.5 / (9.7 + PRUEBA));
+	while(PRUEBA > w){
+		PRUEBA = PRUEBA - 1;
 	}
+	write(PRUEBA);
+	write(i);
 }
 
 main(){
-	int h, j, r;
-	float p;
-	j = 90;
-	if(valor > i){
-		k = i + o;
-		h = x - valor;
-	}
-	else{
-		i = o;
-		valor = x;
-	}
-	if(i > valor){
-		h = 10;
-	}
-	o = k + i + 6;
-	r = fact(p, j);
+	valor = 5;
+	o = 10;
+
+	fact(valor, o);
+	write(1);
 }

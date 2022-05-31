@@ -1,9 +1,5 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    PROGRAMA
-
 Grammar
 
 Rule 0     S' -> programa
@@ -140,7 +136,6 @@ LETRERO              : 34
 LTHANEQ              : 57
 MAIN                 : 3
 OR                   : 50
-PROGRAMA             : 
 RETURN               : 26
 VOID                 : 13
 WHILE                : 41

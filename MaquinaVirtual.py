@@ -12,6 +12,8 @@ parametros = []
 auxLocales = {}
 cont = 0
 contAux = 0
+contAux1 = 0
+contAux2 = 1
 
 def get_Valor(c):
     try:
@@ -104,19 +106,23 @@ def retorno(c1, c2, c3):
     global variablesGlobales
     global cont
     variablesGlobales[c1] = get_Valor(c3)
-    cont = contAux
+    cont = contAux1
 
 def ret(c1, c2, c3):
-    global variablesLocales
-    global temporal
     global cont
-    cont = contAux
+    print("C: ", contAux)
+    cont = contAux1 + 1
 
 def gosub(c1, c2, c3):
     global cont
     global contAux
+    global contAux1
+    global contAux2
+    if contAux2 == 1:
+        contAux1 = cont
+        contAux2 = 0
     contAux = cont
-    cont = c1
+    cont = c1 - 1
     global variablesLocales
     variablesLocales = auxLocales 
 

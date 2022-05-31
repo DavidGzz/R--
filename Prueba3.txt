@@ -1,0 +1,27 @@
+RMM;
+
+int i, o, k;
+float valor, x;
+
+main(){
+	x = 5;
+	o = 5;
+	k = 5;
+	valor = 9;
+	
+	while(x > 0){
+		valor = valor + 1;
+		x = x - 1;
+	}
+	write(valor);
+	valor = 0;
+	while(o > 0){
+		while(k > 0){
+			valor = valor + 1;
+			k = k - 1;
+		}
+		valor = valor + 1;
+		o = o - 1;
+	}
+	write(valor);
+}

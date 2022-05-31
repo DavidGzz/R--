@@ -2,74 +2,23 @@ RMM;
 
 int i, o, k;
 float valor, x;
-char b, ch;
+char ch;
 
 function float prueba1(float l){
-	int a, prueba;
+	int a;
 	float j;
-	j = 0.0;
 	a = 18;
-	prueba = 5;
-	write(3.0);
-	j = a + prueba * 8;
+	if(a == 18){
+		write(3.0);
+	}
+	j = a + l * 8;
 	return(j);
 }
 
-function void vPrueba(int a){
-	write(45);
-}
-
-function int factorial(int n){
-	int a;
-	a = n;
-	write(a);
-	if(a == 0){
-		write(888);
-		return(1);
-	}
-	else{
-		a = a - 1;
-		return(factorial(a));
-	}
-}
-
 main(){
-	int h, j, r, func, func2, p1, p2, n, factorial;
-	int g;
-	float f, func3;
-	f = 1;
-	p1 = 1;
-	p2 = 10;
-	k = 9;
-	i = 8.3;
-	h = 3;
-	j = 4;
-	o = k + i - 6 * h / j + 10.5;
-	float u;
-	u = 2;
-	write(o);
-	write(u);
-	while(k > 0){
-		h = h + 1;
-		k = k - 1;
-	}
-	func = 1;
-	if(func == 1){
-		o = k + 10;
-		i = 0;
-		write(func + 3);
-	}
-	func2 = 10;
-	if(func2 == 5){
-		write(func);
-	}
-	else{
-		o = k + 5.5;
-		func2 = func2 + 1;
-		write(func2);
-	}
-	n = 5;
-	g = 3;
-	func3 = prueba1(f);
-	write(func3);
+	float b, func;
+	b = 5;
+	func = prueba1(b);
+	write(func);
+	
 }

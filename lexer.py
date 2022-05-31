@@ -18,7 +18,7 @@ reserved = {
     'write' : 'WRITE',
     #'arreglo' : 'ARREGLO',
     'main' : 'MAIN',
-    'programa' : 'PROGRAMA'
+    #'programa' : 'PROGRAMA'
 }
 
 tokens = [
@@ -62,7 +62,7 @@ def t_error(t):
     
 lexer = lex.lex()
 
-f = open("Prueba1.txt", "r")
+f = open("Prueba3.txt", "r")
 data = f.read()
 
 lexer.input(data)
