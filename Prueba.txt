@@ -6,7 +6,7 @@ float valor, x;
 function void fact(float w, int g){
 	float PRUEBA;
 	PRUEBA = 10;
-	i = g + (w - 8.5 / (9.7 + PRUEBA));
+	k = g + (w - 8.5 / 9.7 + PRUEBA);
 	while(PRUEBA > w){
 		PRUEBA = PRUEBA - 1;
 	}

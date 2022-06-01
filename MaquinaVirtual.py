@@ -110,7 +110,6 @@ def retorno(c1, c2, c3):
 
 def ret(c1, c2, c3):
     global cont
-    print("C: ", contAux)
     cont = contAux1 + 1
 
 def gosub(c1, c2, c3):

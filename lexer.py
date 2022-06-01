@@ -2,13 +2,10 @@ import ply.lex as lex
 
 reserved = {
     'if' : 'IF',
-    #'then' : 'THEN',
     'else' : 'ELSE',
     'while' : 'WHILE',
-    #'do' : 'DO',
     'for' : 'FOR',
     'return' : 'RETURN',
-    #'vars' : 'VARS',
     'function' : 'FUNCTION',
     'int' : 'INT',
     'float' : 'FLOAT',
@@ -62,7 +59,7 @@ def t_error(t):
     
 lexer = lex.lex()
 
-f = open("Prueba3.txt", "r")
+f = open("Prueba7.txt", "r")
 data = f.read()
 
 lexer.input(data)

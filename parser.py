@@ -20,6 +20,7 @@ tipoActual = []
 tipoRetorno = []
 parametros = []
 pilaSaltos = []
+stackFor = []
 constantes = {}
 cuadruploFuncion = 0
 funcionActual = ""
@@ -185,8 +186,29 @@ def p_writeppAux(p):
     elif tipoWrite == 2:
         cuadruplo.append(['write', '0', '0', writeActual])
 
+#def p_for(p):
+#    '''for : FOR '(' id forAux '=' superexpresion ';' superexpresion ')' bloque'''
+
 def p_for(p):
-    '''for : FOR '(' id '=' superexpresion ';' superexpresion ')' bloque'''
+    '''for : FOR '(' id '=' superexpresion forAux ';' superexpresion forAux2 ')' bloque forAux3'''
+
+def p_forAux(p):
+    '''forAux : '''
+    valor = pilaO.pop()
+    idd = pilaO.pop()
+    cuadruplo.append(['=', valor[0], '0', idd[0]])
+
+def p_forAux2(p):
+    '''forAux2 : '''
+    condicion = pilaO.pop()
+    pilaSaltos.append(len(cuadruplo))
+    cuadruplo.append(['gotoF', condicion[0], '0', '0'])
+
+def p_forAux3(p):
+    '''forAux3 : '''
+    salida = pilaSaltos.pop()
+    cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo) + 1]
+    cuadruplo.append(['goto', '0', '0', salida - 1])
 
 def p_while(p):
     '''while : WHILE whileAux '(' superexpresion ')' whileAux2 bloque'''
@@ -367,10 +389,12 @@ def p_factor(p):
 
 def p_lParen(p):
     '''lParen : '(' '''
+    print("LPAREN")
     pOper.append(p[1])
 
 def p_rParen(p):
     '''rParen : ')' '''
+    print("RPAREN")
     pOper.pop()
 
 def p_constante(p):
@@ -497,7 +521,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("Prueba3.txt", "r")
+f = open("Prueba7.txt", "r")
 
 while True:
     try:
