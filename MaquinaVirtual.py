@@ -141,6 +141,20 @@ def igualIgual(c1, c2, c3):
     else:
         temporal[c3] = False
 
+def menorOIGUAL(c1, c2, c3):
+    global temporal
+    if float(get_Valor(c1)) <= float(get_Valor(c2)):
+        temporal[c3] = True
+    else:
+        temporal[c3] = False
+
+def mayorOIGUAL(c1, c2, c3):
+    global temporal
+    if float(get_Valor(c1)) >= float(get_Valor(c2)):
+        temporal[c3] = True
+    else:
+        temporal[c3] = False
+
 
 operaciones = {
     '+': suma,
@@ -152,6 +166,8 @@ operaciones = {
     '*': multiplicacion,
     '>': mayorQ,
     '<': menorQ,
+    '<=': menorOIGUAL,
+    '>=': mayorOIGUAL,
     'write': write,
     'era' : era,
     'return' : retorno,

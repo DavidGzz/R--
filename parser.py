@@ -186,9 +186,6 @@ def p_writeppAux(p):
     elif tipoWrite == 2:
         cuadruplo.append(['write', '0', '0', writeActual])
 
-#def p_for(p):
-#    '''for : FOR '(' id forAux '=' superexpresion ';' superexpresion ')' bloque'''
-
 def p_for(p):
     '''for : FOR '(' id '=' superexpresion forAux ';' superexpresion forAux2 ')' bloque forAux3'''
 
@@ -235,8 +232,7 @@ def p_asignacion(p):
                     | id asignacionp'''
 
 def p_asignacionp(p):
-    '''asignacionp : '=' superexpresion ';'
-                    | '[' superexpresion ']' '=' superexpresion ';' '''
+    '''asignacionp : '=' superexpresion ';' '''
     asignar = pilaO.pop()
     asignarA = pilaO.pop()
     cuadruplo.append(['=',  asignar[0], '0', asignarA[0]])
@@ -389,12 +385,10 @@ def p_factor(p):
 
 def p_lParen(p):
     '''lParen : '(' '''
-    print("LPAREN")
     pOper.append(p[1])
 
 def p_rParen(p):
     '''rParen : ')' '''
-    print("RPAREN")
     pOper.pop()
 
 def p_constante(p):
@@ -459,7 +453,13 @@ def p_varspp(p):
 
 def p_varsppp(p):
     '''varsppp : ',' varspp
+                | '[' CTEI ']' arreglo
                 | empty'''
+
+def p_arreglo(p):
+    '''arreglo : ',' varspp
+                | empty'''
+    
 
 def p_tipo(p):
     '''tipo : INT
@@ -521,7 +521,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("Prueba7.txt", "r")
+f = open("Prueba8.txt", "r")
 
 while True:
     try:

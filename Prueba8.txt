@@ -1,0 +1,23 @@
+RMM;
+
+main(){
+	int n, aux, aux1, sig, x;
+	n = 5;
+	aux = 0;
+	aux1 = 1;
+	sig = 0;
+	
+	for(x = 1; x <= n) {
+		if(x == 1){
+			write(aux);
+		}
+		if(x == 2) {
+			write(aux1);
+		}
+		sig = aux + aux1;
+		aux = aux1;
+		aux1 = sig;
+		write(sig);
+		x = x + 1;
+	}
+}

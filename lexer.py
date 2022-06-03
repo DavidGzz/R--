@@ -11,11 +11,8 @@ reserved = {
     'float' : 'FLOAT',
     'void' : 'VOID',
     'char' : 'CHAR',
-    #'read' : 'READ',
     'write' : 'WRITE',
-    #'arreglo' : 'ARREGLO',
     'main' : 'MAIN',
-    #'programa' : 'PROGRAMA'
 }
 
 tokens = [
