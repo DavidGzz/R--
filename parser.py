@@ -111,6 +111,10 @@ def p_estatuto(p):
                     | while
                     | return
                     | for
+                    | fact
+                    | fibonacci
+                    | cuadratica
+                    | raiz
                     | id ';'
                     | empty'''
 
@@ -511,6 +515,22 @@ def p_idppp(p):
     global totalParametros
     totalParametros = totalParametros + 1
 
+def p_fact(p):
+    '''fact : FACT '(' CTEI ')' ';' '''
+    cuadruplo.append(['fact', p[3], '0', '0'])
+
+def p_cuadratica(p):
+    '''cuadratica : CUADRATICA '(' CTEI ',' CTEI ',' CTEI ')' ';' '''
+    cuadruplo.append(['cuadratica', p[3], p[5], p[7]])
+
+def p_fibonacci(p):
+    '''fibonacci : FIBONACCI '(' CTEI ')' ';' '''
+    cuadruplo.append(['fib', p[3], '0', '0'])
+
+def p_raiz(p):
+    '''raiz : RAIZ '(' CTEI ')' ';' '''
+    cuadruplo.append(['raiz', p[3], '0', '0'])
+
 def p_empty(p):
     '''empty :'''
     pass
@@ -521,7 +541,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("Prueba8.txt", "r")
+f = open("Prueba7.txt", "r")
 
 while True:
     try:

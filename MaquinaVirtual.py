@@ -1,5 +1,5 @@
 import json
-from math import *
+import math
 
 from semantica import get_variable
 
@@ -155,6 +155,46 @@ def mayorOIGUAL(c1, c2, c3):
     else:
         temporal[c3] = False
 
+def writeL(c1, c2, c3):
+    print(c3)
+
+def fact(c1, c2, c3):
+    num = int(c1)
+    respuesta = math.factorial(num)
+    print("Factorial de", c1, "=", respuesta)
+
+
+def cuadratica(c1, c2, c3):
+    a = int(c1)
+    b = int(c2)
+    c = int(c3)
+    respuesta = (-b + (math.sqrt(math.pow(b, 2) - (4 * a * c)))) / (2 * a)
+    respuesta1 = (-b - (math.sqrt(math.pow(b, 2) - (4 * a * c)))) / (2 * a)
+    print("Resultado 1 =", respuesta)
+    print("Resultado 2 =", respuesta1)
+
+def fibonacci(c1, c2, c3):
+    num = int(c1)
+    aux = 0
+    aux1 = 1
+    sig = 0
+    x = 1
+    while(x <= num):
+        if x == 1:
+            print(aux)
+        if x == 2:
+            print(aux1)
+        sig = aux + aux1
+        aux = aux1
+        aux1 = sig
+        print(sig)
+        x = x + 1
+
+def raiz(c1, c2, c3):
+    num = int(c1)
+    respuesta = math.sqrt(num)
+    print("Raiz cuadrada de", num, "=", respuesta)
+
 
 operaciones = {
     '+': suma,
@@ -176,6 +216,11 @@ operaciones = {
     'ENDFUNC' : endfunc,
     '==' : igualIgual,
     'ret' : ret,
+    'fact' : fact,
+    'cuadratica' : cuadratica,
+    'fib' : fibonacci,
+    'raiz' : raiz,
+
 }
 
 with open('cuadruplos.json') as f:

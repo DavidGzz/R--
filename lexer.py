@@ -13,6 +13,10 @@ reserved = {
     'char' : 'CHAR',
     'write' : 'WRITE',
     'main' : 'MAIN',
+    'fact' : 'FACT',
+    'cuadratica' : 'CUADRATICA',
+    'fibonacci' : 'FIBONACCI',
+    'raiz' : 'RAIZ'
 }
 
 tokens = [
