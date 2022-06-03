@@ -541,7 +541,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-f = open("Prueba7.txt", "r")
+f = open("Prueba9.txt", "r")
 
 while True:
     try:

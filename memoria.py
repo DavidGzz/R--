@@ -8,29 +8,29 @@ class Memoria:
     
     def add_int(this, cont):
         if(this.int[0] + this.int[1]) < this.float[0]:
-            this.int[1] += cont
-            return (this.int[0] + this.int[1] - cont)
+            this.int[1] += 1
+            return (this.int[0] + this.int[1] - 1)
         else:
             print("Se excedió del número de variables")
         
     def add_bool(this, cont):
         if(this.bool[0] + this.bool[1]) < this.limite:
-            this.bool[1] += cont
-            return (this.bool[0] + this.bool[1] - cont)
+            this.bool[1] += 1
+            return (this.bool[0] + this.bool[1] - 1)
         else:
             print("Se excedió del número de variables")
     
     def add_float(this, cont):
         if(this.float[0] + this.float[1]) < this.char[0]:
-            this.float[1] += cont
-            return (this.float[0] + this.float[1] - cont)
+            this.float[1] += 1
+            return (this.float[0] + this.float[1] - 1)
         else:
             print("Se excedió del número de variables")
     
     def add_char(this, cont):
         if(this.char[0] + this.char[1]) < this.bool[0]:
-            this.char[1] += cont
-            return (this.char[0] + this.char[1] - cont)
+            this.char[1] += 1
+            return (this.char[0] + this.char[1] - 1)
         else:
             print("Se excedió del número de variables")
     

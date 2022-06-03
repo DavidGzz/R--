@@ -19,13 +19,13 @@ def get_Valor(c):
     try:
         if c in variablesGlobales:
             return variablesGlobales[c]
-        if c / 400.0 < 1:
+        if c < 400.0:
             return variablesLocales[c]
-        elif c / 800.0 < 1:
+        elif c < 800.0:
             return variablesGlobales[c]
-        elif c / 1200.0 < 1:
+        elif c < 1200.0:
             return constantes[c]
-        elif c / 1600.0 < 1:
+        elif c < 1600.0:
             return temporal[c]
         else:
             return variablesGlobales[c]
@@ -67,12 +67,12 @@ def gotoF(c1, c2, c3):
 		cont = c3 - 1
 
 def asignacion(c1, c2, c3):
-    if c3 / 400 < 1:
+    if c3 < 400:
         global variablesLocales
         variablesLocales[c3] = get_Valor(c1)
-    elif c3 / 800 < 1:
+    elif c3 < 800:
         variablesGlobales[c3] = get_Valor(c1)
-    elif c3 / 1200 < 1:
+    elif c3 < 1200:
         global constantes
         constantes[c3] = get_Valor(c1)
     else:

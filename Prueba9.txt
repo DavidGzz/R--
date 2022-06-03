@@ -1,0 +1,8 @@
+RMM;
+
+main(){
+	fibonacci(5);
+	factorial(5);
+	raiz(49);
+	cuadratica(2, 9, 10);
+}
