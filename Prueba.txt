@@ -3,10 +3,10 @@ RMM;
 int i, o, k;
 float valor, x;
 
-function void fact(float w, int g){
+function void facto(float w, int g){
 	float PRUEBA;
 	PRUEBA = 10;
-	k = g + (w - 8.5 / 9.7 + PRUEBA);
+	k = g + w - 8.5 / 9.7 + PRUEBA;
 	while(PRUEBA > w){
 		PRUEBA = PRUEBA - 1;
 	}
@@ -18,6 +18,6 @@ main(){
 	valor = 5;
 	o = 10;
 
-	fact(valor, o);
+	facto(valor, o);
 	write(1);
 }

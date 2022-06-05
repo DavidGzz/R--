@@ -1,4 +1,5 @@
 class Memoria:
+    # Inicializa la clase, los 0s y cont iban a ser por si se tenian arreglos
     def __init__(this, ints, floats, chars, bools, limite):
         this.int = [ints, 0]
         this.float = [floats, 0]
@@ -34,6 +35,7 @@ class Memoria:
         else:
             print("Se excedió del número de variables")
     
+    # Checa el tipo de lo que se le manda y lo manda a su función
     def add_tipo(this, tipo):
         if tipo == 'char':
             return this.add_char(1)

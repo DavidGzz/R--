@@ -2,7 +2,7 @@ from asyncio.windows_events import NULL
 import ply.yacc as yacc
 from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, get_variable
 from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
-from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Parametros, get_VariablesFuncion
+from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Parametros, get_VariablesFuncion, delete_VariablesGlobales
 from lexer import tokens
 from CuboSemantico import cuboSemantico
 from memoria import Memoria
@@ -20,7 +20,6 @@ tipoActual = []
 tipoRetorno = []
 parametros = []
 pilaSaltos = []
-stackFor = []
 constantes = {}
 cuadruploFuncion = 0
 funcionActual = ""
@@ -34,6 +33,7 @@ retorna = None
 def p_programa(p):
     '''programa : ID primerCuad ';' vars programaF main'''
 
+# Genera el primer cuádruplo
 def p_primerCuad(p):
     '''primerCuad : '''
     cuadruplo.append(['goto', '0', '0', '0'])
@@ -41,6 +41,7 @@ def p_primerCuad(p):
 def p_main(p):
     '''main : MAIN llenarCuad '(' ')' bloque'''
 
+# Llena el primer cuádruplo
 def p_llenarCuad(p):
     '''llenarCuad : '''
     cuadruplo[0] = ['goto', '0', '0', len(cuadruplo)]
@@ -58,23 +59,27 @@ def p_functionAux(p):
     global parametros
     global cuadruploFuncion
     cuadruploFuncion = len(cuadruplo)
-    if existe_Funcion(p[-4]):
+    if existe_Funcion(p[-4]): # Checa si ya se declaro una función con ese nombre
         print("ERROR, funcion repetida")
         exit(1)
     else:
+        # Agrega la función al directorio de funciones
         global funcionActual
         funcionActual = p[-4]
         tipo = tipoRetorno.pop()
         add_Funciones(p[-4], tipo, parametros, cuadruploFuncion)
+        # Vacia parametros
         parametros = []
 
 def p_functionAux2(p):
     '''functionAux2 : '''
     tipo = get_tipoRetornoFuncion(funcionActual)
+    # Checa que si retorne algo
     if not retorna and tipo != 'void':
         print('LA FUNCION DEBE RETORNAR ALGO')
         exit(1)
     if tipo == 'void':
+        # Retorno especial para void para la maquina virtual
         cuadruplo.append(['ret', '0', '0', '0'])
     if retorna:
         if(retorna[1] != tipo) and tipo != 'void':
@@ -82,6 +87,7 @@ def p_functionAux2(p):
             exit(1)
 
     cuadruplo.append(['ENDFUNC', '0', '0', '0'])
+    # Vacia la memoria
     global mLocal
     mLocal = Memoria(0, 100, 200, 300,400)
     global mTemp
@@ -119,13 +125,13 @@ def p_estatuto(p):
                     | empty'''
 
 def p_return(p):
-    '''return : RETURN superexpresion ';' '''
+    '''return : RETURN '(' superexpresion ')' ';' '''
     global retorna
     retorna = pilaO.pop()
     tipo = get_tipoRetornoFuncion(funcionActual)
+    # Checa que retorne algo si es que no es void
     if retorna and tipo != 'void' and retorna[1] == tipo:
         cuadruplo.append(['return', funcionActual, '0', retorna[0]])
-        #cuadruplo.append(['ret', '0', '0', '0'])
     elif tipo != 'void' and tipo != retorna[1]:
         print('TIPO DE RETORNO EQUIVOCADO')
         exit(-1)
@@ -139,22 +145,27 @@ def p_condicion(p):
 def p_condicionAux(p):
     '''condicionAux : '''
     cond = pilaO.pop()
+    # Checa que la condición sea booleana
     if cond[1] != 'bool':
         print('TYPE_MISMATCH')
         exit(1)
     else:
+        # mete a la pila de saltos el # de cuadruplo actual
         pilaSaltos.append(len(cuadruplo))
+        # genera el goto en falso vacio
         cuadruplo.append(['gotoF', cond[0], '0', '0'])
 
 def p_condicionelse(p):
     '''condicionelse : ELSE condicionelseAux bloque
                         | empty'''
     salida = pilaSaltos.pop()
+    # llena el cuadruplo del goto
     cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo)]
 
 def p_condicionelseAux(p): 
     '''condicionelseAux : '''
     salida = pilaSaltos.pop()
+    # llena el cuadruplo del goto en falso
     cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo) + 1]
     pilaSaltos.append(len(cuadruplo))
     cuadruplo.append(['goto', '0', '0', '0'])
@@ -188,26 +199,30 @@ def p_writeppAux(p):
         varWrite = pilaO.pop()
         cuadruplo.append(['write', '0', '0', varWrite[0]])
     elif tipoWrite == 2:
-        cuadruplo.append(['write', '0', '0', writeActual])
+        # cuadruplo especial de write para la maquina virutal
+        cuadruplo.append(['writeL', '0', '0', writeActual])
 
 def p_for(p):
-    '''for : FOR '(' id '=' superexpresion forAux ';' superexpresion forAux2 ')' bloque forAux3'''
+    '''for : FOR '(' id '=' superexpresion forAux ';' superexpresion forAux2 ';' asignacion ')' bloque forAux3'''
 
 def p_forAux(p):
     '''forAux : '''
     valor = pilaO.pop()
     idd = pilaO.pop()
+    # cuadruplo de asignación del id
     cuadruplo.append(['=', valor[0], '0', idd[0]])
 
 def p_forAux2(p):
     '''forAux2 : '''
     condicion = pilaO.pop()
     pilaSaltos.append(len(cuadruplo))
+    # cuadruplo del goto en falso vacio 
     cuadruplo.append(['gotoF', condicion[0], '0', '0'])
 
 def p_forAux3(p):
     '''forAux3 : '''
     salida = pilaSaltos.pop()
+    # llena el goto en falso
     cuadruplo[salida] = [cuadruplo[salida][0], cuadruplo[salida][1], '0', len(cuadruplo) + 1]
     cuadruplo.append(['goto', '0', '0', salida - 1])
 
@@ -216,10 +231,12 @@ def p_while(p):
     falso = pilaSaltos.pop()
     retorno = pilaSaltos.pop()
     cuadruplo.append(['goto', '0', '0', retorno])
+    # llena el got en falso
     cuadruplo[falso] = [cuadruplo[falso][0], cuadruplo[falso][1], '0', len(cuadruplo)]
 
 def p_whileAux(p):
     '''whileAux : '''
+    # append a la pila de saltos para despues
     pilaSaltos.append(len(cuadruplo))
 
 def p_whileAux2(p):
@@ -228,6 +245,7 @@ def p_whileAux2(p):
     if cond[1] != 'bool':
         print("TYPE MISTMATCH")
     else:
+        # append a la pila de saltos del cuadruplo de la expresion
         pilaSaltos.append(len(cuadruplo))
         cuadruplo.append(['gotoF', cond[0], '0', '0'])
 
@@ -245,11 +263,14 @@ def p_superexpresion(p):
     '''superexpresion : megaexpresion superexpresionp'''
     if pOper: 
         if pOper[-1] == '&&' or pOper[-1] == '||':
+            # pop a las pilas de operadores y operandos
             operador = pOper.pop()
             op1 = pilaO.pop()
             op2 = pilaO.pop()
+            # manda al cubo semantico para checar tipado
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
+                # Si no fue error, genera el cuaruplo
                 respuesta = mTemp.add_tipo(tipo)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
@@ -402,7 +423,9 @@ def p_constante(p):
 
 def p_ctef(p):
     '''ctef : '''
+    # Checa que no esté ya en el direcotrio
     if p[-1] not in constantes:
+        # Mete al direcotirio de constantes
         constantes[p[-1]] = mConsts.add_tipo('float')
     pilaO.append([constantes[p[-1]], 'float'])
 
@@ -419,6 +442,7 @@ def p_functionParam(p):
 def p_parametro(p):
     '''parametro : tipo ID parametrop'''
     tipo = tipoActual.pop()
+    # Append a los parametros y los agrega a las variables locales
     parametros.append([p[2], tipo])
     add_variablesLocales(mLocal, p[2], tipo)
 
@@ -428,6 +452,7 @@ def p_parametrop(p):
 
 def p_vars(p):
     '''vars : varsp'''
+    # La primera vez que pasa es 1 (global) y luego lo cambia a 2 (local)
     global scope
     scope = 2
 
@@ -439,6 +464,7 @@ def p_varspp(p):
     '''varspp : ID varsppp'''
     tipo = tipoActual.pop()
     tipoActual.append(tipo)
+    # Checa el scope para ver a que tabla meterla
     if scope == 1:
         if existe_Global(p[1]):
             print("Variable ya declarada")
@@ -484,17 +510,23 @@ def p_idp(p):
             global temporal
             global temporal1
             for x in range(0, totalParametros):
+                # Meter cada parametro a un temporal 
                 aux = pilaO.pop()
                 temporal.append(aux)
                 temporal1.append(aux)
+                # Para usar ese temporal para validar los parametros
             if validar_Parametros(p[-1], temporal):
+                # Si fueron correctos los parametros, generar el era
                 cuadruplo.append(['era', get_VariablesFuncion(p[-1]), p[-1], '0'])
                 for x in temporal1:
+                    # Por cada parametro generar su cuearuplo
                     cuadruplo.append(['param', x[0], '0', totalParametros])
                     totalParametros = totalParametros - 1
                 temporal1 = []
+                # genera el gosub
                 cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
                 if get_tipoRetornoFuncion(p[-1]) != 'void':
+                    # si no fue void, generar el cuadruplo de asignacion del valor del retorno
                     respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))
                     cuadruplo.append(['=', p[-1], '0', respuesta])
                     pilaO.append([respuesta, get_tipoRetornoFuncion(p[-1])])
@@ -515,6 +547,7 @@ def p_idppp(p):
     global totalParametros
     totalParametros = totalParametros + 1
 
+# Funciones especiales
 def p_fact(p):
     '''fact : FACT '(' CTEI ')' ';' '''
     cuadruplo.append(['fact', p[3], '0', '0'])
@@ -531,6 +564,7 @@ def p_raiz(p):
     '''raiz : RAIZ '(' CTEI ')' ';' '''
     cuadruplo.append(['raiz', p[3], '0', '0'])
 
+# Para que no haga nada
 def p_empty(p):
     '''empty :'''
     pass
@@ -538,11 +572,15 @@ def p_empty(p):
 def p_error(p):
     print("Syntax error in input!")
     print(p)
+    exit(1)
 
 parser = yacc.yacc()
 
-f = open("Prueba9.txt", "r")
+archivo = input("Ingresa el nombre del archivo: ")
 
+f = open(archivo, "r")
+
+# Sacado de la documentación de ply
 while True:
     try:
         s = f.read()
@@ -555,20 +593,24 @@ while True:
 #print("Variables Locales", variablesLocales)
 #print("Directorio de Funciones", Funciones)
 #print("CONSTANTES", constantes)
+
 cont = 0
 print("Cuadruplos")
+# print bonito a los cuádruplo
 for x in cuadruplo:
     print(cont, ": ", cuadruplo[cont])
     cont = cont + 1
 
 f.close()
 
+# Genera un diccionario con lo que se ocupara en la maquina virtual
 diccionario = {
-            'funciones': Funciones,
-            'cuadruplos': cuadruplo ,
-            'constantes': constantes,
-            'globals': variablesGlobales,
-    }
+        'funciones': Funciones,
+        'cuadruplos': cuadruplo ,
+        'constantes': constantes,
+        'globales': variablesGlobales,
+}
 
+# Mete ese diccionario a un archivo json para que sea más facil de manejar en la maquina
 with open('cuadruplos.json', 'w') as f:
     json.dump(diccionario, f)

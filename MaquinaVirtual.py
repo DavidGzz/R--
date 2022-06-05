@@ -15,6 +15,7 @@ contAux = 0
 contAux1 = 0
 contAux2 = 1
 
+# Función que regresa el valor dado una dirección de memoria
 def get_Valor(c):
     try:
         if c in variablesGlobales:
@@ -32,6 +33,7 @@ def get_Valor(c):
     except:
         print("Variable no tiene valor")
         print(c)
+        exit(1)
 
 def suma(c1, c2, c3):
     try:
@@ -195,7 +197,7 @@ def raiz(c1, c2, c3):
     respuesta = math.sqrt(num)
     print("Raiz cuadrada de", num, "=", respuesta)
 
-
+# Todas las operaciones que puede tener el programa
 operaciones = {
     '+': suma,
     'goto': goto,
@@ -209,6 +211,7 @@ operaciones = {
     '<=': menorOIGUAL,
     '>=': mayorOIGUAL,
     'write': write,
+    'writeL': writeL,
     'era' : era,
     'return' : retorno,
     'gosub' : gosub,
@@ -223,16 +226,19 @@ operaciones = {
 
 }
 
-with open('cuadruplos.json') as f:
+# Abre el archivo y lo mete en una variable
+with open("cuadruplos.json") as f:
     todo = json.load(f)
 
+# Mete las constantes en una variable
 constantes = todo['constantes']
+# Las constantes vienen al reves, asi es que se le hace reverse
 constantes = {v: k for k, v in constantes.items()}
+# Mete los cuadruplos a una variable
 cuadruplos = todo['cuadruplos']
-#llenarVariablesLocales('main')
-cuad1 = cuadruplos[cont]
 
+# While que pasa por cada cuadruplo
 while cont < len(cuadruplos):
-	cuad = cuadruplos[cont]
-	operaciones[cuad[0]](cuad[1], cuad[2], cuad[3])
-	cont = cont + 1
+    cuad = cuadruplos[cont]
+    operaciones[cuad[0]](cuad[1], cuad[2], cuad[3])
+    cont = cont + 1

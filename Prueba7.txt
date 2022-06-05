@@ -1,5 +1,8 @@
 RMM;
 
+int a, b;
+float y;
+
 function int factorial(int n, int res){
 	if(n > 1){
 		res = res * (n - 1);
@@ -12,8 +15,15 @@ function int factorial(int n, int res){
 
 main(){
 	int r, res, res1, func, x;
+	int facto, numero, i;
+	facto = 1;
+	numero = 6;
 	r = 6;
 	res = r;
+	for(i = 0; i < numero; i = i + 1;){
+		facto = facto * i;
+	}
+	write("Factorial no recursivo: ", facto);
 	func = factorial(r, res);
-	write(func);
+	write("Factorial recursivo: ", func);
 }

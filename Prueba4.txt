@@ -8,13 +8,8 @@ main(){
 	o = 5;
 	k = 5;
 	
-	for(valor = 5; valor > 0){
+	for(valor = 5; valor > 0; valor = valor - 1;){
 		x = x + 1;
-		valor = valor - 1;
 	}
 	write(x);
-	fibonacci(5);
-	raiz(49);
-	cuadratica(2, 9, 10);
-	factorial(6);
 }

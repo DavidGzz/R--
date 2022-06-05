@@ -3,23 +3,6 @@ RMM;
 int i, o, k;
 float valor, x;
 
-function int prueba(int a, float b){
-	int PRUEBA, g, t;
-	float l;
-	g = 10;
-	t = 5;
-	PRUEBA = 10;
-
-	l = g * 4 + (t - 8.5 / 9.7 * PRUEBA);
-
-	while(b < 5){
-		a = a + 2;
-		b = b + 1;
-	}
-	write(l);
-	return(a);
-}
-
 main(){
 	int j, y, w, func, func1;
 	float n, m;
@@ -33,10 +16,9 @@ main(){
 	n = 0;
 	w = 0;
 	
-	for(valor = 5; valor > 0){
-		for(o = 0; o < 5){
+	for(valor = 5; valor > 0; valor = valor - 1;){
+		for(o = 0; o < 5; o = o + 1;){
 			k = k + 1;
-			o = o + 1;
 			if(k == 4){
 				write(100);
 			}
@@ -49,9 +31,6 @@ main(){
 			m = m + 1;
 		}
 		x = x + 1;
-		valor = valor - 1;
 	}
 	write(x, j, y);
-	func = prueba(w, n);
-	write(func);
 }

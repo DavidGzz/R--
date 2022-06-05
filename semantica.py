@@ -66,10 +66,13 @@ def get_cuadruploFuncion(funcion):
     return Funciones[funcion]['cuadruplo']
 
 def validar_Parametros(funcion, arreglo):
+    # revisa que sean la misma cantidad
     if len(Funciones[funcion]['parametros']) != len(arreglo):
         return False
+    # Reverse al arreglo porque viene al reves
     arreglo.reverse()
     for x in Funciones[funcion]['parametros']:
+        # Saca los tipos del parametro y de lo que se le manda
         y1 = arreglo.pop()[1]
         y2 = x[1]
         if(y1 != y2):

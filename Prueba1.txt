@@ -2,7 +2,6 @@ RMM;
 
 int i, o, k;
 float valor, x;
-char ch;
 
 function float prueba1(float l){
 	int a;

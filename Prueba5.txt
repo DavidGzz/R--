@@ -7,13 +7,11 @@ main(){
 	x = 0;
 	k = 0;
 	
-	for(valor = 5; valor > 0){
-		for(o = 0; o < 5){
+	for(valor = 5; valor > 0; valor = valor - 1;){
+		for(o = 0; o < 5; o = o + 1;){
 			k = k + 1;
-			o = o + 1;
 		}
 		x = x + 1;
-		valor = valor - 1;
 	}
 	write(k);
 	write(x);

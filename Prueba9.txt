@@ -1,8 +1,10 @@
 RMM;
 
 main(){
+	int a[7];
+
 	fibonacci(5);
-	factorial(5);
+	fact(5);
 	raiz(49);
 	cuadratica(2, 9, 10);
 }
