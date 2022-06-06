@@ -1,0 +1,47 @@
+RMM;
+
+int i, o, k;
+float valor, x;
+
+function int ejemplo(int a, int b){
+	int y;
+	y = a + b;
+	return(y);
+}
+
+main(){
+	int f, l, func;
+	x = 5;
+	o = 5;
+	k = 5;
+	f = 5;
+	l = 0;
+	
+	if(k == 5){
+		write("K:", k);
+	}
+	else{
+		k = k - 1;
+		write("K:", k);
+	}
+
+	while(f > 0){
+		l = l + 2;
+		f = f - 1;
+	}
+	write("L:", l);
+
+	for(valor = 5; valor > 0; valor = valor - 1;){
+		x = x + 1;
+	}
+	write("X:", x);
+
+	fact(5);
+	raiz(49);
+	cuadratica(2, 9, 10);
+	fibonacci(5);
+
+	func = ejemplo(l, o);
+	write(func);	
+	
+}

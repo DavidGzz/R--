@@ -7,3 +7,4 @@ Prueba5 = fors anidados
 Prueba6 = combinación de ciclos
 Prueba7 = Factorial
 Prueba8 = Fibonacci
+Prueba9 = Funciones especiales
