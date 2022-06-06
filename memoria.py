@@ -8,9 +8,10 @@ class Memoria:
         this.limite = limite
     
     def add_int(this, cont):
+        # this.int[0] = dirección base, this.int[1] es el contador
         if(this.int[0] + this.int[1]) < this.float[0]:
             this.int[1] += 1
-            return (this.int[0] + this.int[1] - 1)
+            return (this.int[0] + this.int[1] - 1) # Se le quita 1 para que inicie en 0
         else:
             print("Se excedió del número de variables")
         

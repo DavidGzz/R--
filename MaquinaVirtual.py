@@ -69,6 +69,7 @@ def gotoF(c1, c2, c3):
 		cont = c3 - 1
 
 def asignacion(c1, c2, c3):
+    # Checa el valor de c3 que es la variable a asignar
     if c3 < 400:
         global variablesLocales
         variablesLocales[c3] = get_Valor(c1)
