@@ -288,16 +288,12 @@ def p_asignacionp(p):
     global constArr
     aux1 = pilaO.pop()
     aux = pilaO.pop()
-    print("AUX:", aux)
-    print("AUX1:", aux1)
     pilaO.append(aux)
     pilaO.append(aux1)
     if esArreglo == 1 and aux[1] == "arreglo":
         supExp = pilaO.pop()
         pilaO.pop()
         arreglo = pilaO.pop()
-        print("SuoEXP:", supExp)
-        print("ARREGLO:", arreglo)
         cuadruplo.append(['=', supExp[0], '0', arreglo[0]])
         esArreglo = 0
     else:
