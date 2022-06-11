@@ -1,0 +1,24 @@
+RMM;
+
+main(){
+	arreglo[5] a;
+	int temp, i, j;
+	int ayuda, ayuda1;
+	
+	a[2] = 1;
+	a[4] = 2;
+	a[1] = 5;
+	a[0] = 3;
+	a[3] = 4;
+
+	for(i = 0; i < 5; i = 1 + 1){
+      		for(j = 0; j < 4; j = j + 1) {
+        		if(arr[j] > arr[i]){
+                  		temp = arr[i];
+				arr[i] = arr[j];
+                  		arr[j] = temp;	
+                	}
+       		}
+	}
+	write(a[2], a[4], a[1], a[3], a[2]);
+}

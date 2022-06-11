@@ -11,7 +11,7 @@ function void facto(float w, int g){
 		PRUEBA = PRUEBA - 1;
 	}
 	write(PRUEBA);
-	write(i);
+	write(k);
 }
 
 main(){
@@ -19,5 +19,4 @@ main(){
 	o = 10;
 
 	facto(valor, o);
-	write(1);
 }

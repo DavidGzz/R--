@@ -1,13 +1,11 @@
 RMM;
 
-main(){
-	int n, aux, aux1, sig, x;
-	n = 5;
+function int fibona(int a){
+	int x, aux, aux1, sig;
 	aux = 0;
 	aux1 = 1;
 	sig = 0;
-	
-	for(x = 0; x < n; x = x + 1;) {
+	for(x = 0; x < a; x = x + 1;) {
 		if(x == 1){
 			write(aux);
 		}
@@ -17,7 +15,14 @@ main(){
 		sig = aux + aux1;
 		aux = aux1;
 		aux1 = sig;
-		write(sig);
 	}
+	return(sig);
+}
+
+main(){
+	int funcion;
+	funcion = fibona(20);
+	write(funcion);
+
 }
 

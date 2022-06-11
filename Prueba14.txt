@@ -1,0 +1,10 @@
+RMM;
+
+main(){
+	int x, a;
+	a = 1;
+	write("ESCRIBE X:");
+	read(x);
+	a = x + 1;
+	write(x);
+}

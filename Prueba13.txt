@@ -1,0 +1,29 @@
+RMM;
+
+function int factorial(int n){
+	int i, j;
+	write("N", n);
+	if(n > 1){
+		j = n - 1;
+		write("J", j);
+		i = 1 + factorial(n - 1);		
+	}	
+	else{
+		i = 6;
+	}
+	return(i);
+}
+
+main(){
+	int r, res, res1, func;
+	int facto, numero, i;
+	facto = 1;
+	numero = 6;
+	r = 6;
+	for(i = 0; i < numero; i = i + 1;){
+		facto = facto * i;
+	}
+	write("Factorial no recursivo: ", facto);
+	func = factorial(r);
+	write("Factorial recursivo: ", func);
+}

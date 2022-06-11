@@ -24,6 +24,5 @@ main(){
 		facto = facto * i;
 	}
 	write("Factorial no recursivo: ", facto);
-	func = factorial(r, res);
-	write("Factorial recursivo: ", func);
+	write("Factorial recursivo: ", factorial(r, res));
 }

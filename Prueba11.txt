@@ -1,0 +1,23 @@
+RMM;
+
+function int t(int l){
+	return(l * 3);
+}
+
+function int z(int a){
+	int h;
+	h = t(a);
+	return(h * 2);
+}
+
+function int w(int b, int c){
+	int f, f1;
+	f = z(b + c);
+	f1 = f * 2;
+	return(f1);
+}
+
+main(){
+	int r, x;
+	write(w(2, 3));
+}

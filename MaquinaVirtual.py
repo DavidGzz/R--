@@ -1,7 +1,6 @@
 import json
 import math
-
-from semantica import get_variable
+from memoria import Memoria
 
 constantes = {}
 variablesGlobales = {}
@@ -14,19 +13,26 @@ cont = 0
 contAux = 0
 contAux1 = 0
 contAux2 = 1
+auxVar = ""
+isRead = 0
 
 # Función que regresa el valor dado una dirección de memoria
 def get_Valor(c):
     try:
+        if isinstance(c, list):
+            c = get_Valor(c[0])
+        #if isRead == 1:
+        #    isRead = 0
+        #    return temporal[c]
         if c in variablesGlobales:
             return variablesGlobales[c]
-        if c < 400.0:
+        if c < 400:
             return variablesLocales[c]
-        elif c < 800.0:
+        elif c < 800:
             return variablesGlobales[c]
-        elif c < 1200.0:
+        elif c < 1200:
             return constantes[c]
-        elif c < 1600.0:
+        elif c < 1600:
             return temporal[c]
         else:
             return variablesGlobales[c]
@@ -39,25 +45,25 @@ def suma(c1, c2, c3):
     try:
         temporal[c3] = float(get_Valor(c1)) + float(get_Valor(c2))
     except:
-        exit(-1)
+        exit(1)
 
 def resta(c1, c2, c3):
     try:
         temporal[c3] = float(get_Valor(c1)) - float(get_Valor(c2))
     except:
-        exit(-1)
+        exit(1)
 
 def multiplicacion(c1, c2, c3):
     try:
         temporal[c3] = float(get_Valor(c1)) * float(get_Valor(c2))
     except:
-        exit(-1)
+        exit(1)
 
 def division(c1, c2, c3):
     try:
         temporal[c3] = float(get_Valor(c1)) / float(get_Valor(c2))
     except:
-        exit(-1)
+        exit(1)
 
 def goto(c1, c2, c3):
 	global cont
@@ -70,6 +76,9 @@ def gotoF(c1, c2, c3):
 
 def asignacion(c1, c2, c3):
     # Checa el valor de c3 que es la variable a asignar
+    global temporal
+    if isinstance(c3, list):
+        c3 = get_Valor(c3[0])
     if c3 < 400:
         global variablesLocales
         variablesLocales[c3] = get_Valor(c1)
@@ -79,7 +88,6 @@ def asignacion(c1, c2, c3):
         global constantes
         constantes[c3] = get_Valor(c1)
     else:
-        global temporal
         temporal[c3] = get_Valor(c1)
 
 def mayorQ(c1, c2, c3):
@@ -98,35 +106,46 @@ def menorQ(c1, c2, c3):
 def write(c1, c2, c3):
     print(get_Valor(c3))
 
+def read(c1, c2, c3):
+    global cont
+    global isRead
+    c2 = float(input())
+    temporal[c3] = c2
+    #cuadruplos[cont][0] = '='
+    #cuadruplos[cont][1] = int(c2)
+    #cuadruplos[cont][3] = temporal[c3]
+    #print("K:", cuadruplos[cont])
+    #cont = cont - 1
+    isRead = 1
+
 def era(c1, c2, c3):
-	global stackMemoria
-	global variablesLocales
-	stackMemoria.append([cont, variablesLocales, temporal])
-	global parametros
-	parametros = todo['funciones'][c2]
+    global stackMemoria
+    global variablesLocales
+    #print("VariablesLoc:", variablesLocales)
+    #print("Temporal:", temporal)
+    #print("Cont:", cont)
+    stackMemoria.append([cont, variablesLocales, temporal])
+    #print("StackMEMORIA ERA:", stackMemoria)
+    #print("StackMEMORIA ERA[1]:", stackMemoria[-1])
+    global parametros
+    parametros = todo['funciones'][c2]
+    #print("PARAMETROS:", parametros)
 
 def retorno(c1, c2, c3):
-    global variablesGlobales
-    global cont
     variablesGlobales[c1] = get_Valor(c3)
-    cont = contAux1
-
-def ret(c1, c2, c3):
-    global cont
-    cont = contAux1 + 1
 
 def gosub(c1, c2, c3):
     global cont
-    global contAux
-    global contAux1
-    global contAux2
-    if contAux2 == 1:
-        contAux1 = cont
-        contAux2 = 0
-    contAux = cont
-    cont = c1 - 1
     global variablesLocales
-    variablesLocales = auxLocales 
+    global auxLocales
+    #print("Stack Memoria GOSUB", stackMemoria)
+    aux = stackMemoria.pop()
+    #print("AUX:", aux)
+    aux[0] = cont
+    stackMemoria.append(aux)
+    cont = c1 - 1
+    #print("AUXLOCALES:", auxLocales)
+    variablesLocales = auxLocales
 
 def parametro(c1, c2, c3):
     global auxLocales
@@ -134,8 +153,18 @@ def parametro(c1, c2, c3):
     auxLocales[parametros['variablesLocales'][x[0]]['dirMemoria']] = get_Valor(c1)
     
 def endfunc(c1, c2, c3):
+    global variablesLocales
+    global temporal
     global cont
-    cont = contAux
+    #print("Stack Memoria END", stackMemoria)
+    funcion = stackMemoria.pop()
+    #print("Funcion:", funcion)
+    #print("Funcion0:", funcion[0])
+    #print("Funcion1:", funcion[1])
+    #print("Funcion2:", funcion[2])
+    cont = funcion[0]
+    variablesLocales = funcion[1]
+    temporal = funcion[2]
 
 def igualIgual(c1, c2, c3):
     global temporal
@@ -165,7 +194,6 @@ def fact(c1, c2, c3):
     num = int(c1)
     respuesta = math.factorial(num)
     print("Factorial de", c1, "=", respuesta)
-
 
 def cuadratica(c1, c2, c3):
     a = int(c1)
@@ -219,7 +247,7 @@ operaciones = {
     'param' : parametro,
     'ENDFUNC' : endfunc,
     '==' : igualIgual,
-    'ret' : ret,
+    'read' : read,
     'fact' : fact,
     'cuadratica' : cuadratica,
     'fib' : fibonacci,

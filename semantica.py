@@ -3,18 +3,20 @@ variablesLocales = {}
 variablesGlobales = {}
 Funciones = {}
 
-def add_variablesGlobales(memoria, id, tipo):
-    dirMemoria = memoria.add_tipo(tipo)
+def add_variablesGlobales(memoria, id, tipo, tamanioArreglo):
+    dirMemoria = memoria.add_tipo(tipo, tamanioArreglo)
     variablesGlobales[id] = {
         'tipo': tipo,
         'dirMemoria': dirMemoria,
+        'tamanio': tamanioArreglo
     }
 
-def add_variablesLocales(memoria, id, tipo):
-    dirMemoria = memoria.add_tipo(tipo)
+def add_variablesLocales(memoria, id, tipo, tamanioArreglo):
+    dirMemoria = memoria.add_tipo(tipo, tamanioArreglo)
     variablesLocales[id] = {
         'tipo' : tipo,
         'dirMemoria': dirMemoria,
+        'tamanio': tamanioArreglo
     }
 
 def add_Funciones(id, tipo, parametros, cuadruplo):
@@ -81,3 +83,24 @@ def validar_Parametros(funcion, arreglo):
 
 def get_VariablesFuncion(funcion):
     return len(Funciones[funcion]['variablesLocales'])
+
+def existe_arreglo(id):
+    if id in variablesLocales:
+        if 'arreglo' not in variablesLocales[id]['tipo']:
+            print("A")
+            print("ERROR ARREGLO")
+            exit(1)
+        else:
+            return [variablesLocales[id]['dirMemoria'], (variablesLocales[id]['tipo']), variablesLocales[id]['tamanio']]
+    else:
+        print("C")
+        print("ERROR ARREGLO")
+        exit(1)
+
+def existe_arreglo1(dirMem):
+    if 'arreglo' not in variablesLocales['id'][dirMem]:
+        print("A")
+        print("ERROR ARREGLO")
+        exit(1)
+    else:
+        return [variablesLocales['id'][dirMem]]

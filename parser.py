@@ -1,13 +1,15 @@
 from asyncio.windows_events import NULL
+from re import U
 import ply.yacc as yacc
 from semantica import delete_VariablesLocales, variablesLocales, variablesGlobales, add_variablesGlobales, get_variable
-from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones
-from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Parametros, get_VariablesFuncion, delete_VariablesGlobales
+from semantica import add_variablesLocales, existe_Global, existe_Local, existe_Funcion, Funciones, add_Funciones, existe_arreglo
+from semantica import get_tipoRetornoFuncion, get_cuadruploFuncion, validar_Parametros, get_VariablesFuncion, existe_arreglo1
 from lexer import tokens
 from CuboSemantico import cuboSemantico
 from memoria import Memoria
 import json
 
+o = 3
 scope = 1
 tipoWrite = 0
 totalParametros = 0
@@ -21,9 +23,15 @@ tipoRetorno = []
 parametros = []
 pilaSaltos = []
 constantes = {}
+constArr = 0
 cuadruploFuncion = 0
 funcionActual = ""
 writeActual = ""
+tamanioArreglo = 1
+esArreglo = 0
+tipoA = ""
+aidi = ""
+dirVar = -1
 mLocal = Memoria(0, 100, 200, 300, 400)
 mGlobal = Memoria(400, 500, 600, 700, 800)
 mConsts = Memoria(800, 900, 1000, 1100, 1200)
@@ -40,6 +48,15 @@ def p_primerCuad(p):
 
 def p_main(p):
     '''main : MAIN llenarCuad '(' ')' bloque'''
+    global parametros
+    global funcionActual
+    if existe_Funcion(p[3]):
+        print("Función repetida")
+        exit(1)
+    else:
+        funcionActual = p[1]
+        add_Funciones(p[1], 'None', parametros, '0')
+        parametros = []
 
 # Llena el primer cuádruplo
 def p_llenarCuad(p):
@@ -79,8 +96,7 @@ def p_functionAux2(p):
         print('LA FUNCION DEBE RETORNAR ALGO')
         exit(1)
     if tipo == 'void':
-        # Retorno especial para void para la maquina virtual
-        cuadruplo.append(['ret', '0', '0', '0'])
+        pass
     if retorna:
         if(retorna[1] != tipo) and tipo != 'void':
             print("Type Mistmatch")
@@ -114,6 +130,7 @@ def p_estatuto(p):
     '''estatuto : asignacion
                     | condicion
                     | write
+                    | read
                     | while
                     | return
                     | for
@@ -175,7 +192,7 @@ def p_write(p):
 
 def p_writep(p): 
     '''writep : superexpresion writepAux writepp
-              | LETRERO writepAux2 writepp''' 
+              | LETRERO writepAux2 writepp'''
 
 def p_writepAux(p): 
     '''writepAux : ''' 
@@ -191,16 +208,28 @@ def p_writepAux2(p):
 
 def p_writepp(p): 
     '''writepp : ',' writeppAux writep
-                | empty writeppAux'''
+                | writeppAux
+                | empty'''
 
 def p_writeppAux(p): 
-    '''writeppAux : ''' 
+    '''writeppAux : '''
     if tipoWrite == 1:
         varWrite = pilaO.pop()
+        if varWrite[1] == 'arreglo':
+            varWrite = pilaO.pop()
         cuadruplo.append(['write', '0', '0', varWrite[0]])
     elif tipoWrite == 2:
         # cuadruplo especial de write para la maquina virutal
         cuadruplo.append(['writeL', '0', '0', writeActual])
+
+def p_read(p):
+    '''read : READ '(' id ')' readAux ';' '''
+
+def p_readAux(p):
+    '''readAux : '''
+    lee = pilaO.pop()
+    print("LEE:", lee)
+    cuadruplo.append(['read', '0', '0', lee[0]])
 
 def p_for(p):
     '''for : FOR '(' id '=' superexpresion forAux ';' superexpresion forAux2 ';' asignacion ')' bloque forAux3'''
@@ -255,9 +284,26 @@ def p_asignacion(p):
 
 def p_asignacionp(p):
     '''asignacionp : '=' superexpresion ';' '''
-    asignar = pilaO.pop()
-    asignarA = pilaO.pop()
-    cuadruplo.append(['=',  asignar[0], '0', asignarA[0]])
+    global esArreglo
+    global constArr
+    aux1 = pilaO.pop()
+    aux = pilaO.pop()
+    print("AUX:", aux)
+    print("AUX1:", aux1)
+    pilaO.append(aux)
+    pilaO.append(aux1)
+    if esArreglo == 1 and aux[1] == "arreglo":
+        supExp = pilaO.pop()
+        pilaO.pop()
+        arreglo = pilaO.pop()
+        print("SuoEXP:", supExp)
+        print("ARREGLO:", arreglo)
+        cuadruplo.append(['=', supExp[0], '0', arreglo[0]])
+        esArreglo = 0
+    else:
+        asignar = pilaO.pop()
+        asignarA = pilaO.pop()
+        cuadruplo.append(['=',  asignar[0], '0', asignarA[0]])
 
 def p_superexpresion(p):
     '''superexpresion : megaexpresion superexpresionp'''
@@ -271,7 +317,7 @@ def p_superexpresion(p):
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
                 # Si no fue error, genera el cuaruplo
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -295,7 +341,7 @@ def p_megaexpresion(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -324,7 +370,7 @@ def p_exp(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -346,9 +392,11 @@ def p_pAppT(p):
             operador = pOper.pop()
             op1 = pilaO.pop()
             op2 = pilaO.pop()
+            print("OP21", op2[1])
+            print("OP11", op1[1])
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error' :
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -367,7 +415,7 @@ def p_termino(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error':
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -393,7 +441,7 @@ def p_pAppF(p):
             op2 = pilaO.pop()
             tipo = cuboSemantico.get((op2[1], operador, op1[1]), 'error')
             if tipo != 'error':
-                respuesta = mTemp.add_tipo(tipo)
+                respuesta = mTemp.add_tipo(tipo, 1)
                 cuadruplo.append([operador, op2[0], op1[0], respuesta])
                 pilaO.append([respuesta, tipo])
             else:
@@ -426,13 +474,13 @@ def p_ctef(p):
     # Checa que no esté ya en el direcotrio
     if p[-1] not in constantes:
         # Mete al direcotirio de constantes
-        constantes[p[-1]] = mConsts.add_tipo('float')
+        constantes[p[-1]] = mConsts.add_tipo('float', 1)
     pilaO.append([constantes[p[-1]], 'float'])
 
 def p_ctei(p):
     '''ctei : '''
     if p[-1] not in constantes:
-        constantes[p[-1]] = mConsts.add_tipo('int')
+        constantes[p[-1]] = mConsts.add_tipo('int', 1)
     pilaO.append([constantes[p[-1]], 'int'])
 
 def p_functionParam(p):
@@ -444,7 +492,7 @@ def p_parametro(p):
     tipo = tipoActual.pop()
     # Append a los parametros y los agrega a las variables locales
     parametros.append([p[2], tipo])
-    add_variablesLocales(mLocal, p[2], tipo)
+    add_variablesLocales(mLocal, p[2], tipo, 1)
 
 def p_parametrop(p):
     '''parametrop : ',' parametro
@@ -462,6 +510,7 @@ def p_varsp(p):
 
 def p_varspp(p):
     '''varspp : ID varsppp'''
+    global tamanioArreglo
     tipo = tipoActual.pop()
     tipoActual.append(tipo)
     # Checa el scope para ver a que tabla meterla
@@ -470,7 +519,8 @@ def p_varspp(p):
             print("Variable ya declarada")
             exit(1)
         else:
-            add_variablesGlobales(mGlobal, p[1], tipo)
+            add_variablesGlobales(mGlobal, p[1], tipo, tamanioArreglo)
+            tamanioArreglo = 1
     else:
         if existe_Local(p[1]):
             print("Variable ya declarada")
@@ -479,32 +529,46 @@ def p_varspp(p):
             print("Variable ya declarada")
             exit(1)
         else:
-            add_variablesLocales(mLocal, p[1], tipo)
+            add_variablesLocales(mLocal, p[1], tipo, tamanioArreglo)
+            tamanioArreglo = 1
 
 def p_varsppp(p):
     '''varsppp : ',' varspp
-                | '[' CTEI ']' arreglo
                 | empty'''
-
-def p_arreglo(p):
-    '''arreglo : ',' varspp
-                | empty'''
-    
 
 def p_tipo(p):
     '''tipo : INT
             | FLOAT
-            | CHAR'''
+            | CHAR
+            | ARREGLO arreglo'''
     tipoActual.append(p[1])
+
+def p_arreglo(p):
+    '''arreglo : '[' CTEI ']' '''
+    global tamanioArreglo
+    tamanioArreglo = p[2]
 
 def p_id(p): 
     '''id : ID idp'''
 
 def p_idp(p): 
     '''idp : '(' idpp ')'
-            | '[' superexpresion ']'
+            | '[' CTEI ']'
             | empty'''
     global totalParametros
+    global dirVar
+    if p[1] == '[':
+        global esArreglo
+        global aidi
+        global constArr
+        aidi = p[-1]
+        esArreglo = 1
+        arr = existe_arreglo(p[-1])
+        dirVar = arr[0] + int(p[2])
+        if(int(p[2]) < 0 or int(p[2]) >= int(arr[2])):
+            print("Valor del arreglo afuera del limite")
+            exit(1)
+        pilaO.append([dirVar, arr[1]])
     if p[1] == '(':
         if existe_Funcion(p[-1]):
             global temporal
@@ -527,7 +591,7 @@ def p_idp(p):
                 cuadruplo.append(['gosub', get_cuadruploFuncion(p[-1]), p[-1], '0'])
                 if get_tipoRetornoFuncion(p[-1]) != 'void':
                     # si no fue void, generar el cuadruplo de asignacion del valor del retorno
-                    respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]))
+                    respuesta = mTemp.add_tipo(get_tipoRetornoFuncion(p[-1]), 1)
                     cuadruplo.append(['=', p[-1], '0', respuesta])
                     pilaO.append([respuesta, get_tipoRetornoFuncion(p[-1])])
             else :
@@ -588,6 +652,7 @@ while True:
         break
     if not s: break
     parser.parse(s)
+
 
 #print("Variables Globales", variablesGlobales)
 #print("Variables Locales", variablesLocales)

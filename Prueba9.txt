@@ -1,8 +1,8 @@
 RMM;
 
 main(){
-	int a[7];
-
+	arreglo[5] a;
+	
 	fibonacci(5);
 	fact(5);
 	raiz(49);
